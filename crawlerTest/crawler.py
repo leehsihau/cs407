@@ -17,7 +17,7 @@ def webCrawl(foodId, browser):
     # browser.get('https://dining.purdue.edu/menus/item/6c883ba0-e283-4086-ab01-e181a6615435')
     url = 'https://dining.purdue.edu/menus/item/'+foodId
     browser.get(url)
-    sleep(4)
+    #sleep(4)
     elem = browser.page_source
     soup = BeautifulSoup(elem, 'html.parser')
     nutr_feature = soup.body.find('div', attrs={'class':'nutrition-feature-calories'})
@@ -86,7 +86,7 @@ def getWholeMenus():
     browser.quit()
 
 def main():
-    schedule.every().day.at("00:02").do(getWholeMenus)
+    schedule.every().day.at("00:09").do(getWholeMenus)
     while 1:
         schedule.run_pending()
         time.sleep(1)
