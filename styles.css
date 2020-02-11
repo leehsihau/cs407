@@ -13,3 +13,37 @@ body {
     border-radius: 5px;
     margin: auto;
 }
+
+ul.login-list{
+    list-style-type: none;
+    text-align: center;
+}
+
+ul.login-list li{
+    width: 350px;
+    margin-bottom: 10px;
+}
+
+ul.login-list li input[type="text"]{
+    width: 350px;
+    text-align: center;
+    border-radius: 5px;
+    padding: 6px 0px;
+}
+
+ul.login-list li input[type="password"]{
+    width: 350px;
+    text-align: center;
+    border-radius: 5px;
+    padding: 6px 0px;
+}
+
+ul.login-list li input[type="button"]{
+    width: 60px;
+    padding: 1px;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    border: none;
+}
