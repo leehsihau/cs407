@@ -1,7 +1,8 @@
 *{margin: 0; padding: 0}
 
 body {
-    background-color: lightsteelblue;
+    /*background-color: lightsteelblue;*/
+    background-color: steelblue;
     padding-top: 20vh;
 }
 
@@ -9,9 +10,10 @@ body {
     width: 350px;
     height: auto;
     padding: 20px 30px;
-    background-color: rgba(106, 128, 78, 0.774);
+    background-color: darkkhaki;
     border-radius: 5px;
     margin: auto;
+    box-shadow: 0 0 10px 0 black;
 }
 
 ul.login-list{
@@ -21,7 +23,7 @@ ul.login-list{
 
 ul.login-list li{
     width: 350px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 ul.login-list li input[type="text"]{
