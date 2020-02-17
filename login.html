@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lunchmate Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <form
+      id="signin-form"
+      action="/action_page.php"
+      style="border:1px solid #ccc"
+    >
+<div class="login-form-container">
+    <ul class="login-list">
+        <li><img src="logo.png" alt="logo" width="175px"></li>
+        <li><input type="text" name="username" placeholder="Username" \></li>
+        <li><input type="password" name="password" placeholder="Password"></li>
+        <li><input type="button" name="submit" value="Log In"></li>
+        <div class="g-signin2" name="google" data-onsuccess="onSignIn"></div>
+        <li><input type="image" name="google"src="Google Placeholder.png" alt="Google Placeholder" width=170px></li>
+        <li><a href="#top">Forgot Password?</a></li>
+        <li>New? <a href="#top">Create Account</a></li>
+    </ul>
+</div>    
+    </form>
+     <!-- The core Firebase JS SDK is always required and must be listed first -->
+     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+
+     <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script> 
+     <script>
+       // Your web app's Firebase configuration
+       var firebaseConfig = {
+         apiKey: "AIzaSyB5ktXembdAM9WmU8rFXsSiXdOBFTBQc-U",
+         authDomain: "lunchmate-9b46b.firebaseapp.com",
+         databaseURL: "https://lunchmate-9b46b.firebaseio.com",
+         projectId: "lunchmate-9b46b",
+         storageBucket: "lunchmate-9b46b.appspot.com",
+         messagingSenderId: "13075930277",
+         appId: "1:13075930277:web:a7c6eeaf25ead0124c414c",
+         measurementId: "G-6BW0283KH3"
+       };
+       // Initialize Firebase
+       firebase.initializeApp(firebaseConfig);
+ 
+       const auth = firebase.auth();
+ 
+     </script>
+<script src="login.js"></script>
+</body>
+</html>

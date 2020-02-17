@@ -1,0 +1,50 @@
+*{margin: 0; padding: 0}
+
+body {
+    /*background-color: lightsteelblue;*/
+    background-color: rgb(37, 37, 39);
+    padding-top: 20vh;
+}
+
+.allergen-form-container{
+    width: 132px;
+    height: auto;
+    padding: 12px;
+    background-color: lightblue;
+    border-radius: 5px;
+    margin: auto;
+    box-shadow: 0 0 10px 0 black;
+}
+
+ul.allergen-list{
+    list-style-type: none;
+    /*text-align: center;*/
+    margin: 0;
+    padding: 0;
+}
+
+ul.allergen-list li{
+    margin-bottom: 6px;
+    border: 1px transparent solid;
+}
+
+ul.allergen-list li input
+{
+    margin-right: .25em;
+}
+
+ul.allergen-list li label
+{
+    margin-left: .25em;
+}
+
+ul.allergen-list li input[type="button"]{
+    width: 50px;
+    height: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(37, 37, 39);
+    border: none;
+}
