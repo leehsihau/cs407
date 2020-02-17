@@ -8,7 +8,9 @@ changePasswordForm = addEventListener("submit", e => {
   if(password==password1) {
     user.updatePassword(password).then(function() {
         // Update successful.
+        alert("Password changed successfully")
       }).catch(function(error) {
+        alert("Password is not changed successfully")
         // An error happened.
       });
   }

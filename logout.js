@@ -1,5 +1,5 @@
-let signinForm = document.querySelectorAll("#main-page");
-signinForm = addEventListener("submit", e => {
+let logout = document.querySelectorAll("#logout");
+logout = addEventListener('click', e => {
     e.preventDefault();
     firebase.auth().signOut().then(function() {
         // Sign-out successful.
