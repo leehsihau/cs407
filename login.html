@@ -4,7 +4,8 @@
     <title>Lunchmate Login Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-
+<meta name="google-signin-client_id" content="13075930277-gpr5kdf64g941de4sif21dl8cklnhpun.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <body>
     <form
       id="signin-form"
@@ -17,10 +18,17 @@
         <li><input type="text" name="username" placeholder="Username" \></li>
         <li><input type="password" name="password" placeholder="Password"></li>
         <li><input type="button" name="submit" value="Log In"></li>
-        <div class="g-signin2" name="google" data-onsuccess="onSignIn"></div>
-        <li><input type="image" name="google"src="Google Placeholder.png" alt="Google Placeholder" width=170px></li>
+        <div class="g-signin2">
+            <li>
+                <input type="image"
+                  src="Google Placeholder.png"
+                  alt="Google Placeholder"
+                  width="170px"
+                />
+              </li>
+        </div>
         <li><a href="#top">Forgot Password?</a></li>
-        <li>New? <a href="#top">Create Account</a></li>
+        <li>New? <a href="#top"onclick="window.location.href='createAccount.html'">Create Account</a></li>
     </ul>
 </div>    
     </form>
@@ -47,7 +55,8 @@
        firebase.initializeApp(firebaseConfig);
  
        const auth = firebase.auth();
- 
+       const db = firebase.firestore();
+       db.settings({ timestampsInSnapshots: true });
      </script>
 <script src="login.js"></script>
 </body>

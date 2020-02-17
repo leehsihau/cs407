@@ -1,5 +1,5 @@
-let signupForm = document.querySelectorAll("#signin-form");
-signinForm = addEventListener("google", e => {
+let signinForm = document.querySelectorAll("#signin-form");
+signinForm = addEventListener("image", e => {
   e.preventDefault();
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -19,10 +19,10 @@ signinForm = addEventListener("google", e => {
     // ...
   });
 });
-
-firebase.auth().onAuthStateChanged(user => {
+/*
+auth().onAuthStateChanged(user => {
     if(user) {
         window.location = 'createAccount.html';
         console.log(firebase.auth().currentUser.uid)
     }
-});
+});*/
