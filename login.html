@@ -2,24 +2,33 @@
 <html>
   <head>
     <title>Lunchmate Login Page</title>
-    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
     <div class="login-form-container">
       <ul class="login-list">
-        <li>Lunchmate</li>
-        <li><input type="text" name="username" /></li>
-        <li><input type="password" name="password" /></li>
-        <li><input type="button" name="submit" value="Login" /></li>
+        <li><img src="logo.png" alt="logo" width="175px" /></li>
+        <li>
+          <input type="text" name="username" placeholder="Username" required />
+        </li>
+        <li>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+        </li>
+        <li><input type="button" name="submit" value="Log In" /></li>
         <li>
           <img
             src="Google Placeholder.png"
             alt="Google Placeholder"
-            width="140px"
+            width="170px"
           />
         </li>
-        <li>Forgot Password? Click here to reset</li>
+        <li><a href="#top">Forgot Password?</a></li>
         <li><a href="createaccount.html">New? Create Account</a></li>
       </ul>
     </div>
