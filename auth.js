@@ -1,3 +1,17 @@
+var firebaseConfig = {
+  apiKey: "AIzaSyB5ktXembdAM9WmU8rFXsSiXdOBFTBQc-U",
+  authDomain: "lunchmate-9b46b.firebaseapp.com",
+  databaseURL: "https://lunchmate-9b46b.firebaseio.com",
+  projectId: "lunchmate-9b46b",
+  storageBucket: "lunchmate-9b46b.appspot.com",
+  messagingSenderId: "13075930277",
+  appId: "1:13075930277:web:a7c6eeaf25ead0124c414c",
+  measurementId: "G-6BW0283KH3"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
 let signupForm = document.querySelectorAll("#signup-form");
 signupForm = addEventListener("submit", e => {
   e.preventDefault();
@@ -7,5 +21,17 @@ signupForm = addEventListener("submit", e => {
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
     console.log(cred.user);
     // close the signup modal & reset form
+
+    auth.signInWithEmailAndPassword(email, password).then(cred1 => {
+      console.log(cred1.user);
+    });
   });
+});
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log(user);
+  } else {
+    console.log("not log in");
+  }
 });
