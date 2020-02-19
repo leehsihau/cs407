@@ -3,8 +3,23 @@ body{
     width: 100%;
 }
 
+.p-map, .m-map{
+    display: flex;
+    flex-direction: row;
+}
+
 .diet-pref{
     text-align: center;
+}
+
+.height-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+.height-in, .height-ft{
+    width: 20px;
+    text-align: right;
 }
 
 .diet-wrapper{

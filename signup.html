@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="signup.css" />
+    <link rel="stylesheet" type="text/css" href="signup.css" />
     <title>Signup</title>
 </head>
 
@@ -16,15 +16,37 @@
         <input type="text" id="weight-update" class="weight-text">
 
         <br>
+        <div>Height</div>
+        <div class="height-wrapper">
+            
+            <input type="text" class="height-ft">
+            <div>ft.</div>
+            <input type="text" class="height-in">
+            <div>in.</div>
+        </div>
+        <br>
         <div>Would you like to gain weight, lose weight, or neither?</div>
 
-        <input type="radio" id="gain" name="diet" value="gain">
-        <label for="gain">Gain</label><br>
-        <input type="radio" id="lose" name="diet" value="lose">
-        <label for="lose">Lose</label><br>
-        <input type="radio" id="neither" name="diet" value="neither">
-        <label for="neither">Neither</label>
+        <div class="gain-lose">
+            <input type="radio" id="gain" name="diet" value="gain">
+            <label for="gain">Gain</label><br>
+            <input type="radio" id="lose" name="diet" value="lose">
+            <label for="lose">Lose</label><br>
+            <input type="radio" id="neither" name="diet" value="neither">
+            <label for="neither">Neither</label>
+        </div>
+        <br>
 
+        <input type="button" class="upload-pic" value="Upload Profile Picture"></input>
+        <br>
+        <div class="p-map">
+            <div>Allow other users to see you on the map</div>
+            <input type="checkbox" class="map-check">
+        </div>
+        <div class="m-map">
+            <div>Allow other users to message you</div>
+            <input type="checkbox" class="message-check">
+        </div>
     </div>
 
 </body>
