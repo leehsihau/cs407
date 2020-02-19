@@ -7,11 +7,64 @@ var firebaseConfig = {
    // messagingSenderId: "sender-id",
    appId: "1:13075930277:web:a7c6eeaf25ead0124c414c"
   };
-  let map, infoWindow;
+let map, infoWindow;
 let gmarkers = new Map();//array for google map markers 
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
+}
+
+
+//sign up
+let signupForm = document.querySelectorAll("#signup-form");
+signupForm = addEventListener("submit", e => {
+  e.preventDefault();
+  const email = document.getElementById("signup-email").value;
+  const password = document.getElementById("signup-password").value;
+
+  auth.createUserWithEmailAndPassword(email, password).then(cred => {
+    console.log(cred.user);
+    window.location = "./map.html";
+    // close the signup modal & reset form
+  });
+});
+
+
+//sign in
+if(window.location.pathname == '/index.html'){
+
+let signinForm = document.querySelectorAll("#signin-form");
+
+signinForm = document.getElementById("login").addEventListener("click", e => {
+  console.log("dian")
+  e.preventDefault();
+  const email = document.getElementById("signin-email").value;
+  const password = document.getElementById("signin-password").value;
+    auth.signInWithEmailAndPassword(email, password).then(cred1 => {
+      console.log(cred1.user);
+      window.location = '/map.html';
+    });
+});
+}
+//sign out
+  
+function signOut(){
+    let uid = getCurrentUserId();
+    firebase.auth().signOut().then(function() {
+      const db = firebase.database();
+      db.ref('/userLocations/'+uid).remove();
+      window.location = './index.html'
+        // Sign-out successful.
+      }).catch(function(error) {
+        // An error happened.
+      });
+    }
+
+
+function getCurrentUserId() {
+  var user = firebase.auth().currentUser;
+  //console.log("current uid in func: "+user.uid);
+  return user.uid;
 }
 
 
@@ -36,16 +89,145 @@ function saveMessagingDeviceToken() {
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map-canvas'), {
-      center: { lat: -34.397, lng: 150.644 },
+      center: { lat: 40.454770, lng: -86.915700 },
       zoom: 6
     });
     infoWindow = new google.maps.InfoWindow;
     
 }
 
-
+var locationBefore;
 function getLocationAndUpload(){
-    console.log("executed");
+  var user = firebase.auth().currentUser;
+  if(user!=null){
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            let pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            let timestamp = firebase.database.ServerValue.TIMESTAMP;
+      
+            const db = firebase.database();
+            updates={};
+            let uid = getCurrentUserId();
+            updates['/userLocations/'+uid+'/']={
+              pos: pos,
+              timestamp: timestamp
+            }
+            if(locationBefore['lat'] != pos['lat'] && locationBefore['lng'] != pos['lng']){
+              console.log("uploading: ", pos);
+              firebase.database().ref().update(updates);
+            }else if(locationBefore == null){
+              console.log("location before is null");
+            }
+            else{
+              console.log("same location");
+            }
+
+          });
+      } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    }else{
+      console.log("not signed in")
+    }
+}
+
+
+var locations = firebase.database().ref('/userLocations');
+const m = {};
+
+function loadLocations(){
+    let flag=true;
+    locations.on('value', function(snapshot, context){
+        //console.log("called");
+        //console.log(snapshot);
+        if(gmarkers.size!=0){
+          for(const n of (Object(gmarkers.keys()))){
+            gmarkers.get(n).setMap(null);
+            gmarkers.delete(n);
+            //m.delete(n);                
+        }
+      }
+      console.log("lai le");
+      locations.once('value', function(snapshot_) {
+        snapshot_.forEach(function(childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          var pos = childData['pos'];
+              var marker = new google.maps.Marker({
+                position: pos,
+                title: childKey
+              });
+              marker.setMap(map);
+              gmarkers.set(childKey, marker);
+              console.log(gmarkers.size);
+          }); 
+        return;       
+    })
+  });
+}
+  /*snapshot.forEach(function(childSnapshot) {
+            var childKey = childSnapshot.key;
+            var childData = childSnapshot.val();
+            if((typeof m[childKey]!='undefined') && (m[childKey]['timestamp']===childData['timestamp'])){
+              //console.log("don't print come in");
+              //console.log("key: ", childKey);
+              //console.log("m[childkey]: ", m[childKey]);
+            }else{
+              console.log("new added: ", childKey, "  ",childData);
+              m[childKey] = childData;   
+              var pos = childData['pos'];  
+              if(gmarkers.get(childKey)!=undefined){
+                gmarkers.get(childKey).setMap(null);
+              }
+              console.log("keys: ", Object.keys(m))
+              var pass = false;
+              var n_;
+              for(const n of (Object.keys(m))){
+                if(n===childKey){
+                  console.log("pass");
+                  pass=true;
+                  n_=n;
+                  break;
+                }else{
+                  console.log("not pass");
+                  console.log(n, childKey)
+                }
+              }
+              if(!pass){
+                  gmarkers.get(n).setMap(null);
+                  gmarkers.delete(n);
+                  m.delete(n);
+              }
+
+              var marker = new google.maps.Marker({
+                position: pos,
+                title: childKey
+              });
+              marker.setMap(map);
+              gmarkers.set(childKey, marker);
+
+            }
+            
+              var pos = childData['pos'];
+              var marker = new google.maps.Marker({
+                position: pos,
+                title: childKey
+              });
+              marker.setMap(map);
+              gmarkers.set(childKey, marker);
+              console.log(gmarkers.size);
+            
+        });*/
+        //console.log("coming in:", m);}
+
+firebase.auth().onAuthStateChanged(user => {
+  if(user) {
+    console.log("uid: ",  firebase.auth().currentUser.uid);
+    console.log("initial location");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
           let pos = {
@@ -53,44 +235,40 @@ function getLocationAndUpload(){
             lng: position.coords.longitude
           };
     
-          /*var user = firebase.auth().currentUser;
-          let username = "";
-          if (user.isAnonymous) {
-            username = "Anonymous";
-          } else {
-            username = getUserName();
-          }*/
           const db = firebase.database();
-          firebase.database().ref('users/').push({
-//            name: username,
-  //          profilePicUrl: getProfilePicUrl(),
-    //        uid: getCurrentUserId(),
+          updates={};
+          let uid = getCurrentUserId();
+          updates['/userLocations/'+uid+'/']={
             pos: pos,
             timestamp: firebase.database.ServerValue.TIMESTAMP
-          }).catch(function (error) {
-            console.error('Error writing location to Realtime Database:', error);
-          });
-        }, function () {
-          handleLocationError(true, infoWindow, map.getCenter());
+          }
+          firebase.database().ref().update(updates);
+          locationBefore = pos;
         });
       } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
       }
-}
+  }else{
+    var user = firebase.auth().currentUser;
+    if(user==null){
+      executed=false
+      console.log("location: ", window.location)
+      //if(window.location.pathname == '/map.html'){
+        //window.location = './index.html'
+     // }
 
+      console.log("logout");
 
-var locations = firebase.database().ref('/users');
-function loadLocations(){
-    locations.on('value', function(snapshot, context){
-        snapshot.forEach(function(childSnapshot) {
-            var childData = childSnapshot.val();
-            console.log("coming in", childData);
-
-          });
-    })
-}
+    }
+  }
+});
 
 setInterval(getLocationAndUpload, 2000);
 loadLocations();
-saveMessagingDeviceToken();
+//saveMessagingDeviceToken();
+
+if(window.location.pathname=='/map.html'){
+  let signOutButtonElement = document.getElementById('signout');
+  signOutButtonElement.addEventListener('click', signOut);
+}
