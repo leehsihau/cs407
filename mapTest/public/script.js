@@ -31,7 +31,7 @@ signupForm = addEventListener("submit", e => {
 
 
 //sign in
-if(window.location.pathname == '/index.html'){
+if(window.location.pathname == '/index.html' || window.location.pathname=="/"){
 
 let signinForm = document.querySelectorAll("#signin-form");
 
@@ -99,7 +99,7 @@ function initMap() {
 var locationBefore;
 function getLocationAndUpload(){
   var user = firebase.auth().currentUser;
-  if(user!=null){
+  if(user!=null && locationBefore != undefined){
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(function (position) {
             let pos = {
@@ -227,14 +227,13 @@ function loadLocations(){
 firebase.auth().onAuthStateChanged(user => {
   if(user) {
     console.log("uid: ",  firebase.auth().currentUser.uid);
-    console.log("initial location");
     if (navigator.geolocation) {
+        console.log("jin")
         navigator.geolocation.getCurrentPosition(function (position) {
           let pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
           };
-    
           const db = firebase.database();
           updates={};
           let uid = getCurrentUserId();
@@ -244,9 +243,14 @@ firebase.auth().onAuthStateChanged(user => {
           }
           firebase.database().ref().update(updates);
           locationBefore = pos;
-        });
+          console.log("initial location");
+
+        },function (error) {
+            console.log("not support error")
+        }, {timeout:10000});
       } else {
         // Browser doesn't support Geolocation
+        console.log("not support")
         handleLocationError(false, infoWindow, map.getCenter());
       }
   }else{
