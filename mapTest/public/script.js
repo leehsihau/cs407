@@ -111,13 +111,28 @@ function getLocationAndUpload(){
             const db = firebase.database();
             updates={};
             let uid = getCurrentUserId();
+
+            var currentDate = new Date();
+
+            var mili = currentDate.getMilliseconds();
+            var seconds = currentDate.getSeconds();
+            var minutes = currentDate.getMinutes();
+            var hours = currentDate.getHours();
+          var date = currentDate.getDate();
+          var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+          var year = currentDate.getFullYear();
+
+          var dateString = mili+"-" + seconds+"-"+minutes+"-"+hours+"-"+ date + "-" +(month + 1) + "-" + year;
+
             updates['/userLocations/'+uid+'/']={
               pos: pos,
-              timestamp: timestamp
+              timestamp: dateString
             }
             if(locationBefore['lat'] != pos['lat'] && locationBefore['lng'] != pos['lng']){
               console.log("uploading: ", pos);
+              console.log("location before", locationBefore);
               firebase.database().ref().update(updates);
+              locationBefore=pos;
             }else if(locationBefore == null){
               console.log("location before is null");
             }
@@ -237,9 +252,21 @@ firebase.auth().onAuthStateChanged(user => {
           const db = firebase.database();
           updates={};
           let uid = getCurrentUserId();
+          var currentDate = new Date();
+
+            var mili = currentDate.getMilliseconds();
+            var seconds = currentDate.getSeconds();
+            var minutes = currentDate.getMinutes();
+            var hours = currentDate.getHours();
+          var date = currentDate.getDate();
+          var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+          var year = currentDate.getFullYear();
+
+          var dateString = year + "-"+(month + 1) + "-"+ date + "-"+hours+":" +minutes+":"+ seconds+":"+mili;
           updates['/userLocations/'+uid+'/']={
             pos: pos,
-            timestamp: firebase.database.ServerValue.TIMESTAMP
+            //timestamp: firebase.database.ServerValue.TIMESTAMP
+            timestamp: dateString
           }
           firebase.database().ref().update(updates);
           locationBefore = pos;
