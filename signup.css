@@ -3,7 +3,7 @@ body{
     width: 100%;
 }
 
-.p-map, .m-map, .prof-view{
+.p-map, .m-map, .filesumbit{
     display: flex;
     flex-direction: row;
 }
