@@ -8,6 +8,10 @@ body {
     padding-top: 20vh;
 }
 
+h2 {
+    padding-bottom: 4px;
+}
+
 .ca-form-container {
     width: 450px;
     height: auto;
