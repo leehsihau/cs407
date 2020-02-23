@@ -1,74 +1,70 @@
-*{margin: 0; padding: 0}
+* {
+    margin: 0;
+    padding: 0;
+}
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
     background-color: rgb(37, 37, 39);
-  }
-  * {
-    box-sizing: border-box;
-  }
+    padding-top: 20vh;
+}
 
-  /* Full-width input fields */
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-  }
+h2 {
+    padding-bottom: 4px;
+}
 
-  input[type="text"]:focus,
-  input[type="password"]:focus {
-    background-color: #ddd;
-    outline: none;
-  }
+.ca-form-container {
+    width: 450px;
+    height: auto;
+    padding: 20px 30px;
+    background-color: lightblue;
+    border-radius: 5px;
+    margin: auto;
+    box-shadow: 0 0 10px 0 black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 13px;
+}
 
-  hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-  }
+ul.ca-list {
+    list-style-type: none;
+    text-align: center;
+}
+  
+ul.ca-list li {
+    width: 450px;
+    margin-bottom: 12px;
+}
 
-  /* Set a style for all buttons */
-  button {
-    background-color: #4caf50;
+ul.ca-list li input[type="text"] {
+    width: 450px;
+    height: 20px;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: left;
+    text-indent: 7px;
+    border-radius: 5px;
+    padding: 6px 0px;
+  }
+  
+  ul.ca-list li input[type="password"] {
+    width: 450px;
+    height: 20px;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: left;
+    text-indent: 7px;
+    border-radius: 5px;
+    padding: 6px 0px;
+  }
+  
+  ul.ca-list li input[type="submit"] {
+    width: 455px;
+    height: 37px;
+    margin: 7px 0px 7px 0px;
+    font-size: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    border-radius: 20px;
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
+    background-color: rgb(37, 37, 39);
     border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-  }
-
-  button:hover {
-    opacity: 1;
-  }
-
-  .signupbtn {
-    width: 100%;
-    font-size: large;
-  }
-
-  .cancelbtn {
-    width: 100%;
-    font-size: large;
-    background-color: red;
-  }
-
-  .container {
-    padding: 15px;
-  }
-
-  .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-
-  @media screen and (max-width: 300px) {
-    .signupbtn {
-      width: 100%;
-    }
   }
