@@ -3,10 +3,12 @@ body{
     width: 100%;
 }
 
-.p-map, .m-map{
+.p-map, .m-map, .prof-view{
     display: flex;
     flex-direction: row;
 }
+
+
 
 .diet-pref{
     text-align: center;
