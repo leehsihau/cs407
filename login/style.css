@@ -24,6 +24,10 @@ body {
   margin: 0 auto;
 }
 
+.forgotPassword{
+  margin-top: 15px;
+}
+
 ul.login-list {
   list-style-type: none;
   text-align: center;
