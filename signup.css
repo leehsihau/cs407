@@ -3,12 +3,29 @@ body{
     width: 100%;
 }
 
-.p-map, .m-map, .filesumbit{
+.filesumbit{
     display: flex;
     flex-direction: row;
 }
 
+.privacy-wrapper {
+    display: flex;
+    flex-direction: row;
+}
 
+.question-wrapper, .checkbox-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.question-wrapper {
+    float: left;
+}
+
+.checkbox-wrapper {
+    padding-left: 10px;
+    float: right;
+}
 
 .diet-pref{
     text-align: center;
