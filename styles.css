@@ -49,7 +49,7 @@ ul.login-list li input[type="password"]{
     padding: 6px 0px;
 }
 
-ul.login-list li input[type="button"]{
+ul.login-list li input[type="submit"]{
     width: 455px;
     height: 37px;
     margin: 7px 0px 7px 0px;
