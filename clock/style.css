@@ -1,0 +1,45 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  background: white;
+}
+
+.main {
+  background: #ccc;
+  width: 450px;
+  height: 175px;
+  margin: 100px auto;
+  position: relative;
+  padding: 30px;
+}
+
+.badge {
+  width: 96px;
+  background: green;
+  color: white;
+  padding: 5px 10px;
+  font-family: sans-serif;
+  font-weight: bold;
+  position: absolute;
+  top: -15px;
+  left: 40%;
+}
+.clock {
+  background: #ebebeb;
+  text-align: center;
+  font-size: 55px;
+  height: 100%;
+  padding-top: 35px;
+  font-family: Orbitron;
+}
+
+.date {
+  background: #ebebeb;
+  text-align: center;
+  font-size: 19px;
+  padding-top: 3px;
+  font-family: Orbitron;
+}
