@@ -270,9 +270,9 @@ function loadProfilePics() {
         var childData = childSnapshot.val();
         var pos = childData['pos'];
         if (profilePics[childKey] != undefined) {
+          console.log(profilePics[childKey]);
           gmarkers.get(childKey).setMap(null);
           gmarkers.delete(childKey);
-          console.log("shabi", google.maps.SymbolPath.CIRCLE);
           var marker = new google.maps.Marker({
             position: pos,
             icon: {
@@ -320,7 +320,16 @@ function loadLocations() {
         var pos = childData['pos'];
         var marker = new google.maps.Marker({
           position: pos,
-          title: childKey
+          icon: {
+            url: profilePics[childKey],
+            scaledSize: new google.maps.Size(49, 40)
+          },
+
+
+          id: "profilePic",
+          title: childKey,
+          optimized: false
+
         });
         marker.setMap(map);
         gmarkers.set(childKey, marker);
