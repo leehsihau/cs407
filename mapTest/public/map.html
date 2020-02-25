@@ -22,23 +22,77 @@
 </head>
 
 <body>
-  <div id="signout">
-    <button id="signout">
-      Sign out
-    </button>
-  </div>
-  <div id="upload profile pic">
-    <form id="image-form" action="#">
-      <input id="mediaCapture" type="file" accept="image/*" capture="camera">
-      <button id="submitImage" title="Add an image"
-        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
-        <i class="material-icons">image</i>
-      </button>
-    </form>
-  </div>
-  <div class="container">
-    <h1>Live Device Location</h1>
-    <div id="map-canvas" style="width:600px;height:400px">map div</div>
+  <div class="signup-page">
+    <div class="background-left"></div>
+    <div class="left-side">
+      <div id="signout">
+        <button id="signout">
+          Sign out
+        </button>
+      </div>
+      <div class="container">
+        <h1>Live Device Location</h1>
+        <div id="map-canvas" style="width:600px;height:400px">map div</div>
+      </div>
+    </div>
+    <div class="right-side">
+      <h2 class="diet-pref">Diet Preferences</h2>
+      <div class="diet-wrapper">
+
+        <label for="weight-update">Current Weight</label>
+        <input type="text" id="weight-update" class="weight-text">
+
+        <br>
+        <div>Height</div>
+        <div class="height-wrapper">
+
+          <input type="text" class="height-ft">
+          <div>ft.</div>
+          <input type="text" class="height-in">
+          <div>in.</div>
+        </div>
+        <br>
+        <div>Would you like to gain weight, lose weight, or neither?</div>
+
+        <div class="gain-lose">
+          <input type="radio" id="gain" name="diet" value="gain">
+          <label for="gain">Gain</label><br>
+          <input type="radio" id="lose" name="diet" value="lose">
+          <label for="lose">Lose</label><br>
+          <input type="radio" id="neither" name="diet" value="neither">
+          <label for="neither">Neither</label>
+        </div>
+        <br>
+        <div id="upload profile pic">
+          <form id="image-form" action="#">
+            <input id="mediaCapture" type="file" accept="image/*" capture="camera">
+            <button id="submitImage" title="Add an image"
+              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+              <i class="material-icons">image</i>
+            </button>
+          </form>
+        </div>
+        <br>
+        <div class="privacy-wrapper">
+          <div class="question-wrapper">
+            <div class="question">
+              <div>Allow other users to see you on the map</div>
+              <input type="checkbox" class="q-box">
+            </div>
+            <div class="question">
+              <div>Allow other users to message you</div>
+              <input type="checkbox" class="q-box">
+            </div>
+            <div class="question">
+              <div>Allow other users to see your profile</div>
+              <input type="checkbox" class="q-box">
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="background-right"></div>
   </div>
   <script src="script.js"></script>
 
