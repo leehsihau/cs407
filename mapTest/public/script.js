@@ -459,3 +459,34 @@ imageButtonElement.addEventListener('click', function (e) {
   mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener('change', onMediaFileSelected);
+
+/* Code for submitting diet preferences */
+
+function dietSubmitHandler(){
+
+//Current weight in pounds
+var currentWeight = document.getElementById('weight-update');
+
+if(currentWeight.value != null){
+  
+}
+
+
+//Weight radio buttons
+
+var gainWeight = document.getElementById('gain');
+var loseWeight = document.getElementById('lose');
+var neitherWeight = document.getElementById('neither');
+var selectedWeightButton;
+
+if(gainWeight.checked == true){
+  selectedWeightButton = gainWeight;
+}
+else if(loseWeight.checked == true){
+  selectedWeightButton = loseWeight;
+}
+else{
+  selectedWeightButton = neitherWeight;
+}
+
+}
