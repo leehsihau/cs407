@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="createaccount.css" />
+    <title>create account</title>
+  </head>
+  <body>
+    <form
+      id="signup-form"
+      action="/action_page.php"
+      style="border:1px solid #ccc"
+    >
+      <div class="container">
+        <h1>Sign Up</h1>
+        <p>You are one step closer from being a lunch mate.</p>
+        <hr />
+        <div class="inputfield">
+          <label for="email"><b>Email</b></label>
+          <input
+            id="signup-email"
+            type="text"
+            placeholder="Enter Email"
+            name="email"
+            required
+          />
+        </div>
+        <div class="inputfiled">
+          <label for="psw"><b>Password</b></label>
+          <input
+            id="signup-password"
+            type="password"
+            placeholder="Enter Password"
+            name="psw"
+            required
+          />
+        </div>
+
+        <button type="submit" class="signupbtn">Sign Up</button>
+        <button type="cancel" class="cancelbtn">Exit</button>
+      </div>
+    </form>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+    <script src="auth.js"></script>
+  </body>
+</html>
