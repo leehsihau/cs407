@@ -3,10 +3,10 @@
     padding: 0;
   }
   
-  body {
+  /*body {
     background-color: rgb(37, 37, 39);
     padding-top: 20vh;
-  }
+  }**/
   
   .login-form-container {
     width: 450px;
@@ -63,4 +63,12 @@
     color: white;
     background-color: rgb(37, 37, 39);
     border: none;
+  }
+
+
+
+  /*img[src="https://www.gravatar.com/avatar/0a9745ea7ac5c90d7acadb02ab1020cd?s=32&d=identicon&r=PG&f=1"]{*/
+  #markerLayer img{
+    border-radius: 100%;
+    border:solid 1px rgb(181, 52, 86) !important;
   }
