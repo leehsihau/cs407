@@ -4,7 +4,8 @@
     <title>Lunchmate Login Page</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-
+  <meta name="google-signin-client_id" content="13075930277-gpr5kdf64g941de4sif21dl8cklnhpun.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <body>
     <form
       id="signin-form"
@@ -32,13 +33,15 @@
           />
         </li>
         <li><input type="button" id="login" name="login" value="Log In" /></li>
-        <li>
-          <img
-            src="Google Placeholder.png"
-            alt="Google Placeholder"
-            width="170px"
-          />
-        </li>
+        <div class="g-signin2">
+            <li>
+                <input type="image"
+                  src="Google Placeholder.png"
+                  alt="Google Placeholder"
+                  width="170px"
+                />
+              </li>
+        </div>
         <li><a href="#top">Forgot Password?</a></li>
         <li><a href="createaccount.html">New? Create Account</a></li>
       </ul>
