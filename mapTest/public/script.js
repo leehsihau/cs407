@@ -47,33 +47,21 @@ if (window.location.pathname == '/index.html' || window.location.pathname == "/"
   });
 }
 
-//google login
-let signinForm = document.querySelectorAll("#signin-form");
-signinForm = addEventListener("image", e => {
-  e.preventDefault();
-  var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider).then(function(result) {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = result.credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    console.log("google");
+//forget password
+if (window.location.pathname == '/index.html' || window.location.pathname == "/") {
+
+  let forgetForm = document.querySelectorAll("#forget-form");
+  forgetForm = document.getElementById("forgetPassword").addEventListener("click", e => {
+    console.log("forget")
+    e.preventDefault();
+    const email = document.getElementById("signin-email").value;
+    auth.sendPasswordResetEmail(email).then(cred1 => {
+      console.log(cred1.user);
       window.location = '/map.html';
-    // ...
-  }).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // The email of the user's account used.
-    var email = error.email;
-    // The firebase.auth.AuthCredential type that was used.
-    var credential = error.credential;
-    // ...
+    });
   });
-});
-
+}
 //sign out
-
 function signOut() {
   let uid = getCurrentUserId();
   firebase.auth().signOut().then(function () {
