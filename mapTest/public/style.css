@@ -3,21 +3,26 @@
     padding: 0;
   }
   
-body {
-  height: 100%;
-}
-
 .signup-page {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
 
-.allergen-list {
+.allergen-wrapper {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+.allergens-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+}
+
+
 
 .left-side, .right-side {
   width: 30%;
@@ -31,6 +36,10 @@ body {
   overflow: hidden;
 }
 
+h3 {
+  text-align: center;
+}
+
 .right-side {
   padding-left: 30px;
   padding-top: 5%;
@@ -39,9 +48,9 @@ body {
 }
 
 .background-left, .background-right {
-  width: 20%;
+  width: 15%;
   background-color: lightsteelblue;
-  height: 5000px;
+  height: 100vh;
   overflow: hidden;
 }
 

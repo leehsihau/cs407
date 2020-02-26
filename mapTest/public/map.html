@@ -38,14 +38,11 @@
     <div class="right-side">
       <h2 class="diet-pref">Diet Preferences</h2>
       <div class="diet-wrapper">
-
         <label for="weight-update">Current Weight</label>
         <input type="text" id="weight-update" class="weight-text">
-
         <br>
         <div>Height</div>
         <div class="height-wrapper">
-
           <input type="text" id="height-ft" class="height-ft">
           <div>ft.</div>
           <input type="text" id="height-in" class="height-in">
@@ -53,7 +50,6 @@
         </div>
         <br>
         <div>Would you like to gain weight, lose weight, or neither?</div>
-
         <div class="gain-lose">
           <input type="radio" id="gain" name="diet" value="gain">
           <label for="gain">Gain</label><br>
@@ -89,24 +85,56 @@
             </div>
             <br>
             <br>
-
             <div class='allergens-list'>
-            <h3>Allergens</h3>
-              <input type="checkbox" id="allergen0" name="allergen0" value="Eggs"><label for="allergen0">Eggs</label><br>
-              <input type="checkbox" id="allergen1" name="allergen1" value="Fish"><label for="allergen1">Fish</label><br>
-              <input type="checkbox" id="allergen2" name="allergen2" value="Gluten"><label for="allergen2">Gluten</label><br>
-              <input type="checkbox" id="allergen3" name="allergen3" value="Milk"><label for="allergen3">Milk</label><br>
-              <input type="checkbox" id="allergen4" name="allergen4" value="Peanuts"><label for="allergen4">Peanuts</label><br>
-              <input type="checkbox" id="allergen5" name="allergen5" value="Shellfish"><label for="allergen5">Shellfish</label><br>
-              <input type="checkbox" id="allergen6" name="allergen6" value="Soy"><label for="allergen6">Soy</label><br>
-              <input type="checkbox" id="allergen7" name="allergen7" value="Tree Nuts"><label for="allergen7">Tree Nuts</label><br>
-              <input type="checkbox" id="allergen8" name="allergen8" value="Vegetarian"><label for="allergen8">Vegetarian</label><br>
-              <input type="checkbox" id="allergen9" name="allergen9" value="Vegan"><label for="allergen9">Vegan</label><br>
-              <input type="checkbox" id="allergen10" name="allergen10" value="Wheat"><label for="allergen10">Wheat</label><br><br>
-              <input type="button" class='allergen-button' onclick="addAllergens()" value="Submit Allergens">
+              <h3>Allergens</h3>
+              <div class='allergen-wrapper'>
+                <label for="allergen0">Eggs</label>
+                <input type="checkbox" id="allergen0" name="allergen0" value="Eggs">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen1">Fish</label>
+                <input type="checkbox" id="allergen1" name="allergen1" value="Fish">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen2">Gluten</label>
+                <input type="checkbox" id="allergen2" name="allergen2" value="Gluten">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen3">Milk</label>
+                <input type="checkbox" id="allergen3" name="allergen3" value="Milk">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen4">Peanuts</label>
+                <input type="checkbox" id="allergen4" name="allergen4" value="Peanuts">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen5">Shellfish</label>
+                <input type="checkbox" id="allergen5" name="allergen5" value="Shellfish">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen6">Soy</label>
+                <input type="checkbox" id="allergen6" name="allergen6" value="Soy">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen7">Tree Nuts</label>
+                <input type="checkbox" id="allergen7" name="allergen7" value="Tree Nuts">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen8">Vegetarian</label>
+                <input type="checkbox" id="allergen8" name="allergen8" value="Vegetarian">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen9">Vegan</label>
+                <input type="checkbox" id="allergen9" name="allergen9" value="Vegan">
+              </div>
+              <div class='allergen-wrapper'>
+                <label for="allergen10">Wheat</label>
+                <input type="checkbox" id="allergen10" name="allergen10" value="Wheat">
+              </div>
+
             </div>
-        
-           <br>
+            <input type="button" class='allergen-button' onclick="addAllergens()" value="Submit Allergens">
+            <br>
             <input type="button" id="diet-submit" onclick="dietSubmitHandler()" value="Submit All"></button>
           </div>
         </div>
