@@ -469,15 +469,15 @@ function dietSubmitHandler() {
   console.log(currentWeight.value);
   console.log(currentHeightFt.value);
   if (currentWeight.value != "") {
-    if(currentHeightFt.value != "" && currentHeightIn.value != ""){
-      bmi = 703 * (parseInt(currentWeight.value)/Math.pow((parseInt(currentHeightIn.value)+(parseInt(currentHeightFt.value)*12)), 2));
+    if (currentHeightFt.value != "" && currentHeightIn.value != "") {
+      bmi = 703 * (parseInt(currentWeight.value) / Math.pow((parseInt(currentHeightIn.value) + (parseInt(currentHeightFt.value) * 12)), 2));
       window.alert("Current BMI: " + bmi.toString());
     }
-    else{
+    else {
       window.alert("Not enough information to calculate BMI")
     }
   }
-  else{
+  else {
     window.alert("Not enough information to calculate BMI")
   }
 
@@ -516,7 +516,7 @@ function dietSubmitHandler() {
 
 /* Allergen list */
 
-function addAllergens(){
+function addAllergens() {
   let uid = getCurrentUserId();
   const db = firebase.database();
   /**
@@ -524,223 +524,22 @@ function addAllergens(){
   firebase.database().ref('/userAllergens/'+uid).push(teststring);
   */
   //const allergen = document.getElementById('allergen0');
-  if(document.getElementById('allergen0').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("eggs")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("eggs")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
+  var allergens = new Array();
+
+  for (let i = 0; i < 11; i++) {
+    var current = 'allergen' + i.toString();
+    if (document.getElementById(current).checked) {
+      allergens.push(document.getElementById(current).value);
+    }
   }
 
-  if(document.getElementById('allergen1').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("fish")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("fish")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
+  console.log(allergens);
 
-  if(document.getElementById('allergen2').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("gluten")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("gluten")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
-
-  if(document.getElementById('allergen3').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("milk")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("milk")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
-
-  if(document.getElementById('allergen4').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("peanuts")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("peanuts")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
-
-  if(document.getElementById('allergen5').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("shellfish")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("shellfish")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
-
-  if(document.getElementById('allergen6').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("soy")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("soy")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
-
-  if(document.getElementById('allergen7').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("tree nuts")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("tree nuts")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
-
-  if(document.getElementById('allergen8').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("vegetarian")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("vegetarian")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
-
-  if(document.getElementById('allergen9').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("vegan")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("vegan")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
-
-  if(document.getElementById('allergen10').checked) {
-    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
-    //db.ref(''+uid).add();//TODO
-     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayUnion("wheat")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  } else {
-    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
-        uid: getCurrentUserId(),
-        timestamp: dateString,
-        allergens: firebase.firestore.FieldValue.arrayRemove("wheat")
-      }).catch(function (error) {
-        console.log("error: " + error);
-      });
-  }
+  firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+    uid: getCurrentUserId(),
+    timestamp: dateString,
+    allergens: allergens
+  }).catch(function (error) {
+    console.log("error: " + error);
+  });
 }
