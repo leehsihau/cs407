@@ -18,13 +18,16 @@ signupForm = addEventListener("submit", e => {
   const email = document.getElementById("signup-email").value;
   const password = document.getElementById("signup-password").value;
 
+  if (!password.match(/[a-zA-Z0-9]/)) {
+    alert("contains special character");
+    return;
+  }
+
   auth.createUserWithEmailAndPassword(email, password).catch(function(err) {
     alert(err.message);
     // close the signup modal & reset form
 
-    auth.signInWithEmailAndPassword(email, password).catch(function(err) {
-      alert(err.message);
-    });
+    auth.signInWithEmailAndPassword(email, password).catch(function(err) {});
   });
 });
 
