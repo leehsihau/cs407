@@ -29,6 +29,18 @@ signupForm = addEventListener("submit", e => {
   });
 });
 
+//forget password
+let forgetForm = document.querySelectorAll("#forget-form");
+forgetForm = document.getElementById("submit").addEventListener("click", e => {
+  console.log("forget")
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  auth.sendPasswordResetEmail(email).then(cred1 => {
+    console.log(cred1.user);
+    alert("Reset password email has been sent to your email address!");
+    window.location = '/index.html';
+  });
+});
 
 //sign in
 if (window.location.pathname == '/index.html' || window.location.pathname == "/") {
@@ -47,20 +59,6 @@ if (window.location.pathname == '/index.html' || window.location.pathname == "/"
   });
 }
 
-//forget password
-if (window.location.pathname == '/index.html' || window.location.pathname == "/") {
-
-  let forgetForm = document.querySelectorAll("#forget-form");
-  forgetForm = document.getElementById("forgetPassword").addEventListener("click", e => {
-    console.log("forget")
-    e.preventDefault();
-    const email = document.getElementById("signin-email").value;
-    auth.sendPasswordResetEmail(email).then(cred1 => {
-      console.log(cred1.user);
-      window.location = '/map.html';
-    });
-  });
-}
 //sign out
 function signOut() {
   let uid = getCurrentUserId();
