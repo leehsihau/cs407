@@ -19,10 +19,15 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 50%;
+  align-self: center;
 }
 
-
+.allergen-wrapper input {
+  margin-top: 3px;
+  margin-right: 3px;
+  margin-left: 60px;
+  margin-bottom: 3px;
+}
 
 .left-side, .right-side {
   width: 30%;
