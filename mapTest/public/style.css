@@ -13,6 +13,12 @@ body {
   justify-content: space-evenly;
 }
 
+.allergen-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .left-side, .right-side {
   width: 30%;
 }
@@ -22,6 +28,7 @@ body {
   padding-top: 5%;
   padding-right: 30px;
   background-color: white;
+  overflow: hidden;
 }
 
 .right-side {
@@ -35,6 +42,7 @@ body {
   width: 20%;
   background-color: lightsteelblue;
   height: 5000px;
+  overflow: hidden;
 }
 
   /*body {

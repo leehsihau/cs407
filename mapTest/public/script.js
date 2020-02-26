@@ -217,29 +217,29 @@ function saveImageMessage(file) {
 
 
 
-/*
-  firebase.firestore().collection('usersProfilePics').doc(getCurrentUserId()).set({
-    uid: getCurrentUserId(),
-    timestamp: dateString
-  }).then(function (messageRef) {
-    // 2 - Upload the image to Cloud Storage.
-    var filePath = firebase.auth().currentUser.uid + '/' + file.name;
-    return firebase.storage().ref(filePath).put(file).then(function (fileSnapshot) {
-      // 3 - Generate a public URL for the file.
-      return fileSnapshot.ref.getDownloadURL().then((url) => {
-        // 4 - Update the chat message placeholder with the image’s URL.
-        return messageRef.update({
-          imageUrl: url,
-          storageUri: fileSnapshot.metadata.fullPath
-        }).catch(function (error) {
-          console.log("error: " + error);
+  /*
+    firebase.firestore().collection('usersProfilePics').doc(getCurrentUserId()).set({
+      uid: getCurrentUserId(),
+      timestamp: dateString
+    }).then(function (messageRef) {
+      // 2 - Upload the image to Cloud Storage.
+      var filePath = firebase.auth().currentUser.uid + '/' + file.name;
+      return firebase.storage().ref(filePath).put(file).then(function (fileSnapshot) {
+        // 3 - Generate a public URL for the file.
+        return fileSnapshot.ref.getDownloadURL().then((url) => {
+          // 4 - Update the chat message placeholder with the image’s URL.
+          return messageRef.update({
+            imageUrl: url,
+            storageUri: fileSnapshot.metadata.fullPath
+          }).catch(function (error) {
+            console.log("error: " + error);
+          });
         });
       });
+    }).catch(function (error) {
+      console.error('There was an error uploading a file to Cloud Storage:', error);
     });
-  }).catch(function (error) {
-    console.error('There was an error uploading a file to Cloud Storage:', error);
-  });
-*/
+  */
 }
 
 
@@ -346,9 +346,6 @@ function loadLocations() {
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     console.log("uid: ", firebase.auth().currentUser.uid);
-
-
-
 
     if (navigator.geolocation) {
       console.log("jin")
@@ -462,31 +459,288 @@ mediaCaptureElement.addEventListener('change', onMediaFileSelected);
 
 /* Code for submitting diet preferences */
 
-function dietSubmitHandler(){
+function dietSubmitHandler() {
 
-//Current weight in pounds
-var currentWeight = document.getElementById('weight-update');
+  //Current weight in pounds
+  var currentWeight = document.getElementById('weight-update');
+  var currentHeightFt = document.getElementById('height-ft');
+  var currentHeightIn = document.getElementById('height-in');
+  var bmi;
+  console.log(currentWeight.value);
+  console.log(currentHeightFt.value);
+  if (currentWeight.value != "") {
+    if(currentHeightFt.value != "" && currentHeightIn.value != ""){
+      bmi = 703 * (parseInt(currentWeight.value)/Math.pow((parseInt(currentHeightIn.value)+(parseInt(currentHeightFt.value)*12)), 2));
+      window.alert("Current BMI: " + bmi.toString());
+    }
+    else{
+      window.alert("Not enough information to calculate BMI")
+    }
+  }
+  else{
+    window.alert("Not enough information to calculate BMI")
+  }
 
-if(currentWeight.value != null){
-  
+  //Weight radio buttons
+
+  var gainWeight = document.getElementById('gain');
+  var loseWeight = document.getElementById('lose');
+  var neitherWeight = document.getElementById('neither');
+  var selectedWeightButton;
+
+  if (gainWeight.checked == true) {
+    selectedWeightButton = gainWeight;
+  }
+  else if (loseWeight.checked == true) {
+    selectedWeightButton = loseWeight;
+  }
+  else {
+    selectedWeightButton = neitherWeight;
+  }
+
+  console.log(selectedWeightButton);
+
+  //TODO: Add privacy checkboxes
+
+  firebase.firestore().collection('userSettings').doc(getCurrentUserId()).update({
+    uid: getCurrentUserId(),
+    weight: currentWeight.value,
+    heightFt: currentHeightFt.value,
+    heightIn: currentHeightIn.value,
+    bmi: bmi,
+    gainLose: selectedWeightButton.value
+  }).catch(function (error) {
+    console.log("error: " + error);
+  });
 }
 
+/* Allergen list */
 
-//Weight radio buttons
+function addAllergens(){
+  let uid = getCurrentUserId();
+  const db = firebase.database();
+  /**
+  String teststring = "hello";
+  firebase.database().ref('/userAllergens/'+uid).push(teststring);
+  */
+  //const allergen = document.getElementById('allergen0');
+  if(document.getElementById('allergen0').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("eggs")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("eggs")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
 
-var gainWeight = document.getElementById('gain');
-var loseWeight = document.getElementById('lose');
-var neitherWeight = document.getElementById('neither');
-var selectedWeightButton;
+  if(document.getElementById('allergen1').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("fish")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("fish")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
 
-if(gainWeight.checked == true){
-  selectedWeightButton = gainWeight;
-}
-else if(loseWeight.checked == true){
-  selectedWeightButton = loseWeight;
-}
-else{
-  selectedWeightButton = neitherWeight;
-}
+  if(document.getElementById('allergen2').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("gluten")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("gluten")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
 
+  if(document.getElementById('allergen3').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("milk")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("milk")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen4').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("peanuts")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("peanuts")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen5').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("shellfish")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("shellfish")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen6').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("soy")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("soy")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen7').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("tree nuts")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("tree nuts")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen8').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("vegetarian")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("vegetarian")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen9').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("vegan")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("vegan")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen10').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("wheat")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("wheat")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
 }

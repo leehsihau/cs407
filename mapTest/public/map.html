@@ -46,9 +46,9 @@
         <div>Height</div>
         <div class="height-wrapper">
 
-          <input type="text" class="height-ft">
+          <input type="text" id="height-ft" class="height-ft">
           <div>ft.</div>
-          <input type="text" class="height-in">
+          <input type="text" id="height-in" class="height-in">
           <div>in.</div>
         </div>
         <br>
@@ -87,8 +87,27 @@
               <div>Allow other users to see your profile</div>
               <input type="checkbox" class="q-box">
             </div>
+            <br>
+            <br>
+
+            <div class='allergens-list'>
+            <h3>Allergens</h3>
+              <input type="checkbox" id="allergen0" name="allergen0" value="Eggs"><label for="allergen0">Eggs</label><br>
+              <input type="checkbox" id="allergen1" name="allergen1" value="Fish"><label for="allergen1">Fish</label><br>
+              <input type="checkbox" id="allergen2" name="allergen2" value="Gluten"><label for="allergen2">Gluten</label><br>
+              <input type="checkbox" id="allergen3" name="allergen3" value="Milk"><label for="allergen3">Milk</label><br>
+              <input type="checkbox" id="allergen4" name="allergen4" value="Peanuts"><label for="allergen4">Peanuts</label><br>
+              <input type="checkbox" id="allergen5" name="allergen5" value="Shellfish"><label for="allergen5">Shellfish</label><br>
+              <input type="checkbox" id="allergen6" name="allergen6" value="Soy"><label for="allergen6">Soy</label><br>
+              <input type="checkbox" id="allergen7" name="allergen7" value="Tree Nuts"><label for="allergen7">Tree Nuts</label><br>
+              <input type="checkbox" id="allergen8" name="allergen8" value="Vegetarian"><label for="allergen8">Vegetarian</label><br>
+              <input type="checkbox" id="allergen9" name="allergen9" value="Vegan"><label for="allergen9">Vegan</label><br>
+              <input type="checkbox" id="allergen10" name="allergen10" value="Wheat"><label for="allergen10">Wheat</label><br><br>
+              <input type="button" class='allergen-button' onclick="addAllergens()" value="Submit Allergens">
+            </div>
+        
            <br>
-            <button id="diet-submit" onclick="dietSubmitHandler()"></button>
+            <input type="button" id="diet-submit" onclick="dietSubmitHandler()" value="Submit All"></button>
           </div>
         </div>
       </div>
