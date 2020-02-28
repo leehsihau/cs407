@@ -21,14 +21,35 @@ signupForm = addEventListener("submit", e => {
   e.preventDefault();
   const email = document.getElementById("signup-email").value;
   const password = document.getElementById("signup-password").value;
-
+  if (!password.match(/[a-zA-Z0-9]/)) {
+    alert("contains special character");
+    window.location('./createaccount.html')
+  }
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
     console.log(cred.user);
     window.location = "./map.html";
     // close the signup modal & reset form
+  }).catch(function (err){
+    alert(err)
   });
 });
 
+//forget password
+if (window.location.pathname == '/forgetpassword.html') {
+
+let forgetForm = document.querySelectorAll("#forget-form");
+forgetForm = document.getElementById("submit_forget").addEventListener("click", e => {
+  console.log("forget")
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  console.log("email: ", email);
+  auth.sendPasswordResetEmail(email).then(cred1 => {
+    //console.log(cred1.user);
+    alert("Reset password email has been sent to your email address!");
+    //window.location = './index.html';
+  });
+});
+}
 
 //sign in
 if (window.location.pathname == '/index.html' || window.location.pathname == "/") {
@@ -46,6 +67,38 @@ if (window.location.pathname == '/index.html' || window.location.pathname == "/"
     });
   });
 }
+
+//sign in google
+//google login
+if (window.location.pathname == '/index.html' || window.location.pathname == "/") {
+
+var signInButtonElement = document.getElementById('sign-in');
+signInButtonElement.addEventListener('click', signInGoogle);
+function signInGoogle(){
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        console.log("google");
+          window.location = '/map.html';
+        // ...
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+  }
+  
+    
+}
+
 //sign out
 
 function signOut() {
@@ -459,3 +512,100 @@ imageButtonElement.addEventListener('click', function (e) {
   mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener('change', onMediaFileSelected);
+
+function dietSubmitHandler() {
+
+  //Current weight in pounds
+  var currentWeight = document.getElementById('weight-update');
+  var currentHeightFt = document.getElementById('height-ft');
+  var currentHeightIn = document.getElementById('height-in');
+  var bmi;
+  console.log(currentWeight.value);
+  console.log(currentHeightFt.value);
+  if (currentWeight.value != "") {
+    if(currentHeightFt.value != "" && currentHeightIn.value != ""){
+      bmi = 703 * (parseInt(currentWeight.value)/Math.pow((parseInt(currentHeightIn.value)+(parseInt(currentHeightFt.value)*12)), 2));
+      window.alert("Current BMI: " + bmi.toString());
+    }
+    else{
+      window.alert("Not enough information to calculate BMI")
+    }
+  }
+  else{
+    window.alert("Not enough information to calculate BMI")
+  }
+
+  //Weight radio buttons
+
+  var gainWeight = document.getElementById('gain');
+  var loseWeight = document.getElementById('lose');
+  var neitherWeight = document.getElementById('neither');
+  var selectedWeightButton;
+
+  if (gainWeight.checked == true) {
+    selectedWeightButton = gainWeight;
+  }
+  else if (loseWeight.checked == true) {
+    selectedWeightButton = loseWeight;
+  }
+  else {
+    selectedWeightButton = neitherWeight;
+  }
+
+  console.log(selectedWeightButton);
+
+  //TODO: Add privacy checkboxes
+
+  firebase.firestore().collection('userSettings').doc(getCurrentUserId()).set({
+    uid: getCurrentUserId(),
+    weight: currentWeight.value,
+    heightFt: currentHeightFt.value,
+    heightIn: currentHeightIn.value,
+    bmi: bmi,
+    gainLose: selectedWeightButton.value
+  }).catch(function (error) {
+    console.log("error: " + error);
+  });
+}
+
+/* Allergen list */
+
+/* Allergen list */
+
+function addAllergens() {
+  let uid = getCurrentUserId();
+  const db = firebase.database();
+  /**
+  String teststring = "hello";
+  firebase.database().ref('/userAllergens/'+uid).push(teststring);
+  */
+  //const allergen = document.getElementById('allergen0');
+  var allergens = new Array();
+
+  for (let i = 0; i < 11; i++) {
+    var current = 'allergen' + i.toString();
+    if (document.getElementById(current).checked) {
+      allergens.push(document.getElementById(current).value);
+    }
+  }
+
+  console.log(allergens);
+  var currentDate = new Date();
+        var mili = currentDate.getMilliseconds();
+        var seconds = currentDate.getSeconds();
+        var minutes = currentDate.getMinutes();
+        var hours = currentDate.getHours();
+        var date = currentDate.getDate();
+        var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+        var year = currentDate.getFullYear();
+
+        var dateString = mili + "-" + seconds + "-" + minutes + "-" + hours + "-" + date + "-" + (month + 1) + "-" + year;
+
+  firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+    uid: getCurrentUserId(),
+    timestamp: dateString,
+    allergens: allergens
+  }).catch(function (error) {
+    console.log("error: " + error);
+  });
+}
