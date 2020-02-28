@@ -21,14 +21,35 @@ signupForm = addEventListener("submit", e => {
   e.preventDefault();
   const email = document.getElementById("signup-email").value;
   const password = document.getElementById("signup-password").value;
-
+  if (!password.match(/[a-zA-Z0-9]/)) {
+    alert("contains special character");
+    window.location('./createaccount.html')
+  }
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
     console.log(cred.user);
     window.location = "./map.html";
     // close the signup modal & reset form
+  }).catch(function (err){
+    alert(err)
   });
 });
 
+//forget password
+if (window.location.pathname == '/forgetpassword.html') {
+
+let forgetForm = document.querySelectorAll("#forget-form");
+forgetForm = document.getElementById("submit_forget").addEventListener("click", e => {
+  console.log("forget")
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  console.log("email: ", email);
+  auth.sendPasswordResetEmail(email).then(cred1 => {
+    //console.log(cred1.user);
+    alert("Reset password email has been sent to your email address!");
+    //window.location = './index.html';
+  });
+});
+}
 
 //sign in
 if (window.location.pathname == '/index.html' || window.location.pathname == "/") {
@@ -46,6 +67,38 @@ if (window.location.pathname == '/index.html' || window.location.pathname == "/"
     });
   });
 }
+
+//sign in google
+//google login
+if (window.location.pathname == '/index.html' || window.location.pathname == "/") {
+
+var signInButtonElement = document.getElementById('sign-in');
+signInButtonElement.addEventListener('click', signInGoogle);
+function signInGoogle(){
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        console.log("google");
+          window.location = '/map.html';
+        // ...
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+  }
+  
+    
+}
+
 //sign out
 
 function signOut() {
@@ -459,3 +512,299 @@ imageButtonElement.addEventListener('click', function (e) {
   mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener('change', onMediaFileSelected);
+
+function dietSubmitHandler() {
+
+  //Current weight in pounds
+  var currentWeight = document.getElementById('weight-update');
+  var currentHeightFt = document.getElementById('height-ft');
+  var currentHeightIn = document.getElementById('height-in');
+  var bmi;
+  console.log(currentWeight.value);
+  console.log(currentHeightFt.value);
+  if (currentWeight.value != "") {
+    if(currentHeightFt.value != "" && currentHeightIn.value != ""){
+      bmi = 703 * (parseInt(currentWeight.value)/Math.pow((parseInt(currentHeightIn.value)+(parseInt(currentHeightFt.value)*12)), 2));
+      window.alert("Current BMI: " + bmi.toString());
+    }
+    else{
+      window.alert("Not enough information to calculate BMI")
+    }
+  }
+  else{
+    window.alert("Not enough information to calculate BMI")
+  }
+
+  //Weight radio buttons
+
+  var gainWeight = document.getElementById('gain');
+  var loseWeight = document.getElementById('lose');
+  var neitherWeight = document.getElementById('neither');
+  var selectedWeightButton;
+
+  if (gainWeight.checked == true) {
+    selectedWeightButton = gainWeight;
+  }
+  else if (loseWeight.checked == true) {
+    selectedWeightButton = loseWeight;
+  }
+  else {
+    selectedWeightButton = neitherWeight;
+  }
+
+  console.log(selectedWeightButton);
+
+  //TODO: Add privacy checkboxes
+
+  firebase.firestore().collection('userSettings').doc(getCurrentUserId()).set({
+    uid: getCurrentUserId(),
+    weight: currentWeight.value,
+    heightFt: currentHeightFt.value,
+    heightIn: currentHeightIn.value,
+    bmi: bmi,
+    gainLose: selectedWeightButton.value
+  }).catch(function (error) {
+    console.log("error: " + error);
+  });
+}
+
+/* Allergen list */
+
+function addAllergens(){
+  let uid = getCurrentUserId();
+  const db = firebase.database();
+  var currentDate = new Date();
+        var mili = currentDate.getMilliseconds();
+        var seconds = currentDate.getSeconds();
+        var minutes = currentDate.getMinutes();
+        var hours = currentDate.getHours();
+        var date = currentDate.getDate();
+        var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+        var year = currentDate.getFullYear();
+
+        var dateString = mili + "-" + seconds + "-" + minutes + "-" + hours + "-" + date + "-" + (month + 1) + "-" + year;
+  /**
+  String teststring = "hello";
+  firebase.database().ref('/userAllergens/'+uid).push(teststring);
+  */
+  //const allergen = document.getElementById('allergen0');
+  if(document.getElementById('allergen0').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("eggs")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("eggs")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen1').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("fish")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("fish")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen2').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("gluten")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("gluten")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen3').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("milk")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("milk")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen4').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("peanuts")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("peanuts")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen5').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("shellfish")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("shellfish")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen6').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("soy")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("soy")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen7').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("tree nuts")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("tree nuts")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen8').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("vegetarian")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("vegetarian")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen9').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("vegan")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("vegan")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+
+  if(document.getElementById('allergen10').checked) {
+    //firebase.database().ref('/userAllergens/'+uid).push(teststring);
+    //db.ref(''+uid).add();//TODO
+     firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayUnion("wheat")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  } else {
+    firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
+        uid: getCurrentUserId(),
+        timestamp: dateString,
+        allergens: firebase.firestore.FieldValue.arrayRemove("wheat")
+      }).catch(function (error) {
+        console.log("error: " + error);
+      });
+  }
+}

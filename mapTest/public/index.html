@@ -1,47 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Lunchmate Login Page</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
 
-  <body>
-    <form
-      id="signin-form"
-      action="/action_page.php"
-      style="border:1px solid #ccc"
-    >
+<head>
+  <title>Lunchmate Login Page</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="google-signin-client_id"
+    content="13075930277-gpr5kdf64g941de4sif21dl8cklnhpun.apps.googleusercontent.com">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</head>
+
+<body>
+  <form id="signin-form" action="/action_page.php" style="border:1px solid #ccc">
     <div class="login-form-container">
       <ul class="login-list">
         <li><img src="logo.png" alt="logo" width="175px" /></li>
         <li>
-          <input 
-                  id="signin-email"
-                  type="text" 
-                  name="username"
-                  placeholder="Username" 
-                  required />
+          <input id="signin-email" type="text" name="username" placeholder="Username" required />
         </li>
         <li>
-          <input
-            id="signin-password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
+          <input id="signin-password" type="password" name="password" placeholder="Password" required />
         </li>
         <li><input type="button" id="login" name="login" value="Log In" /></li>
         <li>
-          <img
-            src="Google Placeholder.png"
-            alt="Google Placeholder"
-            width="170px"
-          />
+            <button id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+              <i class="material-icons">account_circle</i>Sign-in with Google
+            </button>
         </li>
-        <li><a href="#top">Forgot Password?</a></li>
-        <li><a href="createaccount.html">New? Create Account</a></li>
-      </ul>
+        </li>
+    </div>
+    </li>
+    <li><a href="forgetpassword.html">Forgot Password?</a></li>
+    <li><a href="createaccount.html">New? Create Account</a></li>
+    </ul>
     </div>
   </form>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -74,5 +64,6 @@
   </script>
   <script src="script.js"></script>
 
-  </body>
+</body>
+
 </html>
