@@ -3,7 +3,27 @@
     padding: 0;
   }
 
-.flex-wrapper{
+  .flex-nav-bar{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      background: lightblue;
+      position: fixed;
+      width: 100%;
+  }
+
+  .flex-nav-bar a{
+      display: block;
+      color: white;
+      padding: 1em;
+      font-family: verdana;
+  }
+
+  .flex-nav-bar a:hover{
+      background: darkcyan;
+  }
+
+  .flex-wrapper{
     display: flex;
     flex-direction: row;
 }
@@ -26,6 +46,12 @@
     font-size: 14px;
     padding: 5px;
 }
+
+.search input[type=submit]{
+    margin-left: -56px;
+    cursor: pointer;
+}
+
 .friends{
     background: rosybrown;
     width: 300px;
