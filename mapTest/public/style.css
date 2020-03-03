@@ -111,8 +111,11 @@ ul.login-list li input[type="button"] {
 
 /*img[src="https://www.gravatar.com/avatar/0a9745ea7ac5c90d7acadb02ab1020cd?s=32&d=identicon&r=PG&f=1"]{*/
 #markerLayer img{
-  border-radius: 100%;
-  border:solid 1px rgb(181, 52, 86) !important;
+  border-radius: 100% !important;
+  border: 2px solid rgb(47, 172, 194) !important;
+        width: 85% !important;
+        height: 90% !important;
+        border-radius: 5px;
 }
 
 /* Added in styling from signup.css */

@@ -49,6 +49,12 @@ def getWholeMenus():
     firebase_ = firebase.FirebaseApplication('https://lunchmate-9b46b.firebaseio.com/', None)
     result = firebase_.delete('/wholeMenus', None)
     print('delete: '+str(result))
+
+    recommList = {}
+    recommList[0] = []
+    recommList[1] = []
+    recommList[2] = []
+    recommList[3] = []
     for courtName in courtNames:
         time = datetime.datetime.now()
         ftime = time.strftime("%m-%d-%Y")
@@ -81,8 +87,20 @@ def getWholeMenus():
                     #if calories is not 0:
                         #allergens = allergensOfItem(items[k])
                     items[k].update([('calories',calories)])
+
+                    items[k].update([('calories',calories)])
+                    if calories < 200:
+                        recommList[0].append(items[k])
+                    elif 200<calories < 300:
+                        recommList[1].append(items[k])
+                    elif 200<calories<500:
+                        recommList[2].append(items[k])
+                    elif 300<calories:
+                        recommList[3].append(items[k])
         dbName = '/wholeMenus/'+courtName
+        rcName = dbName+'/Recommendation'
         result = firebase_.post(dbName, data)
+        result = firebase_.post(rcName, recommList)
     browser.quit()
 
 def main():

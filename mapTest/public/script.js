@@ -601,7 +601,7 @@ function addAllergens() {
 
         var dateString = mili + "-" + seconds + "-" + minutes + "-" + hours + "-" + date + "-" + (month + 1) + "-" + year;
 
-  firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).update({
+  firebase.firestore().collection('userAllergensList').doc(getCurrentUserId()).set({
     uid: getCurrentUserId(),
     timestamp: dateString,
     allergens: allergens
