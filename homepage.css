@@ -79,3 +79,20 @@
 .map-container{
     align-self: center;
 }
+
+.main_clock{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.date{
+    margin-right: 30px;
+    margin-top: 20px;
+    line-height: 200%;
+}
+  
+.clock{
+    margin-top: 20px;
+    line-height: 200%;
+}
