@@ -1,7 +1,7 @@
-* {
+  *{
     margin: 0;
     padding: 0;
-  }
+   }
 
   .flex-nav-bar{
       display: flex;
@@ -26,7 +26,8 @@
   .flex-wrapper{
     display: flex;
     flex-direction: row;
-}
+    }
+
 
 .flex-social{
     display: flex;
@@ -40,6 +41,7 @@
 .search{
     align-self: center;
 }
+
 .search input[type=text]{
     width: 300px;
     font-family: verdana;
@@ -70,4 +72,9 @@
     margin: 20px;
     line-height: 250px;
     align-self: center;
+}
+
+.map-container{
+    align-self: center;
+    margin-left: 10%;
 }
