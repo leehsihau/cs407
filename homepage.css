@@ -5,7 +5,7 @@
 
   .flex-nav-bar{
       display: flex;
-      flex-direction: row;
+      flex-flow: row wrap;
       justify-content: space-between;
       background: lightblue;
       position: fixed;
@@ -17,6 +17,8 @@
       color: white;
       padding: 1em;
       font-family: verdana;
+      text-decoration: none;
+      line-height: 200%;
   }
 
   .flex-nav-bar a:hover{
@@ -34,7 +36,7 @@
     flex-direction: column;
     background: darkcyan;
     height: 100vh;
-    width: 60vh;
+    flex: 0 1 40%;
     justify-content: center;
 }
 
@@ -76,5 +78,4 @@
 
 .map-container{
     align-self: center;
-    margin-left: 10%;
 }
