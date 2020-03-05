@@ -1,35 +1,34 @@
-  *{
+*{
     margin: 0;
     padding: 0;
-   }
+}
 
-  .flex-nav-bar{
+.flex-nav-bar{
       display: flex;
       flex-flow: row wrap;
       justify-content: space-between;
       background: lightblue;
       position: fixed;
       width: 100%;
-  }
+}
 
-  .flex-nav-bar a{
+.flex-nav-bar a{
       display: block;
       color: white;
       padding: 1em;
       font-family: verdana;
       text-decoration: none;
       line-height: 200%;
-  }
+}
 
-  .flex-nav-bar a:hover{
+.flex-nav-bar a:hover{
       background: darkcyan;
-  }
+}
 
-  .flex-wrapper{
+.flex-wrapper{
     display: flex;
     flex-direction: row;
-    }
-
+}
 
 .flex-social{
     display: flex;
@@ -38,6 +37,7 @@
     height: 100vh;
     flex: 0 1 40%;
     justify-content: center;
+    margin-top: 68px;
 }
 
 .search{
