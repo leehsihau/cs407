@@ -393,6 +393,18 @@ function loadLocations() {
   });
 }
 
+function loadWholeMenus(){
+  var ref = firebase.database().ref("wholeMenus/Hillenbrand");
+  ref.once('value', function (snapshot_) {
+    snapshot_.forEach(function (childSnapshot) {
+      var childKey = childSnapshot.key;
+      var childData = childSnapshot.val();
+      if(childData['Date']!=undefined){
+        console.log("date: ", childData['Date']);
+      }
+    })
+  })
+}
 
 
 
@@ -609,3 +621,5 @@ function addAllergens() {
     console.log("error: " + error);
   });
 }
+getLocationAndUpload();
+loadWholeMenus();
