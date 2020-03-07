@@ -9,6 +9,7 @@
       justify-content: space-between;
       background: lightblue;
       position: fixed;
+      overflow: hidden;
       width: 100%;
 }
 
@@ -37,7 +38,7 @@
     height: 100vh;
     flex: 0 1 40%;
     justify-content: center;
-    margin-top: 68px;
+    /*margin-top: 68px;*/
 }
 
 .search{
@@ -76,7 +77,15 @@
     align-self: center;
 }
 
-.map-container{
+.flex-map-container{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    flex: 0 1 60%;
+    /*margin-top: 68px;*/
+}
+
+.map{
     align-self: center;
 }
 
