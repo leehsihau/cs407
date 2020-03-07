@@ -6,6 +6,7 @@
     </head>
 
     <body>
+        <!--
         <div class="flex-nav-bar">
             <img src="logo.png" alt="logo">
             <div class="search">
@@ -27,18 +28,39 @@
             </div>
             <a href="#">Settings</a>
         </div>
-        
+    -->
         <div class="flex-wrapper">
+                <div class="flex-nav-bar">
+                        <img src="logo.png" alt="logo">
+                        <div class="search">
+                                <input type="text" placeholder="Search">
+                                <input type="submit">
+                        </div>
+                        
+                        <div class="main_clock">
+                            <div class="date">
+                                <span id="weekday"></span>
+                                <span id="month"></span>
+                                <span id="day"></span>
+                            </div>
+                            <div class="clock">
+                                <span id="hour"></span>
+                                <span id="minute"></span>
+                                <span id="second"></span>
+                            </div>
+                        </div>
+                        <a href="#">Settings</a>
+                    </div>
             <div class="flex-social">
                 <div class="friends">
-                    Friends
+                    <h2>Friends</h2>
                 </div>
                 <div class="messages">
-                    Messages
+                    <h2>Messages</h2>
                 </div>
             </div>
             <div class="flex-map-container">
-                    <div class="map" id="map-canvas" style="width:700px;height:500px">map div</div>
+                    <div class="map" id="map-canvas" style="width:700px;height:500px"></div>
             </div>
         </div>
 

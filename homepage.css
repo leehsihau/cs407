@@ -9,6 +9,7 @@
       justify-content: space-between;
       background: lightblue;
       position: fixed;
+      top: 0;
       overflow: hidden;
       width: 100%;
 }
@@ -29,16 +30,21 @@
 .flex-wrapper{
     display: flex;
     flex-direction: row;
+    overflow: hidden;
 }
 
 .flex-social{
     display: flex;
     flex-direction: column;
-    background: darkcyan;
+    /*background: rgb(37, 37, 39);*/
+    background: whitesmoke;
     height: 100vh;
     flex: 0 1 40%;
     justify-content: center;
-    /*margin-top: 68px;*/
+    position: relative;
+    top: 68px;
+    overflow: hidden;
+    border-right: 2px solid gray;
 }
 
 .search{
@@ -58,35 +64,42 @@
 }
 
 .friends{
-    background: rosybrown;
-    width: 300px;
+    background: white;
+    width: 400px;
     height: 250px;
-    text-align: center;
     margin: 20px;
-    line-height: 250px;
+    margin-top: -20px;
     align-self: center;
+    border: 2px solid black;
+    border-radius: 5px;
 }
 
 .messages{
-    background: goldenrod;
-    width: 300px;
+    background: white;
+    width: 400px;
     height: 250px;
-    text-align: center;
     margin: 20px;
-    line-height: 250px;
     align-self: center;
+    border: 2px solid black;
+    border-radius: 5px;
 }
 
 .flex-map-container{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     height: 100vh;
     flex: 0 1 60%;
-    /*margin-top: 68px;*/
+    position: relative;
+    top: 68px;
+    overflow: hidden;
 }
 
 .map{
     align-self: center;
+    margin-top: -50px;
+    border: 2px solid black;
+    border-radius: 5px;
 }
 
 .main_clock{
