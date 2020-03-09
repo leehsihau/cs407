@@ -164,58 +164,129 @@ justify-content: space-between;
   align-items: center;
 }
 
+
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+.flex-nav-bar{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    background: lightblue;
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.flex-nav-bar a{
+    display: block;
+    color: white;
+    padding: 1em;
+    font-family: verdana;
+    text-decoration: none;
+    line-height: 200%;
+}
+
+.flex-nav-bar a:hover{
+    background: darkcyan;
+}
+
+.flex-wrapper{
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.flex-social{
+  display: flex;
+  flex-direction: column;
+  /*background: rgb(37, 37, 39);*/
+  background: whitesmoke;
+  height: 100vh;
+  flex: 0 1 40%;
+  justify-content: center;
+  position: relative;
+  top: 68px;
+  overflow: hidden;
+  border-right: 2px solid gray;
+}
+
+.search{
+  align-self: center;
+}
+
+.search input[type=text]{
+  width: 300px;
+  font-family: verdana;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.search input[type=submit]{
+  margin-left: -56px;
+  cursor: pointer;
+}
+
+.friends{
+  background: white;
+  width: 400px;
+  height: 250px;
+  margin: 20px;
+  /*margin-top: -20px*/
+  align-self: center;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.messages{
+  background: white;
+  width: 400px;
+  height: 250px;
+  margin: 20px;
+  align-self: center;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.flex-map-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  flex: 0 1 60%;
+  position: relative;
+  top: 68px;
+  overflow: hidden;
+}
+
+.map{
+  align-self: center;
+  /*margin-top: -50px;*/
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
 .main_clock{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  position: absolute;
-  left: 44%;
+
 }
 
 .date{
   margin-right: 30px;
   margin-top: 20px;
+  line-height: 200%;
 }
 
 .clock{
   margin-top: 20px;
+  line-height: 200%;
 }
 
-/*
-.main_clock {
-  background: #ccc;
-  width: 450px;
-  height: 175px;
-  margin: 100px auto;
-  position: relative;
-  padding: 30px;
+#mediaCapture {
+  display: none;
 }
-
-.badge {
-  width: 96px;
-  background: green;
-  color: white;
-  padding: 5px 10px;
-  font-family: sans-serif;
-  font-weight: bold;
-  position: absolute;
-  top: -15px;
-  left: 40%;
-}
-.clock {
-  background: #ebebeb;
-  text-align: center;
-  font-size: 55px;
-  height: 100%;
-  padding-top: 35px;
-  font-family: Orbitron;
-}
-
-.date {
-  background: #ebebeb;
-  text-align: center;
-  font-size: 19px;
-  padding-top: 3px;
-  font-family: Orbitron;
-}
-*/
