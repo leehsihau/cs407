@@ -111,7 +111,7 @@ if (
 //sign out
 function deleteUser() {
   var user = firebase.auth().currentUser;
-
+  signOut();
   user
     .delete()
     .then(function() {
