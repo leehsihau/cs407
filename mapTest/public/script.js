@@ -228,10 +228,10 @@ function saveImageMessage(file) {
   var dateString = mili + "-" + seconds + "-" + minutes + "-" + hours + "-" + date + "-" + (month + 1) + "-" + year;
   // TODO 9: Posts a new image as a message.
   const firestore = firebase.firestore();
-  const settings = {
+  /*const settings = {
     timestampsInSnapshots: true
   };
-  firestore.settings(settings);
+  firestore.settings(settings);*/
 
 
   const listRef = firebase.storage().ref().child(getCurrentUserId());
@@ -334,15 +334,31 @@ function loadProfilePics() {
             },
 
 
-            id: "profilePic",
+            id: childKey,
             title: childKey,
             optimized: false
 
           });
-          google.maps.event.addListener(marker, "click", function () {
+
+          var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">User Info</h1>'+
+        '<div id="bodyContent">'+ childKey+
+        '<p><b>Favorite Food List: </b></p>'+
+        '</div>'+
+        '</div>';
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        google.maps.event.addListener(marker,'click', function() {
+          infowindow.open(map, marker);
+        });
+
+          /*google.maps.event.addListener(marker, "click", function () {
             var marker = this;
             alert("ID is: " + this.id);
-          });
+          });*/
           //marker.metadata = {id: "profilePic"};
           marker.setMap(map);
           gmarkers.set(childKey, marker);
@@ -371,6 +387,16 @@ function loadLocations() {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData['pos'];
+
+        var contentString = '<div id="content">'+
+        '<div id="siteNotice">'+
+        '</div>'+
+        '<h1 id="firstHeading" class="firstHeading">User Info</h1>'+
+        '<div id="bodyContent">'+ childKey+
+        '<p><b>Favorite Food List: </b></p>'+
+        '</div>'+
+        '</div>';
+
         var marker = new google.maps.Marker({
           position: pos,
           icon: {
@@ -379,10 +405,16 @@ function loadLocations() {
           },
 
 
-          id: "profilePic",
+          id: childKey,
           title: childKey,
           optimized: false
 
+        });
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
         });
         marker.setMap(map);
         gmarkers.set(childKey, marker);
@@ -433,10 +465,10 @@ firebase.auth().onAuthStateChanged(user => {
         locationBefore = pos;
         console.log("initial location");
         const firestore = firebase.firestore();
-        const settings = {
+        /*const settings = {
           timestampsInSnapshots: true
         };
-        firestore.settings(settings);
+        firestore.settings(settings);*/
         firebase.firestore().collection('usersProfilePics').doc('flag').set({
           uid: 1,
           timestamp: dateString
