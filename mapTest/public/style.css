@@ -290,3 +290,7 @@ justify-content: space-between;
 #mediaCapture {
   display: none;
 }
+
+#signout {
+  margin-top: 10px
+}
