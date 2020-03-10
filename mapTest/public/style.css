@@ -253,13 +253,14 @@ justify-content: space-between;
   border-radius: 5px;
 }
 
-/*Styling for dining court tabs in the recommendation box*/
+/*Styling for the bar behind dining court tabs in the recommendation box*/
 .dc-tab{
   overflow: hidden;
   background-color: lightblue;
   border-bottom: 2px solid black;
 }
 
+/*Styling for the dining court tab buttons*/
 .dc-tab button{
   background-color: inherit;
   float: left;
@@ -270,10 +271,12 @@ justify-content: space-between;
   transition: 0.3s;
 }
 
+/*Change tab color when mouse hovers over tab*/
 .dc-tab button:hover{
   background-color: darkcyan;
 }
 
+/*Styling the content of each tab*/
 .tabcontent{
   display: none;
   text-align: center;
