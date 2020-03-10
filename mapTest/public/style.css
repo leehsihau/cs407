@@ -238,11 +238,12 @@ justify-content: space-between;
   margin: 20px;
   /*margin-top: -20px*/
   align-self: center;
+  text-align: center;
   border: 2px solid black;
   border-radius: 5px;
 }
 
-.messages{
+.recommendations{
   background: white;
   width: 400px;
   height: 250px;
@@ -250,6 +251,32 @@ justify-content: space-between;
   align-self: center;
   border: 2px solid black;
   border-radius: 5px;
+}
+
+/*Styling for dining court tabs in the recommendation box*/
+.dc-tab{
+  overflow: hidden;
+  background-color: lightblue;
+  border-bottom: 2px solid black;
+}
+
+.dc-tab button{
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+.dc-tab button:hover{
+  background-color: darkcyan;
+}
+
+.tabcontent{
+  display: none;
+  text-align: center;
 }
 
 .flex-map-container{
