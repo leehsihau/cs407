@@ -296,25 +296,25 @@ justify-content: space-between;
 }
 
 
-#fb{
+.fb{
   width:398px;
   border:1px solid gray;
   border-radius:5px;
   position:relative;
   height:75px;
 }
-#fb p{
+.fb p{
   font-family:sans-serif;
   margin: 0 0 0 10px;
   line-height:30px;
 }
 
-#fb-top span{
+.fb-top span{
   color:#4267B2;
   float:right;
   margin-right:10px;
 }
-#fb-top{
+.fb-top{
   background-color:#efefef;
   height:30px;
   width:500px;
@@ -325,7 +325,7 @@ justify-content: space-between;
   border:1px solid gray;
 }
 
-#fb img{
+.fb img{
   position:absolute;
   left:10px;
   top:5px;
@@ -358,7 +358,7 @@ justify-content: space-between;
   display:inline-block;
 }
 
-#confirm, #delete{
+.confirmRequest, .deleteRequest{
   background-color:#4267B2;
   color:white;
   padding:7px;
@@ -367,7 +367,7 @@ justify-content: space-between;
   font-family:sans-serif;
 }
 
-#delete{
+.deleteRequest{
   color:#222;
   background-color:#bbb;
   border:1px solid #999;

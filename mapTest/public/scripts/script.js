@@ -101,7 +101,7 @@ if (window.location.pathname == '/index.html' || window.location.pathname == "/"
 
 
 let map, infoWindow;
-  let gmarkers = new Map();//array for google map markers
+let gmarkers = new Map();//array for google map markers
 //sign out
 
 function signOut() {
@@ -402,7 +402,42 @@ function loadLocations() {
   });
 }
 
+function acceptFriend(friendId){
+  var currentDate = new Date();
+  var mili = currentDate.getMilliseconds();
+  var seconds = currentDate.getSeconds();
+  var minutes = currentDate.getMinutes();
+  var hours = currentDate.getHours();
+  var date = currentDate.getDate();
+  var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+  var year = currentDate.getFullYear();
+
+  var dateString = mili + "-" + seconds + "-" + minutes + "-" + hours + "-" + date + "-" + (month + 1) + "-" + year;
+  console.log("accpeted: ",friendId);
+  updates = {};
+  var uid = getCurrentUserId();
+  updates['/friendList/' + uid + '/' + friendId] = {
+    friendStatus: 1,
+    timestamp: dateString
+  }
+  firebase.database().ref().update(updates);
+
+}
+
+function rejectFriend(friendId){
+  console.log("rejected", friendId);
+  console.log('/friendList/'+getCurrentUserId()+'/'+friendId);
+  var friendList = firebase.database().ref('/friendList/'+getCurrentUserId()).child(friendId).remove();
+  var div = friendsDir.querySelector('#'+friendId);
+  div.parentNode.removeChild(div);
+  console.log(div.innerHTML);
+}
+
+
 function friendStatus(friendId) {
+
+
+
   console.log("send friend request: ", friendId);
   updates = {};
   let uid = getCurrentUserId();
@@ -436,6 +471,7 @@ function friendStatus(friendId) {
   var friendList = firebase.database().ref('/friendList/').child(uid);
 
   friendList.on('value', function (snapshot, context) {
+    friendsDir.innerHTML='';
     snapshot.forEach(function (childSnapshot) {
       //if (childSnapshot.key == uid) {
       console.log("friend request: ", childSnapshot.key);
@@ -443,8 +479,26 @@ function friendStatus(friendId) {
 
       //node.appendChild(friendRequestPlaceHolder);
       //friendsDir.appendChild(node);
-      friendsDir.innerHTML = friendRequestPlaceHolder;
-
+      var isFriend = childSnapshot.val()['friendStatus'];
+      var friendRequestPlaceHolder='';
+      if(isFriend){
+         friendRequestPlaceHolder = '<div class="fb" id='+ childSnapshot.key +'>' +
+        '<img src="./logo.png" height="50" width="50" alt="Image of woman">' +
+        '<p id="info"><b>'+ childSnapshot.key +'</b> <br></p>' +
+        '</div>' +
+        '</div>'
+      }else{
+         friendRequestPlaceHolder = '<div class="fb" id='+ childSnapshot.key +'>' +
+        '<img src="./logo.png" height="50" width="50" alt="Image of woman">' +
+        '<p id="info"><b>'+ childSnapshot.key +'</b> <br></p>' +
+        '<div id="button-block" class="friendRequests">' +
+        '<div class = "confirmRequest" onclick="acceptFriend(this.id)" id='+childSnapshot.key+'>Confirm</div>' +
+        '<div class = "deleteRequest" onclick="rejectFriend(this.id)" id='+childSnapshot.key+'>Delete</div>' +
+        '</div>' +
+        '</div>'
+      }
+      
+      friendsDir.innerHTML += friendRequestPlaceHolder;
 
     });
   });
@@ -554,22 +608,14 @@ var imageButtonElement = document.getElementById('submitImage');
 var imageFormElement = document.getElementById('image-form');
 var mediaCaptureElement = document.getElementById('mediaCapture');
 var friendsDir = document.getElementById('friendsDir');
-var friendRequestPlaceHolder = '<div id="fb">' +
 
-  '<img src="./logo.png" height="50" width="50" alt="Image of woman">' +
-  '<p id="info"><b>Natalie G.</b> <br></p>' +
-  '<div id="button-block">' +
-  '<div id="confirm">Confirm</div>' +
-  '<div id="delete">Delete Request</div>' +
-  '</div>' +
-  '</div>'
 var settings = document.getElementById("settingButton");
 
 if (window.location.pathname == '/map.html') {
   let signOutButtonElement = document.getElementById('signout');
   signOutButtonElement.addEventListener('click', signOut);
-  settings.addEventListener('click', function(){
-  window.location = "./weightAndSettingsMngr.html";
+  settings.addEventListener('click', function () {
+    window.location = "./weightAndSettingsMngr.html";
   });
 }
 
