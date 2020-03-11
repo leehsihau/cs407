@@ -192,7 +192,7 @@ justify-content: space-between;
 }
 
 .flex-nav-bar a:hover{
-    background: darkcyan;
+  text-decoration: none;
 }
 
 .flex-wrapper{
@@ -204,7 +204,6 @@ justify-content: space-between;
 .flex-social{
   display: flex;
   flex-direction: column;
-  /*background: rgb(37, 37, 39);*/
   background: whitesmoke;
   height: 100vh;
   flex: 0 1 40%;
@@ -229,6 +228,24 @@ justify-content: space-between;
 .search input[type=submit]{
   margin-left: -56px;
   cursor: pointer;
+}
+
+.flex-settings{
+  display: flex;
+  align-self: center;
+  text-decoration: none;
+}
+.flex-settings:hover{
+  background: darkcyan;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.user_profile_pic{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid black;
+  align-self: center;
 }
 
 .friends{
