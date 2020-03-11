@@ -45,10 +45,10 @@ height: 5000px;
 overflow: hidden;
 }
 
-/*body {
+.login-body {
   background-color: rgb(37, 37, 39);
   padding-top: 20vh;
-}**/
+}
 
 .login-form-container {
   width: 450px;
