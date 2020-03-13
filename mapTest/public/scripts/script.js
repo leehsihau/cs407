@@ -317,13 +317,14 @@ function loadProfilePics() {
           });
 
           var contentString = '<div id="content">' +
-            '<div id="siteNotice">' +
-            '</div>' +
-            '<h2 id="firstHeading" class="firstHeading">User Info</h2>' +
-            '<div id="bodyContent">' + childKey +
-            '<p><b>Favorite Food List: </b></p>' +
-            '</div>' +
-            '</div>';
+          '<div id="siteNotice">' +
+          '</div>' +
+          '<h2 id="firstHeading" class="firstHeading">User Info</h2>' +
+          '<div id="bodyContent">' + childKey +
+          '<p><b>Favorite Food List: </b></p>' +
+          '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' + childKey + '> friend me</button>';
+        '</div>' +
+          '</div>';
           var infowindow = new google.maps.InfoWindow({
             content: contentString
           });
@@ -370,7 +371,7 @@ function loadLocations() {
           '<h2 id="firstHeading" class="firstHeading">User Info</h2>' +
           '<div id="bodyContent">' + childKey +
           '<p><b>Favorite Food List: </b></p>' +
-          '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' + childKey + '> Click me</button>';
+          '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' + childKey + '> friend me</button>';
         '</div>' +
           '</div>';
 
@@ -399,6 +400,43 @@ function loadLocations() {
       });
       return;
     })
+  });
+}
+
+function loadFriends(){
+  var uid = getCurrentUserId();
+  var friendList = firebase.database().ref('/friendList/').child(uid);
+  friendList.once('value', function (snapshot, context) {
+    friendsDir.innerHTML='<h2>Friends</h2>';
+    snapshot.forEach(function (childSnapshot) {
+      //if (childSnapshot.key == uid) {
+      console.log("friend request: ", childSnapshot.key);
+      //var node = document.createElement("LI");                 // Create a <li> node
+
+      //node.appendChild(friendRequestPlaceHolder);
+      //friendsDir.appendChild(node);
+      var isFriend = childSnapshot.val()['friendStatus'];
+      var friendRequestPlaceHolder='';
+      if(isFriend){
+         friendRequestPlaceHolder = '<div class="fb" id='+ childSnapshot.key +'>' +
+        '<img src="./logo.png" height="50" width="50" alt="Image of woman">' +
+        '<p id="info"><b>'+ childSnapshot.key +'</b> <br></p>' +
+        '</div>' +
+        '</div>'
+      }else{
+         friendRequestPlaceHolder = '<div class="fb" id='+ childSnapshot.key +'>' +
+        '<img src="./logo.png" height="50" width="50" alt="Image of woman">' +
+        '<p id="info"><b>'+ childSnapshot.key +'</b> <br></p>' +
+        '<div id="button-block" class="friendRequests">' +
+        '<div class = "confirmRequest" onclick="acceptFriend(this.id)" id='+childSnapshot.key+'>Confirm</div>' +
+        '<div class = "deleteRequest" onclick="rejectFriend(this.id)" id='+childSnapshot.key+'>Delete</div>' +
+        '</div>' +
+        '</div>'
+      }
+      
+      friendsDir.innerHTML += friendRequestPlaceHolder;
+
+    });
   });
 }
 
@@ -471,7 +509,7 @@ function friendStatus(friendId) {
   var friendList = firebase.database().ref('/friendList/').child(uid);
 
   friendList.on('value', function (snapshot, context) {
-    friendsDir.innerHTML='';
+    friendsDir.innerHTML='<h2>Friends</h2>';
     snapshot.forEach(function (childSnapshot) {
       //if (childSnapshot.key == uid) {
       console.log("friend request: ", childSnapshot.key);
@@ -509,6 +547,7 @@ function friendStatus(friendId) {
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
+    loadFriends();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
       console.log("jin")
@@ -599,6 +638,7 @@ function onMediaFileSelected(event) {
 //setInterval(getLocationAndUpload, 5000);
 loadLocations();
 loadProfilePics();
+//loadFriends();
 //saveMessagingDeviceToken();
 
 /**
