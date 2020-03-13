@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Welcome to Firebase Hosting</title>
+  <title>Lunchmate</title>
 
   <!-- update the version number as needed -->
   <script src="/__/firebase/7.8.1/firebase-app.js"></script>
@@ -52,19 +52,62 @@
           <span id="second"></span>
         </div>
       </div>
+
       <div id="signout">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="signout">
           Sign out
         </button>
       </div>
-      <a href="#" id="settingButton">Settings</a>
+
+      <div class="flex-settings">
+        <img src="logo.png" alt="Profile pic" class="user_profile_pic">
+        <a href="#" id="settingButton">Settings</a>
+      </div>
     </div>
     <div class="flex-social">
       
       <div class="friends" id = "friendsDir">
       </div>
-      <div class="messages">
-        <h2>Messages</h2>
+      <div class="recommendations">
+        <!--Dining Court tab links-->
+        <div class="dc-tab">
+          <button class="tablinks" onclick="openDC(event, 'Earhart')" id="defaultOpen">Earhart</button>
+          <button class="tablinks" onclick="openDC(event, 'Ford')">Ford</button>
+          <button class="tablinks" onclick="openDC(event, 'Hillenbrand')">Hillenbrand</button>
+          <button class="tablinks" onclick="openDC(event, 'Wiley')">Wiley</button>
+          <button class="tablinks" onclick="openDC(event, 'Windsor')">Windsor</button>
+        </div>
+
+        <!--Dining court tab content-->
+        <div id="Earhart" class="tabcontent">
+          <h3>Today's Recommendations at Earhart</h3>
+          <!--TODO: Add functionality for pulling recs. from database and displaying here-->
+          <p>Add recommendations from database here!</p>
+        </div>
+
+        <div id="Ford" class="tabcontent">
+          <h3>Today's Recommendations at Ford</h3>
+          <!--TODO: Add functionality for pulling recs. from database and displaying here-->
+          <p>Add recommendations from database here!</p>
+        </div>
+
+        <div id="Hillenbrand" class="tabcontent">
+          <h3>Today's Recommendations at Hillenbrand</h3>
+          <!--TODO: Add functionality for pulling recs. from database and displaying here-->
+          <p>Add recommendations from database here!</p>
+        </div>
+
+        <div id="Wiley" class="tabcontent">
+          <h3>Today's Recommendations at Wiley</h3>
+          <!--TODO: Add functionality for pulling recs. from database and displaying here-->
+          <p>Add recommendations from database here!</p>
+        </div>
+
+        <div id="Windsor" class="tabcontent">
+          <h3>Today's Recommendations at Windsor</h3>
+          <!--TODO: Add functionality for pulling recs. from database and displaying here-->
+          <p>Add recommendations from database here!</p>
+        </div>
       </div>
     </div>
     <div class="flex-map-container">
@@ -80,6 +123,9 @@
       <div class="map" id="map-canvas" style="width:700px;height:500px"></div>
     </div>
   </div>
+
+  <script src="scripts/dc-tabs.js"></script>
+  <script>document.getElementById("defaultOpen").click();</script>
   <script src="scripts/script.js"></script>
   <script src="scripts/app.js" charset="utf-8"></script>
 

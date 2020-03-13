@@ -45,10 +45,10 @@ height: 5000px;
 overflow: hidden;
 }
 
-/*body {
+.login-body {
   background-color: rgb(37, 37, 39);
   padding-top: 20vh;
-}**/
+}
 
 .login-form-container {
   width: 450px;
@@ -192,7 +192,7 @@ justify-content: space-between;
 }
 
 .flex-nav-bar a:hover{
-    background: darkcyan;
+  text-decoration: none;
 }
 
 .flex-wrapper{
@@ -204,7 +204,6 @@ justify-content: space-between;
 .flex-social{
   display: flex;
   flex-direction: column;
-  /*background: rgb(37, 37, 39);*/
   background: whitesmoke;
   height: 100vh;
   flex: 0 1 40%;
@@ -231,6 +230,24 @@ justify-content: space-between;
   cursor: pointer;
 }
 
+.flex-settings{
+  display: flex;
+  align-self: center;
+  text-decoration: none;
+}
+.flex-settings:hover{
+  background: darkcyan;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.user_profile_pic{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid black;
+  align-self: center;
+}
+
 .friends{
   background: white;
   width: 400px;
@@ -238,11 +255,12 @@ justify-content: space-between;
   margin: 20px;
   /*margin-top: -20px*/
   align-self: center;
+  text-align: center;
   border: 2px solid black;
   border-radius: 5px;
 }
 
-.messages{
+.recommendations{
   background: white;
   width: 400px;
   height: 250px;
@@ -250,6 +268,35 @@ justify-content: space-between;
   align-self: center;
   border: 2px solid black;
   border-radius: 5px;
+}
+
+/*Styling for the bar behind dining court tabs in the recommendation box*/
+.dc-tab{
+  overflow: hidden;
+  background-color: lightblue;
+  border-bottom: 2px solid black;
+}
+
+/*Styling for the dining court tab buttons*/
+.dc-tab button{
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/*Change tab color when mouse hovers over tab*/
+.dc-tab button:hover{
+  background-color: darkcyan;
+}
+
+/*Styling the content of each tab*/
+.tabcontent{
+  display: none;
+  text-align: center;
 }
 
 .flex-map-container{
