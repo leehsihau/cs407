@@ -467,6 +467,8 @@ function acceptFriend(friendId, username) {
     username: name,
     profUrl: profilePics[uid]
   }
+  firebase.database().ref().update(updates);
+
 }
 
 function rejectFriend(friendId, username) {
