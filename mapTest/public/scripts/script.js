@@ -249,14 +249,14 @@ function loadProfilePics() {
           //marker.metadata = {id: "profilePic"};
           marker.setMap(map);
           gmarkers.set(childKey, marker);
-        }else{
-          profilePics[childKey]='../profile_placeholder.png'
+        } else {
+          profilePics[childKey] = '../profile_placeholder.png'
           gmarkers.get(childKey).setMap(null);
           gmarkers.delete(childKey);
           var marker = new google.maps.Marker({
             position: pos,
             icon: {
-              url:'.. /profile_placeholder.png' ,
+              url: '.. /profile_placeholder.png',
               scaledSize: new google.maps.Size(49, 40)
             },
 
@@ -370,22 +370,22 @@ function loadFriends() {
       var isFriend = childSnapshot.val()['friendStatus'];
       var friendRequestPlaceHolder = '';
 
-      var username = "&quot;"+childSnapshot.val()['username']+"&quot;";
+      var username = "&quot;" + childSnapshot.val()['username'] + "&quot;";
       if (isFriend) {
         friendRequestPlaceHolder = '<div class="fb" id=' + childSnapshot.key + '>' +
-          '<img src='+ profilePics[childSnapshot.key]+' height="50" width="50" alt="Image of woman">' +
+          '<img src=' + profilePics[childSnapshot.key] + ' height="50" width="50" alt="Image of woman">' +
           '<p id="info"><b>' + username + '</b> <br></p>' +
           '<div id="button-block" class="friendRequests">' +
-          '<div class = "deleteRequest" onclick="rejectFriend(this.id, '+username +')" id=' + childSnapshot.key + '>Delete</div>' +
+          '<div class = "deleteRequest" onclick="rejectFriend(this.id, ' + username + ')" id=' + childSnapshot.key + '>Delete</div>' +
           '</div>' +
           '</div>'
       } else {
         friendRequestPlaceHolder = '<div class="fb" id=' + childSnapshot.key + '>' +
-          '<img src='+ profilePics[childSnapshot.key]+' height="50" width="50" alt="Image of woman">' +
+          '<img src=' + profilePics[childSnapshot.key] + ' height="50" width="50" alt="Image of woman">' +
           '<p id="info"><b>' + username + '</b> <br></p>' +
           '<div id="button-block" class="friendRequests">' +
-          '<div class = "confirmRequest" onclick="acceptFriend(this.id, '+username +')" id=' + childSnapshot.key + '>Confirm</div>' +
-          '<div class = "deleteRequest" onclick="rejectFriend(this.id, '+username +')" id=' + childSnapshot.key + '>Delete</div>' +
+          '<div class = "confirmRequest" onclick="acceptFriend(this.id, ' + username + ')" id=' + childSnapshot.key + '>Confirm</div>' +
+          '<div class = "deleteRequest" onclick="rejectFriend(this.id, ' + username + ')" id=' + childSnapshot.key + '>Delete</div>' +
           '</div>' +
           '</div>'
       }
@@ -396,8 +396,8 @@ function loadFriends() {
   });
 }
 
-function friendListTrigger(){
-var friendList = firebase.database().ref('/friendList/').child(getCurrentUserId());
+function friendListTrigger() {
+  var friendList = firebase.database().ref('/friendList/').child(getCurrentUserId());
   friendList.on('value', function (snapshot, context) {
     console.log("jibascao");
     friendsDir.innerHTML = '<h2>Friends</h2>';
@@ -410,23 +410,23 @@ var friendList = firebase.database().ref('/friendList/').child(getCurrentUserId(
       //friendsDir.appendChild(node);
       var isFriend = childSnapshot.val()['friendStatus'];
       var friendRequestPlaceHolder = '';
-      var username = "&quot;"+childSnapshot.val()['username']+"&quot;";
+      var username = "&quot;" + childSnapshot.val()['username'] + "&quot;";
 
       if (isFriend) {
         friendRequestPlaceHolder = '<div class="fb" id=' + childSnapshot.key + '>' +
-          '<img src='+ profilePics[childSnapshot.key]+' height="50" width="50" alt="Image of woman">' +
+          '<img src=' + profilePics[childSnapshot.key] + ' height="50" width="50" alt="Image of woman">' +
           '<p id="info"><b>' + username + '</b> <br></p>' +
           '<div id="button-block" class="friendRequests">' +
-          '<div class = "deleteRequest" onclick="rejectFriend(this.id, '+username +')" id=' + childSnapshot.key + '>Delete</div>' +
+          '<div class = "deleteRequest" onclick="rejectFriend(this.id, ' + username + ')" id=' + childSnapshot.key + '>Delete</div>' +
           '</div>' +
           '</div>'
       } else {
         friendRequestPlaceHolder = '<div class="fb" id=' + childSnapshot.key + '>' +
-          '<img src='+ profilePics[childSnapshot.key] +' height="50" width="50" alt="Image of woman">' +
+          '<img src=' + profilePics[childSnapshot.key] + ' height="50" width="50" alt="Image of woman">' +
           '<p id="info"><b>' + username + '</b> <br></p>' +
           '<div id="button-block" class="friendRequests">' +
-          '<div class = "confirmRequest" onclick="acceptFriend(this.id, '+username +')" id=' + childSnapshot.key + '>Confirm</div>' +
-          '<div class = "deleteRequest" onclick="rejectFriend(this.id, '+username +')" id=' + childSnapshot.key + '>Delete</div>' +
+          '<div class = "confirmRequest" onclick="acceptFriend(this.id, ' + username + ')" id=' + childSnapshot.key + '>Confirm</div>' +
+          '<div class = "deleteRequest" onclick="rejectFriend(this.id, ' + username + ')" id=' + childSnapshot.key + '>Delete</div>' +
           '</div>' +
           '</div>'
       }
@@ -461,7 +461,7 @@ function acceptFriend(friendId, username) {
     profUrl: profilePics[uid]
   }
   firebase.database().ref().update(updates);
-  updates['/friendList/' + friendId + '/' + uid]={
+  updates['/friendList/' + friendId + '/' + uid] = {
     friendStatus: 1,
     timestamp: dateString,
     username: name,
@@ -484,7 +484,7 @@ function rejectFriend(friendId, username) {
 function friendStatus(friendId) {
 
 
-
+  alert("friend Request Sent")
   console.log("send friend request: ", friendId);
   updates = {};
   let uid = getCurrentUserId();
@@ -523,11 +523,90 @@ function friendStatus(friendId) {
 
 }
 
+function loadDiningCourts() {
+  var startTime0 = 0;
+  var endTime0 = 0;
+  var status0 = false;
+  var startTime1 = 0;
+  var endTime1 = 0;
+  var status1 = false;
+  var startTime2 = 0;
+  var endTime2 = 0;
+  var status2 = false;
+  var startTime3 = 0;
+  var endTime3 = 0;
+  var status03 = false;
+  var startTime4 = 0;
+  var endTime4 = 0;
+  var status4 = false;
 
+  timeArr = {};
+  timeArr[0] = {};
+  timeArr[1] = {};
+  timeArr[2] = {};
+  timeArr[3] = {};
+
+  for (let index = 0; index < 4; index++) {
+    timeArr[index]['start'] = 0;
+    timeArr[index]['end'] = 0;
+    timeArr[index]['status'] = false;
+
+  }
+  firebase.database().ref('/wholeMenus/Wiley').orderByChild('Order').once('value', function (snapshot) {
+    snapshot.forEach(function (childSnapshot) {
+      for (let i = 0; i < 4; i++) {
+        if (childSnapshot.val()['Meals'] != undefined) {
+          var temp = childSnapshot.val()['Meals'][i];
+          var tempStatus = temp['Status'];
+          timeArr[i]['status'] = tempStatus;
+          if (tempStatus != "Open") {
+            console.log("closed")
+          } else {
+            timeArr[i]['status']=true;
+            timeArr[i]['start']=temp['Hours']['StartTime'];
+            timeArr[i]['end'] = temp['Hours']['EndTime'];
+          }
+        }
+      }
+      console.log('time sheets: ', timeArr);
+    })
+    //console.log('end: ', endTime);
+  });
+  var pos =
+  {
+    lat: 40.428476,
+    lng: -86.920799
+  };
+  var contentString = '<div id="content">' +
+    '<h3 id="firstHeading" class="firstHeading">Wiley Dining Court</h3>' +
+    '<div id="bodyContent">' +
+    '<p><b>Favorite Food List: </b></p>' +
+    '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + "Wiley" + '> Favorite me</button>';
+  '</div>' +
+    '</div>';
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  var marker = new google.maps.Marker({
+    position: pos,
+    icon: {
+      url: '../dining.png',
+      scaledSize: new google.maps.Size(70, 70)
+    }
+
+  });
+  google.maps.event.addListener(marker, 'click', function () {
+    infowindow.open(map, marker);
+  });
+
+  marker.setMap(map);
+}
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     loadFriends();
+    loadDiningCourts();
     friendListTrigger();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
@@ -607,6 +686,7 @@ function onMediaFileSelected(event) {
 //checkLogIn();
 loadLocations();
 loadProfilePics();
+
 //loadFriends();
 //saveMessagingDeviceToken();
 

@@ -57,3 +57,10 @@ function cleanupTokens(response, tokens) {
     });
     return Promise.all(tokensDelete); 
   }
+
+  exports.sendCouponOnPurchase = functions.analytics.event('login').onLog((event) => {
+    const user = event.user;
+    const uid = user.userId; // The user ID set via the setUserId API.
+    console.log("zhen tan ma de sha bi");
+  
+  });
