@@ -106,7 +106,8 @@ function getLocationAndUpload() {
         updates['/userLocations/' + uid + '/'] = {
           pos: pos,
           timestamp: dateString,
-          username: name
+          username: name,
+          isShown: 1
         }
         console.log("uploading: ", pos);
         firebase.database().ref().update(updates);
@@ -219,7 +220,7 @@ function loadProfilePics() {
               scaledSize: new google.maps.Size(49, 40)
             },
 
-
+            animation: google.maps.Animation.DROP,
             id: childKey,
             title: childKey,
             optimized: false
@@ -260,7 +261,7 @@ function loadProfilePics() {
               scaledSize: new google.maps.Size(49, 40)
             },
 
-
+            animation: google.maps.Animation.DROP,
             id: childKey,
             title: childKey,
             optimized: false
@@ -329,6 +330,7 @@ function loadLocations() {
 
         var marker = new google.maps.Marker({
           position: pos,
+          animation: google.maps.Animation.DROP,
           icon: {
             url: profilePics[childKey],
             scaledSize: new google.maps.Size(49, 40)
@@ -539,7 +541,9 @@ function loadDiningCourts() {
   timeArr[1] = {};
   timeArr[2] = {};
   timeArr[3] = {};
-  firebase.database().ref('/favoriteDiningCourts/' + getCurrentUserId()).once('value', function (snapshot_){
+  var indexTimeout=1;
+  firebase.database().ref('/favoriteDiningCourts/' + getCurrentUserId()).once('value', function (snapshot_) {
+
     firebase.database().ref('/timeSheets').once('value', function (snapshot) {
       snapshot.forEach(function (childSnapshot) {
         //for (let j = 0; j < 5; j++) {
@@ -552,7 +556,7 @@ function loadDiningCourts() {
             timeArr[2] = {};
             timeArr[3] = {};
           }
-  
+
           //for (let i = 0; i < 4; i++) {
           var temp = childSnapshot_.val();
           var temp_index = 0;
@@ -579,8 +583,8 @@ function loadDiningCourts() {
           //}
           console.log('time sheets: ', timeArr);
           console.log('\n\n\n')
-  
-          var posArr={
+
+          var posArr = {
             'Wiley': {
               lat: 40.428476,
               lng: -86.920799
@@ -589,7 +593,7 @@ function loadDiningCourts() {
               lat: 40.425691,
               lng: -86.925023
             },
-            'Windsor':{
+            'Windsor': {
               lat: 40.426757,
               lng: -86.921091
             },
@@ -597,16 +601,32 @@ function loadDiningCourts() {
               lat: 40.432037,
               lng: -86.919693
             },
-            'Hillenbrand':{
+            'Hillenbrand': {
               lat: 40.426663,
               lng: -86.926691
             },
           }
-            var favoriteList = snapshot_.val();
-            console.log('favorite dining: ', favoriteList);
-            var diningInfoId = childSnapshot_.key+'InfoWindow';
-            var diningName = childSnapshot_.key;
-            var contentString = '<div id="content">' +
+          var favoriteList = snapshot_.val();
+          console.log('favorite dining: ', favoriteList);
+          var diningInfoId = childSnapshot_.key + 'InfoWindow';
+          var diningName = childSnapshot_.key;
+          var contentString = '<div id="content">' +
+            '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
+            '<div id="bodyContent">' +
+            '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
+            '<h3>Breakfast End Time: ' + timeArr[0]['end'] + '</h3>' +
+            '<h3>Lunch Start Time: ' + timeArr[1]['start'] + '</h3>' +
+            '<h3>Lunch End Time: ' + timeArr[1]['end'] + '</h3>' +
+            '<h3>Late Lunch Start Time: ' + timeArr[2]['start'] + '</h3>' +
+            '<h3>Late Lunch End Time: ' + timeArr[2]['end'] + '</h3>' +
+            '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
+            '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
+            '<p><b>Favorite Food List: </b></p>' +
+            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
+          '</div>' +
+            '</div>';
+          if (favoriteList[diningInfoId] == 1) {
+            contentString = '<div id="content">' +
               '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
               '<div id="bodyContent">' +
               '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
@@ -618,60 +638,71 @@ function loadDiningCourts() {
               '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
               '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
               '<p><b>Favorite Food List: </b></p>' +
-              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
+              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + ' disabled> Favorited</button>';
             '</div>' +
               '</div>';
-            if (favoriteList[diningInfoId] == 1) {
-              contentString = '<div id="content">' +
-                '<h3 id="firstHeading" class="firstHeading">'+diningName + 'Dining Court</h3>' +
-                '<div id="bodyContent">' +
-                '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
-                '<h3>Breakfast End Time: ' + timeArr[0]['end'] + '</h3>' +
-                '<h3>Lunch Start Time: ' + timeArr[1]['start'] + '</h3>' +
-                '<h3>Lunch End Time: ' + timeArr[1]['end'] + '</h3>' +
-                '<h3>Late Lunch Start Time: ' + timeArr[2]['start'] + '</h3>' +
-                '<h3>Late Lunch End Time: ' + timeArr[2]['end'] + '</h3>' +
-                '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
-                '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
-                '<p><b>Favorite Food List: </b></p>' +
-                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + ' disabled> Favorited</button>';
-              '</div>' +
-                '</div>';
-            }
-            var infowindow = new google.maps.InfoWindow({
-              content: contentString
-            });
-    
-            console.log('loca: ',diningName);
+          }
+          var infowindow = new google.maps.InfoWindow({
+            content: contentString
+          });
+
+          console.log('loca: ', diningName);
+          setTimeout(function () {
             var marker = new google.maps.Marker({
               position: posArr[diningName],
+              animation: google.maps.Animation.DROP,
               icon: {
                 url: '../dining.png',
                 scaledSize: new google.maps.Size(70, 70)
               }
-    
+
             });
-    
+
             google.maps.event.addListener(marker, 'click', function () {
               infowindow.open(map, marker);
               map.setZoom(18);
               map.setCenter(marker.getPosition());
               console.log("info value: ", favoriteList['WileyInfoWindow']);
-    
+
             });
-    
+
             marker.setMap(map);
-    
-            console.log('hua ni ma');
-          
+
+          }, indexTimeout*200)
+          /*var marker = new google.maps.Marker({
+            position: posArr[diningName],
+            animation: google.maps.Animation.DROP,
+            icon: {
+              url: '../dining.png',
+              scaledSize: new google.maps.Size(70, 70)
+            }
+  
+          });
+  
+          google.maps.event.addListener(marker, 'click', function () {
+            infowindow.open(map, marker);
+            map.setZoom(18);
+            map.setCenter(marker.getPosition());
+            console.log("info value: ", favoriteList['WileyInfoWindow']);
+  
+          });
+  
+          marker.setMap(map);
+  */
+          console.log('hua ni ma');
+          indexTimeout++;
         });
-        
+
       })
     });
   })
-  console.log('fav: ',favoriteList);
+  //console.log('fav: ',favoriteList);
 
-  
+
+}
+
+function loadRecommendations(){
+
 }
 
 firebase.auth().onAuthStateChanged(user => {
