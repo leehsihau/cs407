@@ -134,6 +134,7 @@
         </form>
       </div>
       <div class="mapAndSettings" id="mapAndSettingsCanvas" style="width:800px;height:800px">
+        <button onclick="caoTaMa()"></button>
         <div class="map" id="map-canvas" style="height: 700px; margin: auto; width: 90%; border: 3px solid rgb(115, 173, 33); padding: 60px; position: absolute; overflow: hidden;"></div>
       </div>
     </div>
@@ -145,6 +146,11 @@
   <script src="scripts/app.js" charset="utf-8"></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD8vHr-qNE3e9G6gsysEbMK0IsQUYxhZpo&callback=initMap"></script>
+  <script>
+    function caoTaMa(){
+      console.log("jier", $('#purdueDining').length)
+    }
+  </script>
 </body>
 
 </html>

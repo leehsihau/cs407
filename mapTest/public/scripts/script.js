@@ -220,7 +220,7 @@ function loadProfilePics() {
               scaledSize: new google.maps.Size(49, 40)
             },
 
-            animation: google.maps.Animation.DROP,
+            //animation: google.maps.Animation.DROP,
             id: childKey,
             title: childKey,
             optimized: false
@@ -261,7 +261,7 @@ function loadProfilePics() {
               scaledSize: new google.maps.Size(49, 40)
             },
 
-            animation: google.maps.Animation.DROP,
+           // animation: google.maps.Animation.DROP,
             id: childKey,
             title: childKey,
             optimized: false
@@ -330,7 +330,7 @@ function loadLocations() {
 
         var marker = new google.maps.Marker({
           position: pos,
-          animation: google.maps.Animation.DROP,
+         // animation: google.maps.Animation.DROP,
           icon: {
             url: profilePics[childKey],
             scaledSize: new google.maps.Size(49, 40)
