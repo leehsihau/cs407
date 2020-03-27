@@ -1,2 +1,2 @@
 # cs407
-cs407 projet Lunchmate
+cs407 projet
