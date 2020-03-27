@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="support.css" />
   </head>
   <body>
-    <form id="forget-form" action="/action_page.php">
+    <form id="support-form" action="/action_page.php">
       <div class="ca-form-container">
         <ul class="ca-list">
           <li><img src="logo.png" alt="logo" width="175px" /></li>
@@ -32,12 +32,14 @@
           </li>
           <li>
             <textarea
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Full name"
+              type="textarea"
+              id="support"
+              name="support"
+              rows = "10"
+              cols = "80"
+              placeholder="support"
               required
-            >
+            >Please enter your feedback here:
           </textarea>
           </li>
           <li><input type="submit" id="submit_forget" value="submit" /></li>
