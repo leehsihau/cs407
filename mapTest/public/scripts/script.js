@@ -646,6 +646,22 @@ function loadDiningCourts() {
               '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + ' disabled> Favorited</button>';
             '</div>' +
               '</div>';
+          }else{
+            var contentString = '<div id="content">' +
+            '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
+            '<div id="bodyContent">' +
+            '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
+            '<h3>Breakfast End Time: ' + timeArr[0]['end'] + '</h3>' +
+            '<h3>Lunch Start Time: ' + timeArr[1]['start'] + '</h3>' +
+            '<h3>Lunch End Time: ' + timeArr[1]['end'] + '</h3>' +
+            '<h3>Late Lunch Start Time: ' + timeArr[2]['start'] + '</h3>' +
+            '<h3>Late Lunch End Time: ' + timeArr[2]['end'] + '</h3>' +
+            '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
+            '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
+            '<p><b>Favorite Food List: </b></p>' +
+            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
+          '</div>' +
+            '</div>';
           }
           var infowindow = new google.maps.InfoWindow({
             content: contentString
