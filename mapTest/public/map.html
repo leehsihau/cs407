@@ -19,6 +19,7 @@
   <!-- initialize the SDK after all desired features are loaded -->
   <script src="/__/firebase/init.js"></script>
   <link rel="stylesheet" href="style.css">
+  <!--<link href="styling/support.css"-->
 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -72,11 +73,6 @@
         </button>
       </div>
 
-      <!--<div class="flex-settings" >-->
-        <!--<img src="profile_placeholder.png" alt="Profile pic" class="user_profile_pic" id="user_prof_pic">-->
-        <!--<a href="#" id="settingButton">Settings</a>-->
-      <!--</div>-->
-
       <!--This is the UI for the settings button-->
       <button id="demo-menu-lower-right"
           class="mdl-button mdl-js-button mdl-button--icon">
@@ -87,17 +83,19 @@
     
     <!--These are the menu items that make up the settings menu-->
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
-          for="demo-menu-lower-right">
-        <li class="mdl-menu__item" onclick="openMI(event, 'Map')" id="menu-map">Map</li>
-        <li class="mdl-menu__item" id="menu-privacy">Privacy</li>
-        <li class="mdl-menu__item" id="menu-changepass">Change Password</li>
-        <li class="mdl-menu__item" id="menu-support">Support</li>
+          for="demo-menu-lower-right" class="mi-tab">
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Map')" id="default-menu-map">Map</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Settings')" id="menu-settings">Settings</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Privacy')" id="menu-privacy">Privacy</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Change Password')" id="menu-changepass">Change Password</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Support')" id="menu-support">Support</li>
     </ul>
 
     <div class="flex-social">
 
       <div class="friends" id="friendsDir">
       </div>
+
       <div class="recommendations">
         <!--Dining Court tab links-->
         <div class="dc-tab">
@@ -140,30 +138,208 @@
         </div>
       </div>
     </div>
+
     <div class="flex-map-container">
-      <div id="upload_profile_pic">
-        <form id="image-form" action="#">
-          <input id="mediaCapture" type="file" accept="image/*" capture="camera">
-          <button id="submitImage" title="Add an image"
-            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
-            <i class="material-icons">image</i>
-          </button>
-          <label for="submitImage">Select a profile picture</label>
+      <div class="tabcontent2" id="Map">
+        <div class="flex-map-container">
+        <div id="upload_profile_pic">
+          <form id="image-form" action="#">
+            <input id="mediaCapture" type="file" accept="image/*" capture="camera">
+            <button id="submitImage" title="Add an image"
+              class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+              <i class="material-icons">image</i>
+            </button>
+            <label for="submitImage">Select a profile picture</label>
+          </form>
+        </div>
+        <!--Used to be 800px by 800px-->
+        <div class="mapAndSettings" id="mapAndSettingsCanvas"> 
+          <button onclick="caoTaMa()"></button>
+          <div class="map" id="map-canvas"></div>
+        </div>
+      </div>
+      </div>
+
+      <div class="tabcontent2" id="Settings">
+        <h2 class="diet-pref">Diet Preferences</h2>
+        <div class="diet-wrapper">
+        <label for="weight-update">Current Weight</label>
+        <input type="text" id="weight-update" class="weight-text">
+        <br>
+        <div>Height</div>
+        <div class="height-wrapper">
+            <input type="text" id="height-ft" class="height-ft">
+            <div>ft.</div>
+            <input type="text" id="height-in" class="height-in">
+            <div>in.</div>
+        </div>
+        <br>
+        <div>Would you like to gain weight, lose weight, or neither?</div>
+        <div class="gain-lose">
+            <input type="radio" id="gain" name="diet" value="gain">
+            <label for="gain">Gain</label><br>
+            <input type="radio" id="lose" name="diet" value="lose">
+            <label for="lose">Lose</label><br>
+            <input type="radio" id="neither" name="diet" value="neither">
+            <label for="neither">Neither</label>
+        </div>
+        <br>
+        <div id="upload profile pic">
+            <form id="image-form" action="#">
+                <input id="mediaCapture" type="file" accept="image/*" capture="camera">
+                <button id="submitImage" title="Add an image"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+                    <i class="material-icons">image</i>
+                </button>
+            </form>
+        </div>
+        <br>
+        <div class="privacy-wrapper">
+            <div class="question-wrapper">
+                <div class="question">
+                    <div>Allow other users to see you on the map</div>
+                    <input type="checkbox" class="q-box">
+                </div>
+                <div class="question">
+                    <div>Allow other users to message you</div>
+                    <input type="checkbox" class="q-box">
+                </div>
+                <div class="question">
+                    <div>Allow other users to see your profile</div>
+                    <input type="checkbox" class="q-box">
+                </div>
+                <br>
+                <br>
+                <div class='allergens-list'>
+                    <h3>Allergens</h3>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen0">Eggs</label>
+                        <input type="checkbox" id="allergen0" name="allergen0" value="Eggs">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen1">Fish</label>
+                        <input type="checkbox" id="allergen1" name="allergen1" value="Fish">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen2">Gluten</label>
+                        <input type="checkbox" id="allergen2" name="allergen2" value="Gluten">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen3">Milk</label>
+                        <input type="checkbox" id="allergen3" name="allergen3" value="Milk">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen4">Peanuts</label>
+                        <input type="checkbox" id="allergen4" name="allergen4" value="Peanuts">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen5">Shellfish</label>
+                        <input type="checkbox" id="allergen5" name="allergen5" value="Shellfish">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen6">Soy</label>
+                        <input type="checkbox" id="allergen6" name="allergen6" value="Soy">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen7">Tree Nuts</label>
+                        <input type="checkbox" id="allergen7" name="allergen7" value="Tree Nuts">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen8">Vegetarian</label>
+                        <input type="checkbox" id="allergen8" name="allergen8" value="Vegetarian">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen9">Vegan</label>
+                        <input type="checkbox" id="allergen9" name="allergen9" value="Vegan">
+                    </div>
+                    <div class='allergen-wrapper'>
+                        <label for="allergen10">Wheat</label>
+                        <input type="checkbox" id="allergen10" name="allergen10" value="Wheat">
+                    </div>
+                </div>
+                <br>
+                <input type="button" class='allergen-button' onclick="addAllergens()" value="Submit Allergens">
+                <br>
+                <input type="button" id="diet-submit" onclick="dietSubmitHandler()" value="Submit All"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="tabcontent2" id="Privacy">
+        <h1>Privacy</h1>
+      </div>
+
+      <div class="tabcontent2" id="Change Password">
+        <form id="changePassword-form" action="/action_page.php">
+          <div class="cp-form-container">
+            <ul class="cp-list">
+              <li><img src="logo.png" alt="logo" width="175px" /></li>
+              <li>
+                <h2>Please help us improve your experience</h2>
+              </li>
+              <li><input type="password" id="password" name="password" placeholder="New Password"></li>
+              <li><input type="password" id="password1" name="password" placeholder="Repeat New Password"></li>
+              <li><input type="submit" name="submit" value="Change Password"></li>
+              </li>
+            </ul>
+          </div>
         </form>
       </div>
-      <!--Used to be 800px by 800px-->
-      <div class="mapAndSettings" id="mapAndSettingsCanvas" style="width:90%;height:90%">
-        <button onclick="caoTaMa()"></button>
-        <div class="map" id="map-canvas"></div>
+
+      <div class="tabcontent2" id="Support">
+        <form id="support-form" action="/action_page.php">
+          <div class="support-form-container">
+            <ul class="support-list">
+              <li><img src="logo.png" alt="logo" width="175px" /></li>
+              <li>
+                <h2>Please help us improve your experience</h2>
+              </li>
+              <li>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  placeholder="Email Address"
+                  required
+                />
+              </li>
+              <li>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Full name"
+                  required
+                />
+              </li>
+              <li>
+                <textarea
+                  type="textarea"
+                  id="support"
+                  name="support"
+                  rows = "10"
+                  cols = "80"
+                  placeholder="support"
+                  required
+                >Please enter your feedback here:
+              </textarea>
+              </li>
+              <li><input type="submit" id="submit_forget" value="submit" /></li>
+            </ul>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
   <script src="scripts/dc-tabs.js"></script>
+  <script src="scripts/menu.js"></script>
   <script>document.getElementById("defaultOpen").click();</script>
+  <script>document.getElementById("default-menu-map").click();</script>
   <script src="scripts/script.js"></script>
   <script src="scripts/app.js" charset="utf-8"></script>
-  <script src="scripts/menu.js"></script>
+  <script src="scripts/changepass.js"></script>
+  <script src="scripts/weightAndSettingsMngr.js"></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD8vHr-qNE3e9G6gsysEbMK0IsQUYxhZpo&callback=initMap"></script>
   <script>

@@ -170,6 +170,7 @@ justify-content: space-between;
     justify-content: space-between;
     align-items: center;
     background: lightblue;
+    border-bottom: 2px solid gray;
     position: fixed;
     top: 0;
     /*overflow: hidden;*/
@@ -203,7 +204,7 @@ justify-content: space-between;
   flex: 0 1 40%;
   justify-content: center;
   position: relative;
-  top: 68px;
+  top: 70px;
   overflow: hidden;
   border-right: 2px solid gray;
 }
@@ -291,6 +292,9 @@ justify-content: space-between;
   display: none;
   text-align: center;
 }
+.tabcontent2{
+  display: none;
+}
 
 .flex-map-container{
   display: flex;
@@ -300,16 +304,15 @@ justify-content: space-between;
   height: 100vh;
   flex: 0 1 60%;
   position: relative;
-  top: 68px;
+  top: 70px;
   overflow: hidden;
 }
 
 .map{
   border-radius: 5px;
-  /*height: 700px;*/
-  height: 90%; 
+  height: 700px;
   margin: auto; 
-  width: 90%; 
+  width: 700px; 
   border: 3px solid rgb(115, 173, 33); 
   padding: 60px;  
   overflow: hidden;
@@ -324,6 +327,152 @@ justify-content: space-between;
 .date{
   margin-right: 30px;
 }
+
+/*PRIVACY FORM*/
+  
+/*END PRIVACY FORM*/
+
+/*CHANGE PASSWORD FORM*/
+.cp-form-container {
+  width: 450px;
+  height: auto;
+  padding: 20px 30px;
+  background-color: lightblue;
+  border-radius: 5px;
+  margin: auto;
+  box-shadow: 0 0 10px 0 black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+}
+
+ul.cp-list {
+  list-style-type: none;
+  text-align: center;
+}
+
+ul.cp-list li {
+  width: 450px;
+  margin-bottom: 12px;
+}
+
+ul.cp-list li input[type="text"] {
+  width: 450px;
+  height: 20px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+
+ul.cp-list li input[type="textarea"] {
+  width: 450px;
+  height: 20px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+ul.cp-list li input[type="password"] {
+  width: 450px;
+  height: 20px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+ul.cp-list li input[type="submit"] {
+  width: 455px;
+  height: 37px;
+  margin: 7px 0px 7px 0px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(37, 37, 39);
+  border: none;
+}
+/*END CHANGE PASSWORD FORM*/
+
+/*SUPPORT FORM*/
+.support-form-container {
+  width: 450px;
+  height: auto;
+  padding: 20px 30px;
+  background-color: lightblue;
+  border-radius: 5px;
+  margin: auto;
+  box-shadow: 0 0 10px 0 black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+}
+
+ul.support-list {
+  list-style-type: none;
+  text-align: center;
+}
+
+ul.support-list li {
+  width: 450px;
+  margin-bottom: 12px;
+}
+
+ul.support-list li input[type="text"] {
+  width: 450px;
+  height: 20px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+
+ul.support-list li input[type="textarea"] {
+  width: 450px;
+  height: 20px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+ul.support-list li input[type="password"] {
+  width: 450px;
+  height: 20px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+ul.support-list li input[type="submit"] {
+  width: 455px;
+  height: 37px;
+  margin: 7px 0px 7px 0px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  border-radius: 20px;
+  color: white;
+  background-color: rgb(37, 37, 39);
+  border: none;
+}
+/*END SUPPORT FORM*/
 
 #mediaCapture {
   display: none;
