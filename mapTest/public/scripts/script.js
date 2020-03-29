@@ -542,6 +542,9 @@ function loadDiningCourts() {
   timeArr[2] = {};
   timeArr[3] = {};
   var indexTimeout=1;
+  /*updatesFlag = {};
+  updatesFlag['/favoriteDiningCourts/' + getCurrentUserId() + '/flag'] = 1;
+  firebase.database().ref('/favoriteDiningCourts/'+getCurrentUserId()).update(updatesFlag);*/
   firebase.database().ref('/favoriteDiningCourts/' + getCurrentUserId()).once('value', function (snapshot_) {
 
     firebase.database().ref('/timeSheets').once('value', function (snapshot) {
@@ -610,6 +613,7 @@ function loadDiningCourts() {
           console.log('favorite dining: ', favoriteList);
           var diningInfoId = childSnapshot_.key + 'InfoWindow';
           var diningName = childSnapshot_.key;
+          if(favoriteList == null || favoriteList[diningInfoId] == 0){
           var contentString = '<div id="content">' +
             '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
             '<div id="bodyContent">' +
@@ -625,7 +629,8 @@ function loadDiningCourts() {
             '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
           '</div>' +
             '</div>';
-          if (favoriteList[diningInfoId] == 1) {
+          }
+          else if (favoriteList[diningInfoId] == 1) {
             contentString = '<div id="content">' +
               '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
               '<div id="bodyContent">' +
@@ -641,6 +646,22 @@ function loadDiningCourts() {
               '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + ' disabled> Favorited</button>';
             '</div>' +
               '</div>';
+          }else{
+            var contentString = '<div id="content">' +
+            '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
+            '<div id="bodyContent">' +
+            '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
+            '<h3>Breakfast End Time: ' + timeArr[0]['end'] + '</h3>' +
+            '<h3>Lunch Start Time: ' + timeArr[1]['start'] + '</h3>' +
+            '<h3>Lunch End Time: ' + timeArr[1]['end'] + '</h3>' +
+            '<h3>Late Lunch Start Time: ' + timeArr[2]['start'] + '</h3>' +
+            '<h3>Late Lunch End Time: ' + timeArr[2]['end'] + '</h3>' +
+            '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
+            '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
+            '<p><b>Favorite Food List: </b></p>' +
+            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
+          '</div>' +
+            '</div>';
           }
           var infowindow = new google.maps.InfoWindow({
             content: contentString
@@ -662,7 +683,6 @@ function loadDiningCourts() {
               infowindow.open(map, marker);
               map.setZoom(18);
               map.setCenter(marker.getPosition());
-              console.log("info value: ", favoriteList['WileyInfoWindow']);
 
             });
 
