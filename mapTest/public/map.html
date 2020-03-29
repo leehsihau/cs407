@@ -72,11 +72,28 @@
         </button>
       </div>
 
-      <div class="flex-settings">
-        <img src="profile_placeholder.png" alt="Profile pic" class="user_profile_pic">
-        <a href="#" id="settingButton">Settings</a>
-      </div>
+      <!--<div class="flex-settings" >-->
+        <!--<img src="profile_placeholder.png" alt="Profile pic" class="user_profile_pic" id="user_prof_pic">-->
+        <!--<a href="#" id="settingButton">Settings</a>-->
+      <!--</div>-->
+
+      <!--This is the UI for the settings button-->
+      <button id="demo-menu-lower-right"
+          class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">more_vert</i>
+      </button>
+
     </div>
+    
+    <!--These are the menu items that make up the settings menu-->
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+          for="demo-menu-lower-right">
+        <li class="mdl-menu__item">Map</li>
+        <li class="mdl-menu__item">Privacy</li>
+        <li class="mdl-menu__item">Change Password</li>
+        <li class="mdl-menu__item">Support</li>
+    </ul>
+
     <div class="flex-social">
 
       <div class="friends" id="friendsDir">

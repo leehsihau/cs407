@@ -164,21 +164,15 @@ justify-content: space-between;
   align-items: center;
 }
 
-
-
-*{
-  margin: 0;
-  padding: 0;
-}
-
 .flex-nav-bar{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    align-items: center;
     background: lightblue;
     position: fixed;
     top: 0;
-    overflow: hidden;
+    /*overflow: hidden;*/
     width: 100%;
 }
 
@@ -325,23 +319,11 @@ justify-content: space-between;
 
 .date{
   margin-right: 30px;
-  margin-top: 20px;
-  line-height: 200%;
-}
-
-.clock{
-  margin-top: 20px;
-  line-height: 200%;
 }
 
 #mediaCapture {
   display: none;
 }
-
-#signout {
-  margin-top: 10px
-}
-
 
 .fb{
   width:398px;
