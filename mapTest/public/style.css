@@ -245,9 +245,8 @@ justify-content: space-between;
 .friends{
   background: white;
   width: 400px;
-  height: 250px;
+  height: 40%;
   margin: 20px;
-  /*margin-top: -20px*/
   align-self: center;
   text-align: center;
   border: 2px solid black;
@@ -257,7 +256,7 @@ justify-content: space-between;
 .recommendations{
   background: white;
   width: 400px;
-  height: 250px;
+  height:40%;
   margin: 20px;
   align-self: center;
   border: 2px solid black;

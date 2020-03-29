@@ -88,10 +88,10 @@
     <!--These are the menu items that make up the settings menu-->
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
           for="demo-menu-lower-right">
-        <li class="mdl-menu__item">Map</li>
-        <li class="mdl-menu__item">Privacy</li>
-        <li class="mdl-menu__item">Change Password</li>
-        <li class="mdl-menu__item">Support</li>
+        <li class="mdl-menu__item" onclick="openMI(event, 'Map')" id="menu-map">Map</li>
+        <li class="mdl-menu__item" id="menu-privacy">Privacy</li>
+        <li class="mdl-menu__item" id="menu-changepass">Change Password</li>
+        <li class="mdl-menu__item" id="menu-support">Support</li>
     </ul>
 
     <div class="flex-social">
@@ -163,6 +163,7 @@
   <script>document.getElementById("defaultOpen").click();</script>
   <script src="scripts/script.js"></script>
   <script src="scripts/app.js" charset="utf-8"></script>
+  <script src="scripts/menu.js"></script>
 
   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD8vHr-qNE3e9G6gsysEbMK0IsQUYxhZpo&callback=initMap"></script>
   <script>
