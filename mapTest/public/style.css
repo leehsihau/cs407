@@ -297,6 +297,7 @@ justify-content: space-between;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100vh;
   flex: 0 1 60%;
   position: relative;
@@ -305,10 +306,14 @@ justify-content: space-between;
 }
 
 .map{
-  align-self: center;
-  /*margin-top: -50px;*/
-  border: 2px solid black;
   border-radius: 5px;
+  /*height: 700px;*/
+  height: 90%; 
+  margin: auto; 
+  width: 90%; 
+  border: 3px solid rgb(115, 173, 33); 
+  padding: 60px;  
+  overflow: hidden;
 }
 
 .main_clock{
