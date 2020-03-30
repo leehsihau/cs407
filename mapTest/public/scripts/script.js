@@ -777,6 +777,7 @@ firebase.auth().onAuthStateChanged(user => {
     loadDiningCourts();
     friendListTrigger();
     onChangePassword();
+    support();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
       console.log("jin")
