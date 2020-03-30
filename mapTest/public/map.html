@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Lunchmate</title>
-
+  <script src="https://smtpjs.com/v3/smtp.js"></script>  
   <!-- update the version number as needed -->
   <script src="/__/firebase/7.8.1/firebase-app.js"></script>
   <!-- include only the Firebase features as you need -->
@@ -279,7 +279,7 @@
               </li>
               <li><input type="password" id="password" name="password" placeholder="New Password"></li>
               <li><input type="password" id="password1" name="password" placeholder="Repeat New Password"></li>
-              <li><input type="submit" name="submit" value="Change Password"></li>
+              <li><input type="submit" id="submit" name="submit" value="Change Password"></li>
               </li>
             </ul>
           </div>
@@ -297,7 +297,7 @@
               <li>
                 <input
                   type="text"
-                  id="email"
+                  id="email_support"
                   name="email"
                   placeholder="Email Address"
                   required
@@ -306,7 +306,16 @@
               <li>
                 <input
                   type="text"
-                  id="name"
+                  id="email_password"
+                  name="password"
+                  placeholder="Password"
+                  required
+                />
+              </li>
+              <li>
+                <input
+                  type="text"
+                  id="name_support"
                   name="name"
                   placeholder="Full name"
                   required
@@ -315,7 +324,7 @@
               <li>
                 <textarea
                   type="textarea"
-                  id="support"
+                  id="support_support"
                   name="support"
                   rows = "10"
                   cols = "54"
@@ -324,7 +333,7 @@
                 > Please enter your feedback here:
               </textarea>
               </li>
-              <li><input type="submit" id="submit_forget" value="submit" /></li>
+              <input type="submit" id="submit_support" value="Submit" onclick="support()"/>
             </ul>
           </div>
         </form>

@@ -725,6 +725,29 @@ function loadRecommendations() {
 
 }
 
+function support() {
+  let supportForm = document.querySelectorAll("#support-form");
+  var user = firebase.auth().currentUser;
+  supportForm = addEventListener("submit", e => {
+    e.preventDefault();
+    const email = document.getElementById("email_support").value;
+    const password = document.getElementById("password_support").value;
+    const name = document.getElementById("name_support").value;
+    const support = document.getElementById("support_support").value;
+    Email.send({
+      Host: "smtp.gmail.com",
+      Username : email,
+      Password : password,
+      To : "yang1083@purdue.edu",
+      From : email,
+      Subject : "User suggestion",
+      Body : support,
+      }).then(
+        message => alert("mail sent successfully")
+      );
+  });
+}
+
 function onChangePassword() {
   let changePasswordForm = document.querySelectorAll("#changePassword-form");
   var user = firebase.auth().currentUser;
