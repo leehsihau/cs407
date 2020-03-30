@@ -305,7 +305,7 @@ justify-content: space-between;
   flex: 0 1 60%;
   position: relative;
   top: 70px;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .map{
