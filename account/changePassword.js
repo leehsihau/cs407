@@ -4,7 +4,6 @@ changePasswordForm = addEventListener("submit", e => {
   e.preventDefault();
   const password= document.getElementById("password").value;
   const password1= document.getElementById("password1").value;
-
   if(password==password1) {
     user.updatePassword(password).then(function() {
         // Update successful.
