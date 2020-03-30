@@ -261,7 +261,7 @@ function loadProfilePics() {
               scaledSize: new google.maps.Size(49, 40)
             },
 
-           // animation: google.maps.Animation.DROP,
+            // animation: google.maps.Animation.DROP,
             id: childKey,
             title: childKey,
             optimized: false
@@ -330,7 +330,7 @@ function loadLocations() {
 
         var marker = new google.maps.Marker({
           position: pos,
-         // animation: google.maps.Animation.DROP,
+          // animation: google.maps.Animation.DROP,
           icon: {
             url: profilePics[childKey],
             scaledSize: new google.maps.Size(49, 40)
@@ -541,7 +541,7 @@ function loadDiningCourts() {
   timeArr[1] = {};
   timeArr[2] = {};
   timeArr[3] = {};
-  var indexTimeout=1;
+  var indexTimeout = 1;
   /*updatesFlag = {};
   updatesFlag['/favoriteDiningCourts/' + getCurrentUserId() + '/flag'] = 1;
   firebase.database().ref('/favoriteDiningCourts/'+getCurrentUserId()).update(updatesFlag);*/
@@ -613,22 +613,22 @@ function loadDiningCourts() {
           console.log('favorite dining: ', favoriteList);
           var diningInfoId = childSnapshot_.key + 'InfoWindow';
           var diningName = childSnapshot_.key;
-          if(favoriteList == null || favoriteList[diningInfoId] == 0){
-          var contentString = '<div id="content">' +
-            '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
-            '<div id="bodyContent">' +
-            '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
-            '<h3>Breakfast End Time: ' + timeArr[0]['end'] + '</h3>' +
-            '<h3>Lunch Start Time: ' + timeArr[1]['start'] + '</h3>' +
-            '<h3>Lunch End Time: ' + timeArr[1]['end'] + '</h3>' +
-            '<h3>Late Lunch Start Time: ' + timeArr[2]['start'] + '</h3>' +
-            '<h3>Late Lunch End Time: ' + timeArr[2]['end'] + '</h3>' +
-            '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
-            '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
-            '<p><b>Favorite Food List: </b></p>' +
-            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
-          '</div>' +
-            '</div>';
+          if (favoriteList == null || favoriteList[diningInfoId] == 0) {
+            var contentString = '<div id="content">' +
+              '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
+              '<div id="bodyContent">' +
+              '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
+              '<h3>Breakfast End Time: ' + timeArr[0]['end'] + '</h3>' +
+              '<h3>Lunch Start Time: ' + timeArr[1]['start'] + '</h3>' +
+              '<h3>Lunch End Time: ' + timeArr[1]['end'] + '</h3>' +
+              '<h3>Late Lunch Start Time: ' + timeArr[2]['start'] + '</h3>' +
+              '<h3>Late Lunch End Time: ' + timeArr[2]['end'] + '</h3>' +
+              '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
+              '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
+              '<p><b>Favorite Food List: </b></p>' +
+              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
+            '</div>' +
+              '</div>';
           }
           else if (favoriteList[diningInfoId] == 1) {
             contentString = '<div id="content">' +
@@ -646,22 +646,22 @@ function loadDiningCourts() {
               '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + ' disabled> Favorited</button>';
             '</div>' +
               '</div>';
-          }else{
+          } else {
             var contentString = '<div id="content">' +
-            '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
-            '<div id="bodyContent">' +
-            '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
-            '<h3>Breakfast End Time: ' + timeArr[0]['end'] + '</h3>' +
-            '<h3>Lunch Start Time: ' + timeArr[1]['start'] + '</h3>' +
-            '<h3>Lunch End Time: ' + timeArr[1]['end'] + '</h3>' +
-            '<h3>Late Lunch Start Time: ' + timeArr[2]['start'] + '</h3>' +
-            '<h3>Late Lunch End Time: ' + timeArr[2]['end'] + '</h3>' +
-            '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
-            '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
-            '<p><b>Favorite Food List: </b></p>' +
-            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
-          '</div>' +
-            '</div>';
+              '<h3 id="firstHeading" class="firstHeading">' + diningName + 'Dining Court</h3>' +
+              '<div id="bodyContent">' +
+              '<h3>Breakfast Start Time: ' + timeArr[0]['start'] + '</h3>' +
+              '<h3>Breakfast End Time: ' + timeArr[0]['end'] + '</h3>' +
+              '<h3>Lunch Start Time: ' + timeArr[1]['start'] + '</h3>' +
+              '<h3>Lunch End Time: ' + timeArr[1]['end'] + '</h3>' +
+              '<h3>Late Lunch Start Time: ' + timeArr[2]['start'] + '</h3>' +
+              '<h3>Late Lunch End Time: ' + timeArr[2]['end'] + '</h3>' +
+              '<h3>Dinner Start Time: ' + timeArr[3]['start'] + '</h3>' +
+              '<h3>Dinner End Time: ' + timeArr[3]['end'] + '</h3>' +
+              '<p><b>Favorite Food List: </b></p>' +
+              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="favoriteDiningCourt(this.id)" id=' + diningInfoId + '> Favorite me</button>';
+            '</div>' +
+              '</div>';
           }
           var infowindow = new google.maps.InfoWindow({
             content: contentString
@@ -688,7 +688,7 @@ function loadDiningCourts() {
 
             marker.setMap(map);
 
-          }, indexTimeout*200)
+          }, indexTimeout * 200)
           /*var marker = new google.maps.Marker({
             position: posArr[diningName],
             animation: google.maps.Animation.DROP,
@@ -721,8 +721,31 @@ function loadDiningCourts() {
 
 }
 
-function loadRecommendations(){
+function loadRecommendations() {
 
+}
+
+function onChangePassword() {
+  let changePasswordForm = document.querySelectorAll("#changePassword-form");
+  var user = firebase.auth().currentUser;
+  changePasswordForm = addEventListener("submit", e => {
+    e.preventDefault();
+    const password = document.getElementById("password").value;
+    const password1 = document.getElementById("password1").value;
+
+    if (password == password1) {
+      user.updatePassword(password).then(function () {
+        // Update successful.
+        alert("Password changed successfully")
+      }).catch(function (error) {
+        alert("Password is not changed successfully")
+        // An error happened.
+      });
+    }
+    else {
+      alert("Please check your repeated password");
+    }
+  });
 }
 
 firebase.auth().onAuthStateChanged(user => {
@@ -730,6 +753,7 @@ firebase.auth().onAuthStateChanged(user => {
     loadFriends();
     loadDiningCourts();
     friendListTrigger();
+    onChangePassword();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
       console.log("jin")
