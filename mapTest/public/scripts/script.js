@@ -728,10 +728,10 @@ function loadRecommendations() {
 function support() {
   let supportForm = document.querySelectorAll("#support-form");
   var user = firebase.auth().currentUser;
-  supportForm = addEventListener("submit", e => {
+  supportForm[0].addEventListener("submit", e => {
     e.preventDefault();
     const email = document.getElementById("email_support").value;
-    const password = document.getElementById("password_support").value;
+    const password = document.getElementById("email_password").value;
     const name = document.getElementById("name_support").value;
     const support = document.getElementById("support_support").value;
     Email.send({
@@ -751,7 +751,7 @@ function support() {
 function onChangePassword() {
   let changePasswordForm = document.querySelectorAll("#changePassword-form");
   var user = firebase.auth().currentUser;
-  changePasswordForm = addEventListener("submit", e => {
+  changePasswordForm[0].addEventListener("submit", e => {
     e.preventDefault();
     const password = document.getElementById("password").value;
     const password1 = document.getElementById("password1").value;
