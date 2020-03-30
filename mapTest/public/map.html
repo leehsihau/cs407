@@ -47,10 +47,10 @@
   <div class="flex-wrapper">
     <div class="flex-nav-bar">
       <img src="logo.png" alt="logo">
-      <div class="search">
-        <input type="text" placeholder="Search">
-        <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
-          type="-submit">
+      <div class="search" >
+        <input type="text" id="favFoodText" placeholder="Search">
+        <input id="favFoodId" onclick="addFavFood()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+          type="submit" value="Submit Favoratie Food">
       </div>
 
       <div class="main_clock">
@@ -72,7 +72,10 @@
           Sign out
         </button>
       </div>
-
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+          id="delete1">
+          delete
+        </button>
       <!--This is the UI for the settings button-->
       <button id="demo-menu-lower-right"
           class="mdl-button mdl-js-button mdl-button--icon">
@@ -85,10 +88,12 @@
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
           for="demo-menu-lower-right" class="mi-tab">
         <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Map')" id="default-menu-map">Map</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Profile')" id="menu-profile">profile</li>
         <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Settings')" id="menu-settings">Settings</li>
         <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Privacy')" id="menu-privacy">Privacy</li>
         <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Change Password')" id="menu-changepass">Change Password</li>
         <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Support')" id="menu-support">Support</li>
+        
     </ul>
 
     <div class="flex-social">
@@ -267,6 +272,12 @@
         </div>
       <div class="tabcontent2" id="Privacy">
         <h1>Privacy</h1>
+      </div>
+      <div class="tabcontent2" id="Profile">
+        <h2>Favorite Food List</h2>
+        <div id="favFoodContainer">
+          fweqfweof
+        </div>
       </div>
 
       <div class="tabcontent2" id="Change Password">
