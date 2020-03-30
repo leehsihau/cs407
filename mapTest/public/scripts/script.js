@@ -728,23 +728,36 @@ function loadRecommendations() {
 function support() {
   let supportForm = document.querySelectorAll("#support-form");
   var user = firebase.auth().currentUser;
+  var email = user.email;
+  var name = email.substring(0, email.indexOf('@'));
+  document.getElementById("email_support").value=email;
+  document.getElementById("name_support").value=name;
+  document.getElementById("support_support").value;
   supportForm[0].addEventListener("submit", e => {
     e.preventDefault();
     const email = document.getElementById("email_support").value;
-    const password = document.getElementById("email_password").value;
     const name = document.getElementById("name_support").value;
     const support = document.getElementById("support_support").value;
-    Email.send({
+    firebase.database().ref('/feedback/' + getCurrentUserId() + '/').update({
+      email: email,
+      name: name,
+      feedback: support
+    });
+    openMI(event, 'Map');
+    /*Email.send({
       Host: "smtp.gmail.com",
-      Username : email,
-      Password : password,
-      To : "yang1083@purdue.edu",
-      From : email,
-      Subject : "User suggestion",
-      Body : support,
-      }).then(
-        message => alert("mail sent successfully")
-      );
+      Username: email,
+      Password: password,
+      To: "li2583@purdue.edu",
+      From: email,
+      Subject: "User suggestion",
+      Body: support,
+    }).then(
+      message => {
+        alert("mail sent successfully");
+        console.log('message: ', message);
+      }
+    );*/
   });
 }
 
@@ -832,6 +845,7 @@ firebase.auth().onAuthStateChanged(user => {
 
 // Triggered when a file is selected via the media picker.
 function onMediaFileSelected(event) {
+  console.log("enter media file");
   event.preventDefault();
   var file = event.target.files[0];
 
@@ -873,9 +887,7 @@ var settings = document.getElementById("settingButton");
 if (window.location.pathname == '/map.html') {
   let signOutButtonElement = document.getElementById('signout');
   signOutButtonElement.addEventListener('click', signOut);
-  settings.addEventListener('click', function () {
-    window.location = "./weightAndSettingsMngr.html";
-  });
+
 }
 
 // Events for image upload.
