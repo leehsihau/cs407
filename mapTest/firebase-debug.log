@@ -1,0 +1,43 @@
+[debug] [2020-03-13T01:20:48.413Z] ----------------------------------------------------------------------
+[debug] [2020-03-13T01:20:48.416Z] Command:       D:\Program Files\node.exe C:\Users\Swan\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-03-13T01:20:48.416Z] CLI Version:   7.14.0
+[debug] [2020-03-13T01:20:48.416Z] Platform:      win32
+[debug] [2020-03-13T01:20:48.416Z] Node Version:  v12.16.1
+[debug] [2020-03-13T01:20:48.417Z] Time:          Thu Mar 12 2020 21:20:48 GMT-0400 (Eastern Daylight Time)
+[debug] [2020-03-13T01:20:48.417Z] ----------------------------------------------------------------------
+[debug] [2020-03-13T01:20:48.417Z] 
+[debug] [2020-03-13T01:20:48.425Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-03-13T01:20:48.425Z] > authorizing via signed-in user
+[debug] [2020-03-13T01:20:48.426Z] [iam] checking project lunchmate-9b46b for permissions ["firebase.projects.get"]
+[debug] [2020-03-13T01:20:48.427Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-03-13T01:20:48.427Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-03-13T01:20:48.598Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-13T01:20:48.612Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/lunchmate-9b46b:testIamPermissions  
+
+[debug] [2020-03-13T01:20:48.791Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-13T01:20:48.793Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/lunchmate-9b46b  
+ 
+[debug] [2020-03-13T01:20:49.042Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'D:\CS407\cs407\mapTest'...
+[info] 
+[debug] [2020-03-13T01:20:49.056Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/lunchmate-9b46b/webApps/-/config  
+ 
+[debug] [2020-03-13T01:20:49.525Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000
+[warn] !  Your requested "node" version "8" doesn't match your global version "12"
+[info] +  functions: functions emulator started at http://localhost:5001
+[info] i  functions: Watching "D:\CS407\cs407\mapTest\functions" for Cloud Functions...
+[debug] [2020-03-13T01:20:51.094Z] [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-03-13T01:20:51.094Z] [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-03-13T01:20:51.094Z] [worker-pool] submitWork(triggerId=)
+[debug] [2020-03-13T01:20:51.094Z] [worker-~diagnostic~-d5c852b9-78d0-4243-af04-50586b3ffc2f]: Assigning socketPath: \\?\pipe\D:\CS407\cs407\mapTest\functions\7928
+[debug] [2020-03-13T01:20:51.095Z] [worker-~diagnostic~-d5c852b9-78d0-4243-af04-50586b3ffc2f]: BUSY
+[debug] [2020-03-13T01:20:51.449Z] [runtime-status] [7928] Functions runtime initialized. {"cwd":"D:\\CS407\\cs407\\mapTest\\functions","node_version":"12.16.1"}
+[debug] [2020-03-13T01:20:51.450Z] [runtime-status] [7928] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[warn] !  The Cloud Functions emulator requires the module "firebase-admin" to be installed. This package is in your package.json, but it's not available. You probably need to run "npm install" in your functions directory.
+[info] i  functions: Your functions could not be parsed due to an issue with your node_modules (see above)
+[debug] [2020-03-13T01:20:51.479Z] [worker-~diagnostic~-d5c852b9-78d0-4243-af04-50586b3ffc2f]: exited
+[debug] [2020-03-13T01:20:51.479Z] [worker-~diagnostic~-d5c852b9-78d0-4243-af04-50586b3ffc2f]: FINISHED
