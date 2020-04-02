@@ -119,24 +119,21 @@ ul.login-list li input[type="button"] {
 }
 
 /* Added in styling from signup.css */
-
+/*
 .privacy-wrapper {
   display: flex;
   flex-direction: row;
   margin-left: 800px;
 }
-
+*/
 .question-wrapper, .checkbox-wrapper {
   display: flex;
   flex-direction: column;
+  margin-left: 800px;
 }
 
-.question-wrapper {
-  float: left;
-}
-
-.q-box {
-margin: 3px;
+.privacy-button{
+  width: 350px;
 }
 
 .question {
