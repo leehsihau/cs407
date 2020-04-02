@@ -327,8 +327,7 @@ justify-content: space-between;
 .container {
   display: block;
   position: relative;
-  /*35px*/
-  padding-left: 150px;
+  padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 17px;
