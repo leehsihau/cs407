@@ -1,0 +1,58 @@
+html, body{
+    margin: 0px;
+    height: 100%;
+}
+
+h1{
+    text-align: center;
+    margin: 0px;
+    color: white;
+    z-index: 1;
+}
+
+.top-bar{
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    background-color: black;
+}
+
+.diet-pref{
+    color: white;
+    z-index: 1;
+}
+
+.account-left{
+    width: 40%;
+    background-color: #b3cde0; 
+    
+}
+
+.account-right{
+    margin-left: 30px;
+}
+
+.account-tabs{
+    padding-top: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-button{
+    border: solid gray 1px;
+    height: 40px;
+    background-color: white;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.account-page{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+.tab-content{
+    display: none;
+}
