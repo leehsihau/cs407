@@ -169,31 +169,34 @@
         <h2 class="diet-pref">Diet Preferences</h2>
         <div class="diet-wrapper">
           <div class="pref-wrapper">
-          <div><b>Current BMI: </b><div id="current-bmi" onload="getBMI()"></div></div>
+            <div><b>Current BMI: </b>
+              <div id="current-bmi" onload="getBMI()"></div>
+            </div>
 
-          <label for="weight-update">Update Weight (lbs.)</label>
-          <input type="text" id="weight-update" class="weight-text">
-          <br>
-          <div><b>Height</b></div>
-          <div class="height-wrapper">
-            <input type="text" id="height-ft" class="height-ft">
-            <div>ft.</div>
-            <input type="text" id="height-in" class="height-in">
-            <div>in.</div>
+            <label for="weight-update">Update Weight (lbs.)</label>
+            <input type="text" id="weight-update" class="weight-text">
+            <br>
+            <div><b>Height</b></div>
+            <div class="height-wrapper">
+              <input type="text" id="height-ft" class="height-ft">
+              <div>ft.</div>
+              <input type="text" id="height-in" class="height-in">
+              <div>in.</div>
+            </div>
+            <br>
+            <div class="weight-question">Would you like to gain weight, lose weight, or neither?</div>
+            <div class="gain-lose">
+              <input type="radio" id="gain" name="diet" value="gain">
+              <label for="gain">Gain</label><br>
+              <input type="radio" id="lose" name="diet" value="lose">
+              <label for="lose">Lose</label><br>
+              <input type="radio" id="neither" name="diet" value="neither">
+              <label for="neither">Neither</label>
+            </div>
           </div>
           <br>
-          <div class="weight-question">Would you like to gain weight, lose weight, or neither?</div>
-          <div class="gain-lose">
-            <input type="radio" id="gain" name="diet" value="gain">
-            <label for="gain">Gain</label><br>
-            <input type="radio" id="lose" name="diet" value="lose">
-            <label for="lose">Lose</label><br>
-            <input type="radio" id="neither" name="diet" value="neither">
-            <label for="neither">Neither</label>
-          </div>
-          </div>
-          <br>
-          <input type="button" id="diet-submit" class="diet-submit" onclick="dietSubmitHandler()" value="Submit Preferences"></button>
+          <input type="button" id="diet-submit" class="diet-submit" onclick="dietSubmitHandler()"
+            value="Submit Preferences"></button>
           <h3 class="allergen-header">Allergens</h3>
           <div class='allergens-list'>
             <div class='allergen-wrapper'>
@@ -243,33 +246,33 @@
           </div>
           <br>
           <input type="button" class='allergen-button' onclick="addAllergens()" value="Submit Allergens">
-          
-          
+
+
         </div>
       </div>
 
       <div class="tabcontent2" id="Privacy">
         <div class="privacy-wrapper">
-          <div class="question-wrapper">
-              <h1>Privacy</h1>
-            <label class="container">
-              <div>&nbsp &nbsp Allow other users to see you on the map</div>
-              <input type="checkbox" id="privacy-setting0" value="map">
-              <span class="checkmark"></span>
-            </label>
-            <label class="container">
-              <div>&nbsp &nbsp Allow other users to message you</div>
-              <input type="checkbox" id="privacy-setting1" value="message">
-              <span class="checkmark"></span>
-            </label>
-            <label class="container">
-              <div>&nbsp &nbsp Allow other users to see your profile</div>
-              <input type="checkbox" id="privacy-setting2" value="profile">
-              <span class="checkmark"></span>
-            </label>
-          
-          <input type="button" class="privacy-button" id="privacy-submit" onclick="privacySubmitHandler()" value="Submit All"></button>  
+          <h3 class="privacy-header">Privacy</h3>
+          <div class="privacy-list">
+            <br>
+            <div class="privacy-question">
+              <label for="privacy0">Allow other users to see you on map</label>
+              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap">
             </div>
+            <div class="privacy-question">
+              <label for="privacy1">Allow other users to message you</label>
+              <input class="switch_1" type="checkbox" id="privacy1" name="privacy1" value="usersMessage">
+            </div>
+            <div class="privacy-question">
+              <label for="privacy2">Allow other users to see your profile</label>
+              <input class="switch_1" type="checkbox" id="privacy2" name="privacy2" value="usersSeeProfile">
+            </div>
+            <br>
+          </div>
+          <br>
+          <input type="button" class="privacy-button" id="privacy-submit" onclick="privacySubmitHandler()"
+            value="Submit All"></button>
         </div>
       </div>
 
@@ -290,7 +293,7 @@
               </li>
               <li><input type="password" id="password" name="password" placeholder="New Password"></li>
               <li><input type="password" id="password1" name="password" placeholder="Repeat New Password"></li>
-              <li><input type="submit" id="submit" name="submit" value="Change Password"></li>
+              <li><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" id="submit" name="submit" value="Change Password"></li>
               </li>
             </ul>
           </div>
@@ -321,10 +324,11 @@
                 <input type="text" id="name_support" name="name" placeholder="Full name" required />
               </li>
               <li>
-                <textarea type="textarea" placeholder="Please enter your feedback here:" id="support_support" name="support" rows="10" cols="54" required></textarea>
+                <textarea type="textarea" placeholder="Please enter your feedback here:" id="support_support"
+                  name="support" rows="10" cols="54" required></textarea>
               </li>
               <li>
-                <input type="submit" id="submit_support" value="submit" />
+                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" id="submit_support" value="Submit" />
               </li>
             </ul>
           </div>

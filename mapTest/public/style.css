@@ -129,11 +129,6 @@ ul.login-list li input[type="button"] {
 .question-wrapper, .checkbox-wrapper {
   display: flex;
   flex-direction: column;
-  margin-left: 800px;
-}
-
-.privacy-button{
-  width: 350px;
 }
 
 .question {
@@ -144,6 +139,12 @@ justify-content: space-between;
 .allergen-wrapper label{
   margin-bottom: 0px;
 }
+
+.privacy-question label{
+  margin-bottom: 0px;
+  margin-right: 30px;
+}
+
 .diet-pref{
   text-align: center;
   font-size: 20px;
@@ -159,7 +160,7 @@ justify-content: space-between;
   text-align: right;
 }
 
-.diet-wrapper{
+.diet-wrapper, .privacy-wrapper{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,8 +175,13 @@ justify-content: space-between;
     border-bottom: 2px solid gray;
     position: fixed;
     top: 0;
+    z-index: 1;
     /*overflow: hidden;*/
     width: 100%;
+}
+
+.privacy-question label{
+  font-size: 18px;
 }
 
 .flex-nav-bar a{
@@ -297,12 +303,12 @@ justify-content: space-between;
   height: 100vh;
   flex: 0 1 60%;
   position: relative;
-  top: 40px;
-  overflow: scroll;
 }
-.allergen-header{
+
+.allergen-header, .privacy-header{
   margin-top: 5px;
 }
+
 .map{
   border-radius: 5px;
   height: 600px;
@@ -423,16 +429,12 @@ ul.cp-list li input[type="password"] {
 }
 
 ul.cp-list li input[type="submit"] {
-  width: 100%;
   height: 37px;
   margin: 7px 0px 7px 0px;
   font-size: 15px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
-  border-radius: 20px;
-  color: white;
-  background-color: rgb(37, 37, 39);
   border: none;
+  width: 40%;
 }
 /*END CHANGE PASSWORD FORM*/
 
@@ -482,16 +484,12 @@ ul.support-list li input[type="textarea"] {
 }
 
 ul.support-list li input[type="submit"] {
-  width: 455px;
   height: 37px;
   margin: 7px 0px 7px 0px;
   font-size: 15px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-align: center;
-  border-radius: 20px;
-  color: white;
-  background-color: rgb(37, 37, 39);
   border: none;
+  width: 25%;
 }
 /*END SUPPORT FORM*/
 
@@ -588,41 +586,28 @@ ul.support-list li input[type="submit"] {
 
 /* Diet Pref */
 
-.allergen-wrapper {
+.allergen-wrapper, .privacy-question {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 0px 147px;
 }
 
-.allergens-list {
+.privacy-question{
+  padding: 0px 30px;
+}
+
+.allergens-list, .privacy-list {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-self: center;
-  border: 2px solid darkblue;
+  border: 2px solid black;
   border-radius: 10px;
   background-color: whitesmoke;
 }
 
-.allergen-wrapper input {
-  margin-top: 3px;
-  margin-right: 3px;
-  margin-left: 60px;
-  margin-bottom: 3px;
-}
-
 h3 {
-  text-align: center;
-}
-
-.privacy-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.privacy-header{
   text-align: center;
 }
 
@@ -660,35 +645,33 @@ justify-content: space-between;
   text-align: right;
 }
 
-.diet-wrapper{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-}
-
 .pref-wrapper{
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 2px solid darkgreen;
+  border: 2px solid black;
   border-radius: 10px;
   background-color: whitesmoke;
 }
 
-.allergen-button, .diet-submit{
-  color: white;
-  border-radius: 10px;
-  border: 2px solid black;
+.allergen-button, .diet-submit, .privacy-button{
+  color: black;
+  border: 0px;
   padding: 5px 10px;
+  box-shadow: 4px 4px 8px black;
+  font-weight: bold;
 }
 
 .allergen-button{
-  background-color: darkblue;
+  background-color: lightblue;
+}
+
+.privacy-button{
+  background-color: lightblue;
 }
 
 .diet-submit{
-  background-color: darkgreen;
+  background-color: lightblue;
 }
 
 .weight-question{
@@ -701,5 +684,49 @@ justify-content: space-between;
 }
 
 .tabcontent2{
-  margin-top: 40px;
+  margin-top: 75px;
 }
+
+/* Checkboxes */
+
+input[type="checkbox"].switch_1{
+	font-size: 30px;
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	        appearance: none;
+	width: 30px;
+	height: 16px;
+	background: #ddd;
+	border-radius: 25px;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+  }
+  
+  input[type="checkbox"].switch_1:checked{
+	background: #0ebeff;
+  }
+  
+  input[type="checkbox"].switch_1:after{
+	position: absolute;
+	content: "";
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #fff;
+	-webkit-box-shadow: 0 0 3px rgba(0,0,0,.3);
+	        box-shadow: 0 0 3px rgba(0,0,0,.3);
+	-webkit-transform: scale(.7);
+	        transform: scale(.7);
+	left: 0;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+  }
+  
+  input[type="checkbox"].switch_1:checked:after{
+	left: calc(100% - 16px);
+  }
+	
+/* Switch 1 Specific Style End */
