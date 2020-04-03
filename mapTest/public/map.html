@@ -87,7 +87,7 @@
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right"
       class="mi-tab">
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Map')" id="default-menu-map">Map</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Profile')" id="menu-profile">profile</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Profile')" id="menu-profile">Profile</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Settings')" id="menu-settings">Settings</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Privacy')" id="menu-privacy">Privacy</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Change Password')" id="menu-changepass">
@@ -257,19 +257,23 @@
           <div class="question-wrapper">
               <h1>Privacy</h1>
             <label class="container">
-              <div>Allow other users to see you on the map</div>
-              <input type="checkbox" class="q-box" id="privacy-setting0" value="map">
+              <div>&nbsp &nbsp Allow other users to see you on the map</div>
+              <input type="checkbox" id="privacy-setting0" value="map">
+              <span class="checkmark"></span>
             </label>
             <label class="container">
-              <div>Allow other users to message you</div>
-              <input type="checkbox" class="q-box" id="privacy-setting1" value="message">
+              <div>&nbsp &nbsp Allow other users to message you</div>
+              <input type="checkbox" id="privacy-setting1" value="message">
+              <span class="checkmark"></span>
             </label>
             <label class="container">
-              <div>Allow other users to see your profile</div>
-              <input type="checkbox" class="q-box" id="privacy-setting2" value="profile">
+              <div>&nbsp &nbsp Allow other users to see your profile</div>
+              <input type="checkbox" id="privacy-setting2" value="profile">
+              <span class="checkmark"></span>
             </label>
-          </div>
-          <input type="button" id="privacy-submit" onclick="privacySubmitHandler()" value="Submit All"></button>  
+          
+          <input type="button" class="privacy-button" id="privacy-submit" onclick="privacySubmitHandler()" value="Submit All"></button>  
+            </div>
         </div>
       </div>
 
