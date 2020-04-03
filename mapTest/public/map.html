@@ -51,7 +51,7 @@
         <input type="text" id="favFoodText" placeholder="Search">
         <input id="favFoodId" onclick="addFavFood()"
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
-          value="Submit Favoratie Food">
+          value="Submit Favorite Food">
       </div>
 
       <div class="main_clock">
@@ -168,7 +168,11 @@
       <div class="tabcontent2" id="Settings">
         <h2 class="diet-pref">Diet Preferences</h2>
         <div class="diet-wrapper">
-          <label for="weight-update">Current Weight</label>
+          <div class="pref-wrapper">
+            <br>
+          <div><b>Current BMI: </b><div id="current-bmi" onload="getBMI()"></div></div>
+
+          <label for="weight-update">Update Weight</label>
           <input type="text" id="weight-update" class="weight-text">
           <br>
           <div>Height</div>
@@ -179,7 +183,7 @@
             <div>in.</div>
           </div>
           <br>
-          <div>Would you like to gain weight, lose weight, or neither?</div>
+          <div class="weight-question">Would you like to gain weight, lose weight, or neither?</div>
           <div class="gain-lose">
             <input type="radio" id="gain" name="diet" value="gain">
             <label for="gain">Gain</label><br>
@@ -189,9 +193,12 @@
             <label for="neither">Neither</label>
           </div>
           <br>
+          </div>
           <br>
+          <input type="button" id="diet-submit" class="diet-submit" onclick="dietSubmitHandler()" value="Submit Preferences"></button>
+          <h3>Allergens</h3>
           <div class='allergens-list'>
-            <h3>Allergens</h3>
+            <br>
             <div class='allergen-wrapper'>
               <label for="allergen0">Eggs</label>
               <input type="checkbox" id="allergen0" name="allergen0" value="Eggs">
@@ -236,11 +243,12 @@
               <label for="allergen10">Wheat</label>
               <input type="checkbox" id="allergen10" name="allergen10" value="Wheat">
             </div>
+            <br>
           </div>
           <br>
           <input type="button" class='allergen-button' onclick="addAllergens()" value="Submit Allergens">
-          <br>
-          <input type="button" id="diet-submit" onclick="dietSubmitHandler()" value="Submit All"></button>
+          
+          
         </div>
       </div>
 

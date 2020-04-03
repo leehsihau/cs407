@@ -39,7 +39,7 @@ function privacySubmitHandler(){
   }else{
     alert("please select your privacy settings");
   }
-
+  
 }
 function dietSubmitHandler() {
 
@@ -94,6 +94,7 @@ function dietSubmitHandler() {
     }).catch(function (error) {
       console.log("error: " + error);
     });
+    getBMI();
   }
   
   /* Allergen list */

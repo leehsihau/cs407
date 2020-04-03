@@ -592,6 +592,103 @@ ul.support-list li input[type="submit"] {
   cursor:pointer;
 }
 
+/* Diet Pref */
 
+.allergen-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 147px;
+}
 
+.allergens-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-self: center;
+  border: 2px solid darkblue;
+  border-radius: 10px;
+}
 
+.allergen-wrapper input {
+  margin-top: 3px;
+  margin-right: 3px;
+  margin-left: 60px;
+  margin-bottom: 3px;
+}
+
+h3 {
+  text-align: center;
+}
+
+.privacy-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.question-wrapper, .checkbox-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-wrapper {
+  float: left;
+}
+
+.q-box {
+margin: 3px;
+}
+
+.question {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+
+.diet-pref{
+  text-align: center;
+}
+
+.height-wrapper{
+  display: flex;
+  flex-direction: row;
+}
+
+.height-in, .height-ft{
+  width: 20px;
+  text-align: right;
+}
+
+.diet-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.pref-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid darkgreen;
+  border-radius: 10px;
+}
+
+.allergen-button, .diet-submit{
+  color: white;
+  border-radius: 10px;
+  border: 2px solid black;
+  padding: 5px 10px;
+}
+
+.allergen-button{
+  background-color: darkblue;
+}
+
+.diet-submit{
+  background-color: darkgreen;
+}
+
+.weight-question{
+  padding: 0px 20px;
+}

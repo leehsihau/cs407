@@ -1158,3 +1158,18 @@ imageButtonElement.addEventListener("click", function(e) {
   mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener("change", onMediaFileSelected);
+
+function getBMI(){
+  const db = firebase.database();
+  var docRef = db.collection("userSettings").doc(getCurrentUserId());
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+        document.getElementById("current-bmi").innerHTML = doc.data().bmi.toString();
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+}
