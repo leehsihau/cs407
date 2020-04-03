@@ -141,9 +141,12 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 }
-
+.allergen-wrapper label{
+  margin-bottom: 0px;
+}
 .diet-pref{
   text-align: center;
+  font-size: 20px;
 }
 
 .height-wrapper{
@@ -290,15 +293,16 @@ justify-content: space-between;
 .flex-map-container{
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
   flex: 0 1 60%;
   position: relative;
-  top: 70px;
+  top: 40px;
   overflow: scroll;
 }
-
+.allergen-header{
+  margin-top: 5px;
+}
 .map{
   border-radius: 5px;
   height: 600px;
@@ -312,8 +316,9 @@ justify-content: space-between;
 .main_clock{
   display: flex;
   flex-direction: row;
-
 }
+
+
 
 .date{
   margin-right: 30px;
@@ -635,6 +640,7 @@ justify-content: space-between;
 
 .diet-pref{
   text-align: center;
+  margin-top: 0px;
 }
 
 .height-wrapper{
@@ -679,4 +685,13 @@ justify-content: space-between;
 
 .weight-question{
   padding: 0px 20px;
+  font-weight: bold;
+}
+
+.gain-lose label{
+  font-weight: normal;
+}
+
+.tabcontent2{
+  margin-top: 40px;
 }

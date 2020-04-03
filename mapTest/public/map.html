@@ -169,13 +169,12 @@
         <h2 class="diet-pref">Diet Preferences</h2>
         <div class="diet-wrapper">
           <div class="pref-wrapper">
-            <br>
           <div><b>Current BMI: </b><div id="current-bmi" onload="getBMI()"></div></div>
 
-          <label for="weight-update">Update Weight</label>
+          <label for="weight-update">Update Weight (lbs.)</label>
           <input type="text" id="weight-update" class="weight-text">
           <br>
-          <div>Height</div>
+          <div><b>Height</b></div>
           <div class="height-wrapper">
             <input type="text" id="height-ft" class="height-ft">
             <div>ft.</div>
@@ -192,13 +191,11 @@
             <input type="radio" id="neither" name="diet" value="neither">
             <label for="neither">Neither</label>
           </div>
-          <br>
           </div>
           <br>
           <input type="button" id="diet-submit" class="diet-submit" onclick="dietSubmitHandler()" value="Submit Preferences"></button>
-          <h3>Allergens</h3>
+          <h3 class="allergen-header">Allergens</h3>
           <div class='allergens-list'>
-            <br>
             <div class='allergen-wrapper'>
               <label for="allergen0">Eggs</label>
               <input type="checkbox" id="allergen0" name="allergen0" value="Eggs">
@@ -243,7 +240,6 @@
               <label for="allergen10">Wheat</label>
               <input type="checkbox" id="allergen10" name="allergen10" value="Wheat">
             </div>
-            <br>
           </div>
           <br>
           <input type="button" class='allergen-button' onclick="addAllergens()" value="Submit Allergens">
