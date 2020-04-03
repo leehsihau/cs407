@@ -1038,6 +1038,7 @@ firebase.auth().onAuthStateChanged(user => {
     support();
     onDeleteAccount();
     loadFavoriteFoodList();
+    getBMI();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
       console.log("jin");
@@ -1161,7 +1162,7 @@ mediaCaptureElement.addEventListener("change", onMediaFileSelected);
 
 function getBMI(){
   const db = firebase.database();
-  var docRef = db.collection("userSettings").doc(getCurrentUserId());
+  var docRef = firebase.firestore().collection("userSettings").doc(getCurrentUserId());
   docRef.get().then(function(doc) {
     if (doc.exists) {
         document.getElementById("current-bmi").innerHTML = doc.data().bmi.toString();
