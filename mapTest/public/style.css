@@ -119,33 +119,36 @@ ul.login-list li input[type="button"] {
 }
 
 /* Added in styling from signup.css */
-
+/*
 .privacy-wrapper {
   display: flex;
   flex-direction: row;
+  margin-left: 800px;
 }
-
+*/
 .question-wrapper, .checkbox-wrapper {
   display: flex;
   flex-direction: column;
 }
 
-.question-wrapper {
-  float: left;
-}
-
-.q-box {
-margin: 3px;
-}
-
 .question {
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.allergen-wrapper label{
+  margin-bottom: 0px;
+}
+
+.privacy-question label{
+  margin-bottom: 0px;
+  margin-right: 30px;
 }
 
 .diet-pref{
   text-align: center;
+  font-size: 20px;
 }
 
 .height-wrapper{
@@ -158,28 +161,28 @@ justify-content: space-between;
   text-align: right;
 }
 
-.diet-wrapper{
+.diet-wrapper, .privacy-wrapper{
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-
-
-*{
-  margin: 0;
-  padding: 0;
 }
 
 .flex-nav-bar{
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+    align-items: center;
     background: lightblue;
+    border-bottom: 2px solid gray;
     position: fixed;
     top: 0;
-    overflow: hidden;
+    z-index: 1;
+    /*overflow: hidden;*/
     width: 100%;
+}
+
+.privacy-question label{
+  font-size: 18px;
 }
 
 .flex-nav-bar a{
@@ -209,7 +212,7 @@ justify-content: space-between;
   flex: 0 1 40%;
   justify-content: center;
   position: relative;
-  top: 68px;
+  top: 70px;
   overflow: hidden;
   border-right: 2px solid gray;
 }
@@ -240,20 +243,12 @@ justify-content: space-between;
   border-radius: 5px;
   text-decoration: none;
 }
-.user_profile_pic{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid black;
-  align-self: center;
-}
 
 .friends{
   background: white;
   width: 400px;
-  height: 250px;
+  height: 40%;
   margin: 20px;
-  /*margin-top: -20px*/
   align-self: center;
   text-align: center;
   border: 2px solid black;
@@ -263,7 +258,7 @@ justify-content: space-between;
 .recommendations{
   background: white;
   width: 400px;
-  height: 250px;
+  height:40%;
   margin: 20px;
   align-self: center;
   border: 2px solid black;
@@ -299,49 +294,210 @@ justify-content: space-between;
   text-align: center;
 }
 
+.tabcontent2{
+  display: none;
+}
+
 .flex-map-container{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   height: 100vh;
   flex: 0 1 60%;
   position: relative;
-  top: 68px;
-  overflow: hidden;
+}
+
+.allergen-header, .privacy-header{
+  margin-top: 5px;
 }
 
 .map{
-  align-self: center;
-  /*margin-top: -50px;*/
-  border: 2px solid black;
   border-radius: 5px;
+  height: 600px;
+  margin: auto; 
+  width: 600px; 
+  border: 3px solid rgb(115, 173, 33); 
+  padding: 60px;  
+  overflow: hidden;
 }
 
 .main_clock{
   display: flex;
   flex-direction: row;
-
 }
+
+
 
 .date{
   margin-right: 30px;
-  margin-top: 20px;
-  line-height: 200%;
 }
 
-.clock{
-  margin-top: 20px;
-  line-height: 200%;
+/*PRIVACY FORM*/
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/*END PRIVACY FORM*/
+
+/*CHANGE PASSWORD FORM*/
+.cp-form-container {
+  width: 100%;
+  height: auto;
+  padding: 20px 30px;
+  background-color: lightblue;
+  border-radius: 5px;
+  /*margin: auto;*/
+  box-shadow: 0 0 10px 0 black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+  margin-top: 160px;
+}
+
+ul.cp-list {
+  list-style-type: none;
+  text-align: center;
+}
+
+ul.cp-list li {
+  width: 450px;
+  margin-bottom: 12px;
+  float: middle;
+}
+
+ul.cp-list li input[type="password"] {
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+ul.cp-list li input[type="submit"] {
+  height: 37px;
+  margin: 7px 0px 7px 0px;
+  font-size: 15px;
+  text-align: center;
+  border: none;
+  width: 40%;
+}
+/*END CHANGE PASSWORD FORM*/
+
+/*SUPPORT FORM*/
+.support-form-container {
+  width: 100%;
+  height: auto;
+  padding: 20px 30px;
+  background-color: lightblue;
+  border-radius: 5px;
+  margin: auto;
+  box-shadow: 0 0 10px 0 black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+}
+
+ul.support-list {
+  list-style-type: none;
+  text-align: center;
+}
+
+ul.support-list li {
+  width: 450px;
+  margin-bottom: 12px;
+}
+
+ul.support-list li input[type="text"] {
+  width: 450px;
+  height: 100%;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+ul.support-list li input[type="textarea"] {
+  width: 100%;
+  height: 20px;
+  font-size: 15px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  text-indent: 7px;
+  border-radius: 5px;
+  padding: 6px 0px;
+}
+
+ul.support-list li input[type="submit"] {
+  height: 37px;
+  margin: 7px 0px 7px 0px;
+  font-size: 15px;
+  text-align: center;
+  border: none;
+  width: 25%;
+}
+/*END SUPPORT FORM*/
 
 #mediaCapture {
   display: none;
 }
-
-#signout {
-  margin-top: 10px
-}
-
 
 .fb{
   width:398px;
@@ -430,6 +586,149 @@ justify-content: space-between;
   cursor:pointer;
 }
 
+/* Diet Pref */
 
+.allergen-wrapper, .privacy-question {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 147px;
+}
 
+.privacy-question{
+  padding: 0px 30px;
+}
 
+.allergens-list, .privacy-list {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-self: center;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: whitesmoke;
+}
+
+h3 {
+  text-align: center;
+}
+
+.question-wrapper, .checkbox-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-wrapper {
+  float: left;
+}
+
+.q-box {
+margin: 3px;
+}
+
+.question {
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+}
+
+.diet-pref{
+  text-align: center;
+  margin-top: 0px;
+}
+
+.height-wrapper{
+  display: flex;
+  flex-direction: row;
+}
+
+.height-in, .height-ft{
+  width: 20px;
+  text-align: right;
+}
+
+.pref-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: whitesmoke;
+}
+
+.allergen-button, .diet-submit, .privacy-button{
+  color: black;
+  border: 0px;
+  padding: 5px 10px;
+  box-shadow: 4px 4px 8px black;
+  font-weight: bold;
+}
+
+.allergen-button{
+  background-color: lightblue;
+}
+
+.privacy-button{
+  background-color: lightblue;
+}
+
+.diet-submit{
+  background-color: lightblue;
+}
+
+.weight-question{
+  padding: 0px 20px;
+  font-weight: bold;
+}
+
+.gain-lose label{
+  font-weight: normal;
+}
+
+.tabcontent2{
+  margin-top: 75px;
+}
+
+/* Checkboxes */
+
+input[type="checkbox"].switch_1{
+	font-size: 30px;
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	        appearance: none;
+	width: 30px;
+	height: 16px;
+	background: #ddd;
+	border-radius: 25px;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+  }
+  
+  input[type="checkbox"].switch_1:checked{
+	background: #0ebeff;
+  }
+  
+  input[type="checkbox"].switch_1:after{
+	position: absolute;
+	content: "";
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: #fff;
+	-webkit-box-shadow: 0 0 3px rgba(0,0,0,.3);
+	        box-shadow: 0 0 3px rgba(0,0,0,.3);
+	-webkit-transform: scale(.7);
+	        transform: scale(.7);
+	left: 0;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+  }
+  
+  input[type="checkbox"].switch_1:checked:after{
+	left: calc(100% - 16px);
+  }
+	
+/* Switch 1 Specific Style End */
