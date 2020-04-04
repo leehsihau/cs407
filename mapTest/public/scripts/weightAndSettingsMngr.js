@@ -41,6 +41,7 @@ function privacySubmitHandler(){
   }
   
 }
+
 function dietSubmitHandler() {
 
     //Current weight in pounds
@@ -138,4 +139,3 @@ function dietSubmitHandler() {
       console.log("error: " + error);
     });
   }
-

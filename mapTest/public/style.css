@@ -132,10 +132,11 @@ ul.login-list li input[type="button"] {
 }
 
 .question {
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
 .allergen-wrapper label{
   margin-bottom: 0px;
 }
@@ -292,6 +293,7 @@ justify-content: space-between;
   display: none;
   text-align: center;
 }
+
 .tabcontent2{
   display: none;
 }
