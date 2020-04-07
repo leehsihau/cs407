@@ -54,7 +54,7 @@ function dietSubmitHandler() {
     if (currentWeight.value != "") {
       if (currentHeightFt.value != "" && currentHeightIn.value != "") {
         bmi = 703 * (parseInt(currentWeight.value) / Math.pow((parseInt(currentHeightIn.value) + (parseInt(currentHeightFt.value) * 12)), 2));
-        window.alert("Current BMI: " + bmi.toString());
+        window.alert("Current BMI: " + bmi.toFixed(1).toString());
       }
       else {
         window.alert("Not enough information to calculate BMI")

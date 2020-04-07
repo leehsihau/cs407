@@ -305,6 +305,7 @@ ul.login-list li input[type="button"] {
   height: 100vh;
   flex: 0 1 60%;
   position: relative;
+  overflow: scroll;
 }
 
 .allergen-header, .privacy-header{
@@ -688,7 +689,7 @@ justify-content: space-between;
 /*Delete Account Button Styling*/
 .deleteAccount{
   text-align: center;
-  margin-top: 35px;
+  margin: 35px;
 }
 
 .tabcontent2{

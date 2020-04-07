@@ -11,11 +11,14 @@ function checkLogIn() {
 function onDeleteAccount() {
   document.getElementById("delete1").addEventListener("click", deleteAccount);
 }
+
 function deleteAccount() {
   var user = firebase.auth().currentUser;
   console.log(user);
 
-  user
+  if(confirm("Are you sure you want to delete your account?")){
+    /*console.log("Deleted");*/
+    user
     .delete()
     .then(function() {
       // User deleted.
@@ -26,6 +29,9 @@ function deleteAccount() {
       console.log(error);
       // An error happened.
     });
+  }else{
+    /*console.log("Cancelled");*/
+  }
 }
 
 //sign out
@@ -1168,7 +1174,7 @@ function getBMI(){
   var docRef = firebase.firestore().collection("userSettings").doc(getCurrentUserId());
   docRef.get().then(function(doc) {
     if (doc.exists) {
-        document.getElementById("current-bmi").innerHTML = doc.data().bmi.toString();
+        document.getElementById("current-bmi").innerHTML = doc.data().bmi.toFixed(1).toString();
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
