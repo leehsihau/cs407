@@ -685,6 +685,12 @@ justify-content: space-between;
   font-weight: normal;
 }
 
+/*Delete Account Button Styling*/
+.deleteAccount{
+  text-align: center;
+  margin-top: 35px;
+}
+
 .tabcontent2{
   margin-top: 75px;
 }
