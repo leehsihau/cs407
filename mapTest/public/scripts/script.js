@@ -11,11 +11,14 @@ function checkLogIn() {
 function onDeleteAccount() {
   document.getElementById("delete1").addEventListener("click", deleteAccount);
 }
+
 function deleteAccount() {
   var user = firebase.auth().currentUser;
   console.log(user);
 
-  user
+  if(confirm("Are you sure you want to delete your account?")){
+    /*console.log("Deleted");*/
+    user
     .delete()
     .then(function() {
       // User deleted.
@@ -26,6 +29,9 @@ function deleteAccount() {
       console.log(error);
       // An error happened.
     });
+  }else{
+    /*console.log("Cancelled");*/
+  }
 }
 
 //sign out
@@ -192,6 +198,7 @@ function saveImageMessage(file) {
     (month + 1) +
     "-" +
     year;
+  
   // TODO 9: Posts a new image as a message.
   const firestore = firebase.firestore();
   /*const settings = {
@@ -616,6 +623,7 @@ function acceptFriend(friendId, username) {
     (month + 1) +
     "-" +
     year;
+  
   console.log("accpeted: ", friendId);
   updates = {};
   var uid = getCurrentUserId();
@@ -623,6 +631,7 @@ function acceptFriend(friendId, username) {
   var email = user.email;
   var name = email.substring(0, email.indexOf("@"));
   updates["/friendList/" + uid + "/" + friendId] = {
+
     friendStatus: 1,
     timestamp: dateString,
     username: username,
@@ -1197,7 +1206,7 @@ function getBMI(){
   var docRef = firebase.firestore().collection("userSettings").doc(getCurrentUserId());
   docRef.get().then(function(doc) {
     if (doc.exists) {
-        document.getElementById("current-bmi").innerHTML = doc.data().bmi.toString();
+        document.getElementById("current-bmi").innerHTML = doc.data().bmi.toFixed(1).toString();
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");

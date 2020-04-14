@@ -132,10 +132,11 @@ ul.login-list li input[type="button"] {
 }
 
 .question {
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
 .allergen-wrapper label{
   margin-bottom: 0px;
 }
@@ -302,6 +303,7 @@ justify-content: space-between;
   display: none;
   text-align: center;
 }
+
 .tabcontent2{
   display: none;
 }
@@ -313,6 +315,7 @@ justify-content: space-between;
   height: 100vh;
   flex: 0 1 60%;
   position: relative;
+  overflow: scroll;
 }
 
 .allergen-header, .privacy-header{
@@ -691,6 +694,12 @@ justify-content: space-between;
 
 .gain-lose label{
   font-weight: normal;
+}
+
+/*Delete Account Button Styling*/
+.deleteAccount{
+  text-align: center;
+  margin: 35px;
 }
 
 .tabcontent2{
