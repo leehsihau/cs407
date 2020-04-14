@@ -203,6 +203,17 @@ justify-content: space-between;
   overflow: hidden;
 }
 
+.social-tab{
+	background: white;
+  width: 400px;
+  height:40%;
+  margin: 20px;
+  align-self: center;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+
 .flex-social{
   display: flex;
   flex-direction: column;
@@ -247,7 +258,6 @@ justify-content: space-between;
   background: white;
   width: 400px;
   height: 40%;
-  margin: 20px;
   align-self: center;
   text-align: center;
   border: 2px solid black;

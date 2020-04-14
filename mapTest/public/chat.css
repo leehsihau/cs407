@@ -1,0 +1,91 @@
+html, body {
+  font-family: 'Roboto', 'Helvetica', sans-serif;
+}
+
+#chatDir {
+  width: 400px;
+  height: 40%;
+}
+
+main, #messages-card {
+height: 100%;
+padding-bottom: 0;
+}
+
+#messages-card-container {height: 95%;padding-bottom: 0;width: 430px;/* align-self: center; */}
+#messages-card {
+margin-top: 15px;
+opacity:0.8
+}
+
+.mdl-layout__header-row {
+padding: 0;
+margin: 0 auto;
+}
+
+.mdl-card__supporting-text {
+  height: 95%;
+  /* padding: 16px; */
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: antiquewhite;
+}
+
+#messages {overflow-y: auto;margin-bottom: 5px;height: calc(100% - 120px);display: flex;flex-direction: column;width: 360px;}
+
+.mdl-grid {
+max-width: 1024px;
+margin: px;
+}
+
+.mdl-textfield__label:after {
+background-color: #0288D1;
+/*background-image: url(images/puge-Backgrounds-26.jpg); */
+background-size:100%;
+
+}
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label {
+color: #0288D1;
+}
+
+.message-container:first-of-type {
+  border-top-width: 0;
+}
+.message-container {
+  display: block;
+  margin-top: 10px;
+  border-top: 1px solid #f3f3f3;
+  padding-top: 10px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.message-container.visible {
+  opacity: 1;
+}
+.message-container .pic {
+  background-image: url('/images/profile_placeholder.png');
+  background-repeat: no-repeat;
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  border-radius: 20px;
+}
+.message-container .spacing {
+  display: table-cell;
+  vertical-align: top;
+}
+.message-container .message {
+  display: table-cell;
+  width: calc(100% - 40px);
+  padding: 5px 0 5px 10px;
+}
+.message-container .name {
+  display: inline-block;
+  width: 100%;
+  padding-left: 40px;
+  color: #bbb;
+  font-style: italic;
+  font-size: 12px;
+  box-sizing: border-box;
+}

@@ -554,6 +554,12 @@ function friendListTrigger() {
           ">Delete</div>" +
           "</div>" +
           "</div>";
+          friendsDir.innerHTML += friendRequestPlaceHolder;
+          $(document).on('click','#'+childSnapshot.key+' img',function(){
+            console.log(this.id)
+            swithFriendChat(event, 'chatDir',childSnapshot.key)
+            
+          });
       } else {
         friendRequestPlaceHolder =
           '<div class="fb" id=' +
@@ -578,9 +584,10 @@ function friendListTrigger() {
           ">Delete</div>" +
           "</div>" +
           "</div>";
+          friendsDir.innerHTML += friendRequestPlaceHolder;
       }
 
-      friendsDir.innerHTML += friendRequestPlaceHolder;
+      
     });
   });
 }
@@ -1029,6 +1036,13 @@ function onChangePassword() {
   });
 }
 
+function undisplayChat(){
+  $('.tablinksFriendChat').ready(function(){
+    console.log(this.id)
+    swithFriendChat(event, 'friendsDir')
+  });;
+}
+
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
     loadFriends();
@@ -1039,6 +1053,8 @@ firebase.auth().onAuthStateChanged(user => {
     onDeleteAccount();
     loadFavoriteFoodList();
     getBMI();
+    undisplayChat();
+    loadMessages();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
       console.log("jin");
@@ -1131,6 +1147,14 @@ function onMediaFileSelected(event) {
   saveImageMessage(file);
 }
 
+function toggleButton() {
+  if (messageInputElement.value) {
+    submitButtonElement.removeAttribute('disabled');
+  } else {
+    submitButtonElement.setAttribute('disabled', 'true');
+  }
+}
+
 //setInterval(getLocationAndUpload, 5000);
 //checkLogIn();
 loadLocations();
@@ -1146,6 +1170,14 @@ var imageButtonElement = document.getElementById("submitImage");
 var imageFormElement = document.getElementById("image-form");
 var mediaCaptureElement = document.getElementById("mediaCapture");
 var friendsDir = document.getElementById("friendsDir");
+var messageInputElement = document.getElementById('message');
+var submitButtonElement = document.getElementById('submitMessage');
+
+
+
+
+messageInputElement.addEventListener('keyup', toggleButton);
+messageInputElement.addEventListener('change', toggleButton);
 
 var settings = document.getElementById("settingButton");
 if (window.location.pathname == "/map.html") {
