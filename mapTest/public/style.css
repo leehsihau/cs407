@@ -263,6 +263,8 @@ ul.login-list li input[type="button"] {
   text-align: center;
   border: 2px solid black;
   border-radius: 5px;
+  overflow-y: auto;
+  overflow-x:hidden;
 }
 
 .recommendations{

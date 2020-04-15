@@ -1159,6 +1159,7 @@ function onMediaFileSelected(event) {
 function toggleButton() {
   if (messageInputElement.value) {
     submitButtonElement.removeAttribute('disabled');
+    console.log("value in toggle: ", messageInputElement.value);
   } else {
     submitButtonElement.setAttribute('disabled', 'true');
   }
@@ -1187,6 +1188,7 @@ var submitButtonElement = document.getElementById('submitMessage');
 
 messageInputElement.addEventListener('keyup', toggleButton);
 messageInputElement.addEventListener('change', toggleButton);
+//submitButtonElement.addEventListener('click', toggleButton);
 
 var settings = document.getElementById("settingButton");
 if (window.location.pathname == "/map.html") {
