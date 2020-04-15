@@ -1,4 +1,5 @@
 function privacySubmitHandler(){
+  alert(test);
   let uid = getCurrentUserId();
   const db = firebase.database();
   /**
@@ -7,9 +8,11 @@ function privacySubmitHandler(){
   */
   //const allergen = document.getElementById('allergen0');
   var privacy = new Array();
+  console.log("hello test");
 
-  for (let i = 0; i < 3; i++) {
-    var current = 'privacy-setting' + i.toString();
+  for (let i = 0; i < 4; i++) {
+    var current = 'privacy' + i.toString();
+    console.log(current);
     if (document.getElementById(current).checked) {
       privacy.push(document.getElementById(current).value);
     }
