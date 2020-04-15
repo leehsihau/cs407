@@ -19,6 +19,7 @@
   <!-- initialize the SDK after all desired features are loaded -->
   <script src="/__/firebase/init.js"></script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="chat.css">
 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -100,9 +101,35 @@
     </ul>
 
     <div class="flex-social">
+      <!--<button class="tablinksFriendChat" onclick="swithFriendChat(event, 'chatDir')">chat</button>-->
+      <button class="tablinksFriendChat" onclick="swithFriendChat(event, 'friendsDir', 0)">friends</button>
+      <div class="social-tab" id="chatDir">
+        <div id="messages-card-container" class="mdl-cell mdl-cell--6-col mdl-grid">
 
-      <div class="friends" id="friendsDir">
+          <!-- Messages container -->
+          <!--<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop"></div>-->
+          <div class="mdl-card__supporting-text mdl-color-text--blue-600">
+            <div id="messages" class="container">
+              <span id="message-filler"></span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="message" autocomplete="off">
+              <label class="mdl-textfield__label" for="message">Message...</label>
+            </div>
+            <input id="submitMessage"
+              class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+              value="send" disabled onclick="sendMessage()"/>
+            <!--<form id="image-form" action="#">
+              <input id="mediaCapture" type="file" accept="image/*" capture="camera">
+              <button id="submitImage" title="Add an image"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+                <i class="material-icons">image</i>
+              </button>
+            </form>-->
+          </div>
+        </div>
       </div>
+      <div class="social-tab friends" id="friendsDir"></div>
 
       <div class="recommendations">
         <!--Dining Court tab links-->
@@ -303,7 +330,8 @@
               </li>
               <li><input type="password" id="password" name="password" placeholder="New Password"></li>
               <li><input type="password" id="password1" name="password" placeholder="Repeat New Password"></li>
-              <li><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" id="submit" name="submit" value="Change Password"></li>
+              <li><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                  type="submit" id="submit" name="submit" value="Change Password"></li>
               </li>
             </ul>
           </div>
@@ -338,7 +366,8 @@
                   name="support" rows="10" cols="54" required></textarea>
               </li>
               <li>
-                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" id="submit_support" value="Submit" />
+                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                  type="submit" id="submit_support" value="Submit" />
               </li>
             </ul>
           </div>
