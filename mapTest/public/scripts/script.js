@@ -1064,6 +1064,7 @@ firebase.auth().onAuthStateChanged(user => {
     getBMI();
     undisplayChat();
     loadMessages();
+    checkPrivacySettings();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
       console.log("jin");
@@ -1214,4 +1215,24 @@ function getBMI(){
 }).catch(function(error) {
     console.log("Error getting document:", error);
 });
+}
+
+function checkPrivacySettings(){
+  const db = firebase.database();
+  var docRef = firebase.firestore().collection("privacySettings").doc(getCurrentUserId());
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      /*Print the privacy array to the console, for debugging*/
+      /*console.log(doc.data().privacy);*/
+      for (let i = 0; i < doc.data().privacy.length; i++){
+        document.getElementById(doc.data().privacy[i]).checked = true;
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
 }

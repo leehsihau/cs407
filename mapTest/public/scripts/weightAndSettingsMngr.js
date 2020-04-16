@@ -1,5 +1,4 @@
 function privacySubmitHandler(){
-  alert("test");
   let uid = getCurrentUserId();
   const db = firebase.database();
   /**
@@ -8,16 +7,22 @@ function privacySubmitHandler(){
   */
   //const allergen = document.getElementById('allergen0');
   var privacy = new Array();
-  console.log("hello test");
 
+  /*Adds whichever privacy settings that are checked into the privacy array*/
   for (let i = 0; i < 4; i++) {
     var current = 'privacy' + i.toString();
-    console.log(current);
     if (document.getElementById(current).checked) {
-      privacy.push(document.getElementById(current).value);
+      privacy.push(document.getElementById(current).id);
+      /*document.getElementById(current).id*/
     }
   }
+  /*Logs the privacy array for debugging*/
   console.log(privacy);
+
+  /*
+  *If at least one privacy option is checked, update the privacy 
+  *settings in the database for the current user 
+  */
   if(privacy.length!=0){
   
     var currentDate = new Date();
@@ -40,7 +45,8 @@ function privacySubmitHandler(){
     });
     openMI(event, 'Map');
   }else{
-    alert("please select your privacy settings");
+    /*Alert the user if no option was selected*/
+    alert("Please select your privacy settings");
   }
   
 }
