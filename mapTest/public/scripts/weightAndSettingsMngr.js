@@ -1,5 +1,5 @@
 function privacySubmitHandler(){
-  alert(test);
+  alert("test");
   let uid = getCurrentUserId();
   const db = firebase.database();
   /**
