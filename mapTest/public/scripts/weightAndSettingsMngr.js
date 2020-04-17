@@ -13,7 +13,6 @@ function privacySubmitHandler(){
     var current = 'privacy' + i.toString();
     if (document.getElementById(current).checked) {
       privacy.push(document.getElementById(current).id);
-      /*document.getElementById(current).id*/
     }
   }
   /*Logs the privacy array for debugging*/
@@ -23,7 +22,7 @@ function privacySubmitHandler(){
   *If at least one privacy option is checked, update the privacy 
   *settings in the database for the current user 
   */
-  if(privacy.length!=0){
+  if(privacy.length>=0){
   
     var currentDate = new Date();
     var mili = currentDate.getMilliseconds();
@@ -44,11 +43,7 @@ function privacySubmitHandler(){
       console.log("error: " + error);
     });
     openMI(event, 'Map');
-  }else{
-    /*Alert the user if no option was selected*/
-    alert("Please select your privacy settings");
   }
-  
 }
 
 function dietSubmitHandler() {
