@@ -439,7 +439,7 @@ function loadFavoriteFoodList() {
     snapshot.forEach(function(child) {
       food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ food +'\');">&times;</span></li>';
+      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
@@ -448,7 +448,7 @@ function loadFavoriteFoodList() {
     snapshot.forEach(function(child) {
       var food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ food +'\');">&times;</span></li>';
+      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
@@ -740,6 +740,9 @@ function favoriteDiningCourt(diningCourtId) {
 
 function addFavFood() {
   var food = document.getElementById("favFoodText");
+  if(food.value == "") {
+    return;
+  }
   console.log(getCurrentUserId());
   var pushRef = firebase
     .database()
@@ -752,19 +755,12 @@ function addFavFood() {
   });
 }
 
-function removeFavFood(favFood) {
-  var closebtns = document.getElementsByClassName("close");
-  var i;
-  for (i = 0; i < closebtns.length; i++) {
-    closebtns[i].addEventListener("click", function() {
-      this.parentElement.style.display = 'none';
-    });
-  }
-  console.log("removed", favFood);
+function removeFavFood(childval) {
+  console.log("/friendList/" + getCurrentUserId() + "/" + childval);
   var favoriteFoodList = firebase
   .database()
   .ref("/favoriteFoodList/" + getCurrentUserId())
-  .child(favFood)
+  .child(childval)
   .remove()
 }
 
