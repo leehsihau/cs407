@@ -437,18 +437,18 @@ function loadFavoriteFoodList() {
   favoriteFoodList.once("value", function(snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
     snapshot.forEach(function(child) {
+      food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-        "<h5>" + child.val()["food"] + "</h5>";
-
+      '<li>' + food + '<span class="close" onclick ="removeFavFood('+ food +')">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
   favoriteFoodList.on("value", function(snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
     snapshot.forEach(function(child) {
+      var food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-        "<h5>" + child.val()["food"] + "</h5>";
-
+      '<li>' + food + '<span class="close" onclick ="removeFavFood('+ food + ')">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
@@ -750,6 +750,22 @@ function addFavFood() {
   pRef.set({
     food: food.value
   });
+}
+
+function removeFavFood(favFood) {
+  var closebtns = document.getElementsByClassName("close");
+  var i;
+  for (i = 0; i < closebtns.length; i++) {
+    closebtns[i].addEventListener("click", function() {
+      this.parentElement.style.display = 'none';
+    });
+  }
+  console.log("removed", "beef jerky");
+  var favoriteFoodList = firebase
+  .database()
+  .ref("/favoriteFoodList/" + getCurrentUserId())
+  .child("beef jerky")
+  .remove()
 }
 
 function loadDiningCourts() {
