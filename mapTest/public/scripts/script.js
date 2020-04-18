@@ -439,7 +439,7 @@ function loadFavoriteFoodList() {
     snapshot.forEach(function(child) {
       food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-      '<li>' + food + '<span class="close" onclick ="removeFavFood('+ food +')">&times;</span></li>';
+      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ food +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
@@ -448,7 +448,7 @@ function loadFavoriteFoodList() {
     snapshot.forEach(function(child) {
       var food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-      '<li>' + food + '<span class="close" onclick ="removeFavFood('+ food + ')">&times;</span></li>';
+      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ food +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
@@ -760,11 +760,11 @@ function removeFavFood(favFood) {
       this.parentElement.style.display = 'none';
     });
   }
-  console.log("removed", "beef jerky");
+  console.log("removed", favFood);
   var favoriteFoodList = firebase
   .database()
   .ref("/favoriteFoodList/" + getCurrentUserId())
-  .child("beef jerky")
+  .child(favFood)
   .remove()
 }
 
