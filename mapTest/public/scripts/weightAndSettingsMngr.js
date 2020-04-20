@@ -1,45 +1,25 @@
-function privacySubmitHandler(){
-  let uid = getCurrentUserId();
-  const db = firebase.database();
-  /**
-  String teststring = "hello";
-  firebase.database().ref('/userAllergens/'+uid).push(teststring);
-  */
-  //const allergen = document.getElementById('allergen0');
-  var privacy = new Array();
-
-  for (let i = 0; i < 3; i++) {
-    var current = 'privacy-setting' + i.toString();
-    if (document.getElementById(current).checked) {
-      privacy.push(document.getElementById(current).value);
-    }
-  }
-  console.log(privacy);
-  if(privacy.length!=0){
+function testfunction(privacy_setting){
+  var currentDate = new Date();
+  var mili = currentDate.getMilliseconds();
+  var seconds = currentDate.getSeconds();    
+  var minutes = currentDate.getMinutes();
+  var hours = currentDate.getHours();
+  var date = currentDate.getDate();
+  var month = currentDate.getMonth(); //Be careful! January is 0 not 1
+  var year = currentDate.getFullYear();
   
-    var currentDate = new Date();
-    var mili = currentDate.getMilliseconds();
-    var seconds = currentDate.getSeconds();
-    var minutes = currentDate.getMinutes();
-    var hours = currentDate.getHours();
-    var date = currentDate.getDate();
-    var month = currentDate.getMonth(); //Be careful! January is 0 not 1
-    var year = currentDate.getFullYear();
+  var dateString = mili + "-" + seconds + "-" + minutes + "-" + hours + "-" + date + "-" + (month + 1) + "-" + year;
   
-    var dateString = mili + "-" + seconds + "-" + minutes + "-" + hours + "-" + date + "-" + (month + 1) + "-" + year;
-  
-    firebase.firestore().collection('privacySettings').doc(getCurrentUserId()).set({
-      uid: getCurrentUserId(),
-      timestamp: dateString,
-      privacy: privacy
-    }).catch(function (error) {
-      console.log("error: " + error);
-    });
-    openMI(event, 'Map');
-  }else{
-    alert("please select your privacy settings");
-  }
-  
+  firebase.firestore().collection('privacySettings').doc(getCurrentUserId()).set({
+    uid: getCurrentUserId(),
+    timestamp: dateString,
+    privacy0: document.getElementById('privacy0').checked,
+    privacy1: document.getElementById('privacy1').checked,
+    privacy2: document.getElementById('privacy2').checked,
+    privacy3: document.getElementById('privacy3').checked
+  }).catch(function (error) {
+    console.log("error: " + error);
+  });
 }
 
 function dietSubmitHandler() {

@@ -1054,6 +1054,7 @@ function undisplayChat(){
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
+    checkPrivacySettings();
     loadFriends();
     loadDiningCourts();
     friendListTrigger();
@@ -1216,4 +1217,31 @@ function getBMI(){
 }).catch(function(error) {
     console.log("Error getting document:", error);
 });
+}
+
+function checkPrivacySettings(){
+  const db = firebase.database();
+  var docRef = firebase.firestore().collection("privacySettings").doc(getCurrentUserId());
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      if(doc.data().privacy0 == true){
+        document.getElementById('privacy0').checked = true;
+      }
+      if(doc.data().privacy1 == true){
+        document.getElementById('privacy1').checked = true;
+      }
+      if(doc.data().privacy2 == true){
+        document.getElementById('privacy2').checked = true;
+      }
+      if(doc.data().privacy3 == true){
+        document.getElementById('privacy3').checked = true;
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
 }
