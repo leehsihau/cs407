@@ -1,3 +1,4 @@
+/*
 function filterNoProfileUsers() {
     var query = firebase.firestore().collection("usersProfilePics");
 
@@ -13,4 +14,4 @@ function filterNoProfileUsers() {
             }
         });
     });
-}
+}*/

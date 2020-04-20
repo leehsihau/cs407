@@ -13,6 +13,9 @@ function privacySubmitHandler(){
     var current = 'privacy' + i.toString();
     if (document.getElementById(current).checked) {
       privacy.push(document.getElementById(current).id);
+      filterNoProfile = true;
+    }else{
+      filterNoProfile = false;
     }
   }
   /*Logs the privacy array for debugging*/
@@ -42,6 +45,7 @@ function privacySubmitHandler(){
     }).catch(function (error) {
       console.log("error: " + error);
     });
+    loadProfilePics();
     openMI(event, 'Map');
   }
 }

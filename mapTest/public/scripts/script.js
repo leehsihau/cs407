@@ -8,6 +8,9 @@ function checkLogIn() {
   }
 }
 
+var filterNoProfile = false;
+console.log("BOOLEAN IS SET");
+
 function onDeleteAccount() {
   document.getElementById("delete1").addEventListener("click", deleteAccount);
 }
@@ -275,7 +278,7 @@ function loadProfilePics() {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData["pos"];
-        if (profilePics[childKey] != undefined) {
+        if ([childKey] != undefined) {
           console.log(profilePics[childKey]);
           gmarkers.get(childKey).setMap(null);
           gmarkers.delete(childKey);
@@ -318,49 +321,51 @@ function loadProfilePics() {
           //marker.metadata = {id: "profilePic"};
           marker.setMap(map);
           gmarkers.set(childKey, marker);
-        } else {
+        } else{
           profilePics[childKey] = "../profile_placeholder.png";
           gmarkers.get(childKey).setMap(null);
           gmarkers.delete(childKey);
-          var marker = new google.maps.Marker({
-            position: pos,
-            icon: {
-              url: ".. /profile_placeholder.png",
-              scaledSize: new google.maps.Size(49, 40)
-            },
+          if(filterNoProfile==false){
+            var marker = new google.maps.Marker({
+              position: pos,
+              icon: {
+                url: ".. /profile_placeholder.png",
+                scaledSize: new google.maps.Size(49, 40)
+              },
 
-            // animation: google.maps.Animation.DROP,
-            id: childKey,
-            title: childKey,
-            optimized: false
-          });
-          var username = childData["username"];
-          var contentString =
-            '<div id="content">' +
-            '<div id="siteNotice">' +
-            "</div>" +
-            '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
-            '<div id="bodyContent">' +
-            username +
-            "<p><b>Favorite Food List: </b></p>" +
-            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
-            childKey +
-            "> friend me</button>";
-          "</div>" + "</div>";
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString
-          });
-          google.maps.event.addListener(marker, "click", function() {
-            infowindow.open(map, marker);
-          });
+              // animation: google.maps.Animation.DROP,
+              id: childKey,
+              title: childKey,
+              optimized: false
+            });
+            var username = childData["username"];
+            var contentString =
+              '<div id="content">' +
+              '<div id="siteNotice">' +
+              "</div>" +
+              '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+              '<div id="bodyContent">' +
+              username +
+              "<p><b>Favorite Food List: </b></p>" +
+              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
+              childKey +
+              "> friend me</button>";
+            "</div>" + "</div>";
+            var infowindow = new google.maps.InfoWindow({
+              content: contentString
+            });
+            google.maps.event.addListener(marker, "click", function() {
+              infowindow.open(map, marker);
+            });
 
-          /*google.maps.event.addListener(marker, "click", function () {
-            var marker = this;
-            alert("ID is: " + this.id);
-          });*/
-          //marker.metadata = {id: "profilePic"};
-          marker.setMap(map);
-          gmarkers.set(childKey, marker);
+            /*google.maps.event.addListener(marker, "click", function () {
+              var marker = this;
+              alert("ID is: " + this.id);
+            });*/
+            //marker.metadata = {id: "profilePic"};
+            marker.setMap(map);
+            gmarkers.set(childKey, marker);
+          }
         }
         loadFriends();
       });
@@ -401,27 +406,29 @@ function loadLocations() {
           "> friend me</button>";
         "</div>" + "</div>";
 
-        var marker = new google.maps.Marker({
-          position: pos,
-          // animation: google.maps.Animation.DROP,
-          icon: {
-            url: profilePics[childKey],
-            scaledSize: new google.maps.Size(49, 40)
-          },
+        if(profilePics[childKey] != undefined || (profilePics[childKey] == undefined && filterNoProfile==false)){
+          var marker = new google.maps.Marker({
+            position: pos,
+            // animation: google.maps.Animation.DROP,
+            icon: {
+              url: profilePics[childKey],
+              scaledSize: new google.maps.Size(49, 40)
+            },
 
-          id: childKey,
-          title: childKey,
-          optimized: false
-        });
-        var infowindow = new google.maps.InfoWindow({
-          content: contentString
-        });
-        marker.addListener("click", function() {
-          infowindow.open(map, marker);
-        });
-        marker.setMap(map);
-        gmarkers.set(childKey, marker);
-        console.log(gmarkers.size);
+            id: childKey,
+            title: childKey,
+            optimized: false
+          });
+          var infowindow = new google.maps.InfoWindow({
+            content: contentString
+          });
+          marker.addListener("click", function() {
+            infowindow.open(map, marker);
+          });
+          marker.setMap(map);
+          gmarkers.set(childKey, marker);
+          console.log(gmarkers.size);
+        }
       });
       return;
     });
@@ -1054,7 +1061,10 @@ function undisplayChat(){
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
+    checkPrivacySettings();
+    console.log("CHECKPRIVACY HAS RUN");
     loadFriends();
+    console.log("LOADFRIENDS-LOGIN HAS RUN");
     loadDiningCourts();
     friendListTrigger();
     onChangePassword();
@@ -1064,13 +1074,13 @@ firebase.auth().onAuthStateChanged(user => {
     getBMI();
     undisplayChat();
     loadMessages();
-    checkPrivacySettings();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
       console.log("jin");
       navigator.geolocation.getCurrentPosition(
         function(position) {
           getLocationAndUpload();
+          console.log("GETLOCATION HAS RUN-LOGIN");
           console.log("initial location");
           const firestore = firebase.firestore();
           /*const settings = {
@@ -1167,8 +1177,11 @@ function toggleButton() {
 
 //setInterval(getLocationAndUpload, 5000);
 //checkLogIn();
-loadLocations();
+
+console.log("LOADLOCATIONS HAS RUN");
 loadProfilePics();
+loadLocations();
+console.log("LOADPROFILEPICS HAS RUN");
 
 //loadFriends();
 //saveMessagingDeviceToken();
@@ -1227,6 +1240,15 @@ function checkPrivacySettings(){
       /*console.log(doc.data().privacy);*/
       for (let i = 0; i < doc.data().privacy.length; i++){
         document.getElementById(doc.data().privacy[i]).checked = true;
+      }
+
+      for (let i = 0; i < 4; i++) {
+        var current = 'privacy' + i.toString();
+        if (document.getElementById(current).checked) {
+          filterNoProfile = true;
+        }else{
+          filterNoProfile = false;
+        }
       }
     } else {
       // doc.data() will be undefined in this case
