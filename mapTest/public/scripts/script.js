@@ -437,22 +437,32 @@ function loadFavoriteFoodList() {
   favoriteFoodList.once("value", function(snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
     snapshot.forEach(function(child) {
+      food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-        "<h5>" + child.val()["food"] + "</h5>";
-
+      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
   favoriteFoodList.on("value", function(snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
     snapshot.forEach(function(child) {
+      var food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-        "<h5>" + child.val()["food"] + "</h5>";
-
+      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
 }
+
+function removeFavFood(childval) {
+  console.log("/friendList/" + getCurrentUserId() + "/" + childval);
+  var favoriteFoodList = firebase
+  .database()
+  .ref("/favoriteFoodList/" + getCurrentUserId())
+  .child(childval)
+  .remove()
+}
+
 
 function loadFriends() {
   var uid = getCurrentUserId();
