@@ -290,20 +290,20 @@
           <div class="privacy-list">
             <br>
             <div class="privacy-question">
-              <label for="privacy0">Allow other users to see you on map</label>
-              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap" onchange="testfunction('privacy0')">
+              <label for="privacy0">Don't allow other users to see you on map</label>
+              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap" onchange="loadLocations(), loadProfilePics(), updatePrivacySettings()">
             </div>
             <div class="privacy-question">
               <label for="privacy1">Allow other users to message you</label>
-              <input class="switch_1" type="checkbox" id="privacy1" name="privacy1" value="usersMessage" onchange="testfunction('privacy1')">
+              <input class="switch_1" type="checkbox" id="privacy1" name="privacy1" value="usersMessage" onchange="updatePrivacySettings()">
             </div>
             <div class="privacy-question">
               <label for="privacy2">Allow other users to see your profile</label>
-              <input class="switch_1" type="checkbox" id="privacy2" name="privacy2" value="usersSeeProfile" onchange="testfunction('privacy2')">
+              <input class="switch_1" type="checkbox" id="privacy2" name="privacy2" value="usersSeeProfile" onchange="updatePrivacySettings()">
             </div>
             <div class="privacy-question">
               <label for="privacy3">Filter out users that don't have a profile pic set</label>
-              <input class="switch_1" type="checkbox" id="privacy3" name="privacy3" value="noProfile" onchange="testfunction('privacy3')"">
+              <input class="switch_1" type="checkbox" id="privacy3" name="privacy3" value="noProfile" onchange="updatePrivacySettings()">
             </div>
             <br>
           </div>
