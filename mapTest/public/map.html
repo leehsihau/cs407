@@ -92,6 +92,7 @@
       class="mi-tab">
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Map')" id="default-menu-map">Map</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Profile')" id="menu-profile">Profile</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'BlockList')" id="menu-blockList">Block List</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Settings')" id="menu-settings">Settings</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Privacy')" id="menu-privacy">Privacy</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Change Password')" id="menu-changepass">
@@ -291,7 +292,7 @@
             <br>
             <div class="privacy-question">
               <label for="privacy0">Don't allow other users to see you on map</label>
-              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap" onchange="loadLocations(), loadProfilePics(), updatePrivacySettings()">
+              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap" onchange="loadProfilePics(), updatePrivacySettings()">
             </div>
             <div class="privacy-question">
               <label for="privacy1">Allow other users to message you</label>
@@ -314,6 +315,11 @@
       <div class="tabcontent2" id="Profile">
         <h2>Favorite Food List</h2>
         <ul id="favFoodContainer"></ul>
+      </div>
+
+      <div class="tabcontent2" id="BlockList">
+        <h2>Block List</h2>
+        <ul id="blockList"></ul>
       </div>
 
       <div class="tabcontent2" id="Change Password">

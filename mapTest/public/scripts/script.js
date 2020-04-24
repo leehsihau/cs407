@@ -280,13 +280,17 @@ function loadProfilePics() {
         var childData = childSnapshot.val();
         var pos = childData["pos"];
         if(childData["isShown"] == 0) {
-          gmarkers.get(childKey).setMap(null);
+          if(gmarkers.get(childKey) != undefined) {
+            gmarkers.get(childKey).setMap(null);
+          }
           gmarkers.delete(childKey);
         } 
         if(childData["isShown"] == 1) {
           if (profilePics[childKey] != undefined) {
             console.log(profilePics[childKey]);
-            gmarkers.get(childKey).setMap(null);
+            if(gmarkers.get(childKey) != undefined) {
+              gmarkers.get(childKey).setMap(null);
+            }
             gmarkers.delete(childKey);
             var marker = new google.maps.Marker({
               position: pos,
@@ -301,6 +305,7 @@ function loadProfilePics() {
               optimized: false
             });
             var username = childData["username"];
+            var user = "&quot;" + childSnapshot.val()["username"] + "&quot;";
             var contentString =
               '<div id="content">' +
               '<div id="siteNotice">' +
@@ -311,7 +316,12 @@ function loadProfilePics() {
               "<p><b>Favorite Food List: </b></p>" +
               '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
               childKey +
-              "> friend me</button>";
+              "> friend me</button><p></p>" +
+              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
+              user +
+              ')" id=' +
+              childKey +
+              "> Block</button>";
             "</div>" + "</div>";
             var infowindow = new google.maps.InfoWindow({
               content: contentString
@@ -344,6 +354,7 @@ function loadProfilePics() {
               optimized: false
             });
             var username = childData["username"];
+            var username = "&quot;" + childSnapshot.val()["username"] + "&quot;";
             var contentString =
               '<div id="content">' +
               '<div id="siteNotice">' +
@@ -354,7 +365,12 @@ function loadProfilePics() {
               "<p><b>Favorite Food List: </b></p>" +
               '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
               childKey +
-              "> friend me</button>";
+              "> friend me</button><p></p>" +
+              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
+              user +
+              ')" id=' +
+              childKey +
+              "> Block</button>";
             "</div>" + "</div>";
             var infowindow = new google.maps.InfoWindow({
               content: contentString
@@ -378,6 +394,63 @@ function loadProfilePics() {
     });
   });
 }
+function removeblockPerson(childval) {
+  console.log("/blockList/" + getCurrentUserId() + "/" + childval);
+  var favoriteFoodList = firebase
+  .database()
+  .ref("/blockList/" + getCurrentUserId())
+  .child(childval)
+  .remove()
+}
+
+function loadBlockList(childKey1) {
+  var uid = getCurrentUserId();
+  var flag = 0;
+  var blockList = firebase
+    .database()
+    .ref("/blockList/")
+    .child(uid);
+  blockList.once("value", function(snapshot, context) {
+    document.getElementById("blockList").innerHTML = "";
+    snapshot.forEach(function(child) {
+      var person = child.val()['username'];
+      if (child.val()['userid'] == childKey1) {
+        flag = 1;
+        console.log("person is blocked", child.val()['userid']);
+      }
+      document.getElementById("blockList").innerHTML +=
+      '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\');">&times;</span></li>';
+      console.log("block Person", child.val()["username"]);
+    });
+  });
+  blockList.on("value", function(snapshot, context) {
+    document.getElementById("blockList").innerHTML = "";
+    snapshot.forEach(function(child) {
+      var childKey = snapshot.key;
+      if (child.val()['userid'] == childKey1) {
+        flag = 1;
+        console.log("person is blocked", child.val()['userid']);
+      }
+      var person = child.val()['username'];
+      document.getElementById("blockList").innerHTML +=
+      '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\');">&times;</span></li>';
+      console.log("blockList", child.val()["username"]);
+    });
+  });
+  return flag;
+}
+
+
+function blockPerson(user, username) {
+  var pushRef = firebase.database().ref('/blockList/' + getCurrentUserId());
+  var pRef = pushRef.push();
+  update = {};
+  update["/blockList/" + getCurrentUserId()] = user.value;
+  pRef.set({
+    username:username,
+    userid:user
+  });
+}
 
 function loadLocations() {
   let flag = true;
@@ -397,12 +470,13 @@ function loadLocations() {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData["pos"];
+        var user = "&quot;" + childSnapshot.val()["username"] + "&quot;";
         if(childData["isShown"] == 0) {
-          for (const n of Object(gmarkers.keys())) {
-            gmarkers.get(n).setMap(null);
-            gmarkers.delete(n);
-            //m.delete(n);
+          if(gmarkers.get(childKey) != undefined) {
+              gmarkers.get(childKey).setMap(null);
           }
+          gmarkers.delete(childKey);
+            //m.delete(n);
         }
         if(childData["isShown"] == 1) {
           var contentString =
@@ -415,7 +489,12 @@ function loadLocations() {
             "<p><b>Favorite Food List: </b></p>" +
             '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
             childKey +
-            "> friend me</button>";
+            "> friend me</button><p></p>" +
+            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
+            user +
+            ')" id=' +
+            childKey +
+            "> Block</button>";
           "</div>" + "</div>";
 
           var marker = new google.maps.Marker({
@@ -1084,6 +1163,7 @@ firebase.auth().onAuthStateChanged(user => {
   if (user) {
     checkPrivacySettings();
     loadFriends();
+    loadBlockList();
     loadDiningCourts();
     friendListTrigger();
     onChangePassword();
