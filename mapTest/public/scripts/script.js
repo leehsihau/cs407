@@ -384,6 +384,7 @@ function loadProfilePics() {
               alert("ID is: " + this.id);
             });*/
             //marker.metadata = {id: "profilePic"};
+            loadBlockList();
             marker.setMap(map);
             gmarkers.set(childKey, marker);
           }
@@ -395,15 +396,40 @@ function loadProfilePics() {
   });
 }
 function removeblockPerson(childval) {
-  console.log("/blockList/" + getCurrentUserId() + "/" + childval);
-  var favoriteFoodList = firebase
+  //console.log("/blockList/" + getCurrentUserId() + "/" + childval);
+  firebase
   .database()
-  .ref("/blockList/" + getCurrentUserId())
+  .ref("/blockList/" + childval)
   .child(childval)
   .remove()
 }
 
-function loadBlockList(childKey1) {
+
+function blockPerson(user, username) {
+  var uid = getCurrentUserId();
+  var pushRef = firebase.database().ref('/blockList/' + getCurrentUserId());
+  var pRef = pushRef.child(uid);
+  update = {};
+  update["/blockList/" + getCurrentUserId()] = user.value;
+  pRef.set({
+    username:username,
+    userid:user,
+    blockedBy:uid
+  });
+
+  var pushRef1 = firebase.database().ref('/blockList/' + user);
+  var pRef1 = pushRef1.child(user);
+  update1 = {};
+  update1["/blockList/" + user] = user.value;
+  pRef1.set({
+    username:username,
+    userid:user,
+    blockedBy:uid
+  });
+}
+
+
+function loadBlockList() {
   var uid = getCurrentUserId();
   var flag = 0;
   var blockList = firebase
@@ -414,42 +440,74 @@ function loadBlockList(childKey1) {
     document.getElementById("blockList").innerHTML = "";
     snapshot.forEach(function(child) {
       var person = child.val()['username'];
-      if (child.val()['userid'] == childKey1) {
-        flag = 1;
-        console.log("person is blocked", child.val()['userid']);
+      var personid = child.val()['userid'];
+      var blockBy = child.val()['blockedBy'];
+      if(blockBy == uid) {
+        console.log("disappear",personid);
+        if(gmarkers.get(personid) != undefined) {
+          gmarkers.get(personid).setMap(null);
+        }
+        gmarkers.delete(personid);
       }
-      document.getElementById("blockList").innerHTML +=
-      '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\');">&times;</span></li>';
-      console.log("block Person", child.val()["username"]);
+      else if(blockBy != uid && personid == uid) {
+        console.log("disappear",blockBy);
+        if(gmarkers.get(blockBy) != undefined) {
+          gmarkers.get(blockBy).setMap(null);
+        }
+        gmarkers.delete(blockBy);
+      }
+      if(blockBy == uid) {
+        document.getElementById("blockList").innerHTML +=
+        '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\'), removeblockPerson(\''+ personid +'\'), window.onbeforeunload = null, window.location.reload();">&times;</span></li>';
+      }
     });
   });
   blockList.on("value", function(snapshot, context) {
     document.getElementById("blockList").innerHTML = "";
     snapshot.forEach(function(child) {
       var childKey = snapshot.key;
-      if (child.val()['userid'] == childKey1) {
-        flag = 1;
-        console.log("person is blocked", child.val()['userid']);
+      var personid = child.val()['userid'];
+      var blockBy = child.val()['blockedBy'];
+      if(blockBy == uid) {
+        if(gmarkers.get(personid) != undefined) {
+          gmarkers.get(personid).setMap(null);
+        }
+        gmarkers.delete(personid);
+        console.log("disappear",personid);
+      }
+      else if(blockBy != uid && personid == uid) {
+        if(gmarkers.get(blockBy) != undefined) {
+          gmarkers.get(blockBy).setMap(null);
+        }
+        gmarkers.delete(blockBy);
+        console.log("disappear",blockBy);
       }
       var person = child.val()['username'];
-      document.getElementById("blockList").innerHTML +=
-      '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\');">&times;</span></li>';
-      console.log("blockList", child.val()["username"]);
+      if(blockBy == uid) {
+        document.getElementById("blockList").innerHTML +=
+        '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\'), removeblockPerson(\''+ personid +'\'), window.onbeforeunload = null, window.location.reload();">&times;</span></li>';
+      }
     });
   });
-  return flag;
-}
 
-
-function blockPerson(user, username) {
-  var pushRef = firebase.database().ref('/blockList/' + getCurrentUserId());
-  var pRef = pushRef.push();
-  update = {};
-  update["/blockList/" + getCurrentUserId()] = user.value;
-  pRef.set({
-    username:username,
-    userid:user
+  var blockList1 = firebase
+  .database()
+  .ref("/blockList/");
+  blockList1.on("value", function(snapshot, context) {
+  
+    snapshot.forEach(function(child) {
+      var childKey = snapshot.key;
+      var personid = child.val()['userid'];
+      console.log("disappear",personid);
+      if(gmarkers.get(personid) != undefined) {
+        gmarkers.get(personid).setMap(null);
+      }
+      gmarkers.delete(personid);
+      var person = child.val()['username'];
+    });
   });
+
+  return flag;
 }
 
 function loadLocations() {
@@ -476,8 +534,14 @@ function loadLocations() {
               gmarkers.get(childKey).setMap(null);
           }
           gmarkers.delete(childKey);
-            //m.delete(n);
         }
+        // if(childKey == "HeJUKBTUH7OMlXWNjUSCNx74kXD3") {
+        //   console.log("disappear",childKey);
+        //   if(gmarkers.get(childKey) != undefined) {
+        //     gmarkers.get(childKey).setMap(null);
+        //   }
+        //   gmarkers.delete(childKey);
+        // }
         if(childData["isShown"] == 1) {
           var contentString =
             '<div id="content">' +
@@ -494,7 +558,7 @@ function loadLocations() {
             user +
             ')" id=' +
             childKey +
-            "> Block</button>";
+            " +> Block</button>";
           "</div>" + "</div>";
 
           var marker = new google.maps.Marker({
@@ -515,6 +579,7 @@ function loadLocations() {
           marker.addListener("click", function() {
             infowindow.open(map, marker);
           });
+          loadBlockList();
           marker.setMap(map);
           gmarkers.set(childKey, marker);
           console.log(gmarkers.size);

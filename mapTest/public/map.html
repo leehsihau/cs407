@@ -291,8 +291,8 @@
           <div class="privacy-list">
             <br>
             <div class="privacy-question">
-              <label for="privacy0">Don't allow other users to see you on map</label>
-              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap" onchange="loadProfilePics(), updatePrivacySettings()">
+              <label for="privacy0">Become invisible on the map</label>
+              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap" onchange="loadProfilePics(), updatePrivacySettings(), window.onbeforeunload = null, window.location.reload()">
             </div>
             <div class="privacy-question">
               <label for="privacy1">Allow other users to message you</label>
