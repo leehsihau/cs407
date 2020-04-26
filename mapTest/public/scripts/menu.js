@@ -14,6 +14,8 @@ var messageListElement = document.getElementById('messages');
 
 //globals
 var friendId = 0;
+var blockMessage = false;
+
 // Template for messages.
 var MESSAGE_TEMPLATE =
   '<div class="message-container">' +
@@ -52,7 +54,23 @@ function getCurrentUserName() {
   return name;
 }
 
+function blockMessages(friendId){
+  const db = firebase.firestore();
+  var docRef = db.collection("privacySettings").doc(friendId);
 
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Block messages?:", doc.data().privacy1);
+        blockMessage = doc.data().privacy1;
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+        blockMessage = false;
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
+}
 
 function displayMessage(key, name, text, picUrl, imageUrl) {
   var div = document.getElementById(key);
@@ -114,7 +132,9 @@ function sendMessage() {
   toggleButton();
   if (message.length == 0) {
     console.log("kong");
-  } else {
+  } else if(blockMessage == true){
+      alert("Sorry, it seems like this user has indicated that they would not like to receive any messages at this time");
+  }else {
     console.log("send ni nai nai ge tuier: ", message);
     var ref = firebase.database().ref("/messages/" + getCurrentUserId() + "/" + friendId);
     ref.push({
@@ -153,6 +173,7 @@ function swithFriendChat(evt, item, id) {
   if (id != 0) {
     friendId = id;
     loadMessages();
+    blockMessages(friendId);
   } else {
     messageListElement.innerHTML = ' ';
     friendId = 0;

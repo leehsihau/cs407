@@ -254,6 +254,25 @@ function saveImageMessage(file) {
     });
 }
 
+const showPro = [];
+var showPro_index = 0;
+
+function showProfile(){
+  const db = firebase.firestore();
+  showPro.length = 0;
+  showPro_index = 0;
+
+  db.collection("privacySettings").get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        if(doc.data().privacy2 == true){
+          showPro[showPro_index] = doc.data().uid;
+          showPro_index++;
+        }
+    });
+});
+}
+
 var locations = firebase.database().ref("/userLocations");
 
 const m = {};
