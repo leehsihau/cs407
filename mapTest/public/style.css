@@ -732,3 +732,8 @@ input[type="checkbox"].switch_1{
   }
 	
 /* Switch 1 Specific Style End */
+
+.food-menus{
+  display: flex;
+  flex-direction: column;
+}

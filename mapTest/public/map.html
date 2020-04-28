@@ -79,7 +79,15 @@
         <button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
           Menus
         </button>
-        
+        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left"
+      class="mi-tab">
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuEarhart')" id="menu-earheart">Earhart</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuFord')" id="menu-ford">Ford</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuHillenbrand')" id="menu-hillenbrand">Hillenbrand</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWiley')" id="menu-wiley">Wiley</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWindsor')" id="menu-windsor">
+        Windsor</li>
+    </ul>
         </button>
       </div>
       <!--This is the UI for the settings button-->
@@ -89,15 +97,7 @@
 
     </div>
 
-    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left"
-      class="mi-tab">
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuEarhart')" id="menu-earheart">Earhart</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuFord')" id="menu-ford">Ford</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuHillenbrand')" id="menu-hillenbrand">Hillenbrand</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWiley')" id="menu-wiley">Wiley</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWindsor')" id="menu-windsor">
-        Windsor</li>
-    </ul>
+    
     <!--These are the menu items that make up the settings menu-->
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right"
       class="mi-tab">
@@ -351,21 +351,25 @@
       </div>
 
       <div class="tabcontent2 menu" id="MenuEarhart">
+        <h2 class="menu-header">Earhart Menu</h2>
         <div class="menu-page-wrapper" id="menu Earhart"></div>
       </div>
       <div class="tabcontent2 menu" id="MenuFord">
+        <h2 class="menu-header">Ford Menu</h2>
         <div class="menu-page-wrapper" id="menu Ford"></div>
-
       </div>
       <div class="tabcontent2 menu" id="MenuHillenbrand">
+        <h2 class="menu-header">Hillenbrand Menu</h2>
         <div class="menu-page-wrapper" id="menu Hillenbrand"></div>
 
       </div>
       <div class="tabcontent2 menu" id="MenuWiley">
+        <h2 class="menu-header">Wiley Menu</h2>
         <div class="menu-page-wrapper" id="menu Wiley"></div>
 
       </div>
       <div class="tabcontent2 menu" id="MenuWindsor">
+        <h2 class="menu-header">Windsor Menu</h2>
         <div class="menu-page-wrapper" id="menu Windsor"></div>
 
       </div>
