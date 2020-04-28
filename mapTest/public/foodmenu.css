@@ -1,0 +1,15 @@
+.menu-page-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.menu-item{
+    background-color: lightblue;
+    font-size: 18px;
+    height: 22px;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-top: 5px;
+}
