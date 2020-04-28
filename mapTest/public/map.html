@@ -20,13 +20,13 @@
   <script src="/__/firebase/init.js"></script>
   <link rel="stylesheet" href="style.css">
 
-
+  <link rel="stylesheet" href="foodmenu.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+  <script src="scripts/foodmenu.js"></script>
   <!-- App Styling -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
@@ -42,7 +42,7 @@
   </script>
 </head>
 
-<body>
+<body onload="loadMenu()">
   <div class="flex-wrapper">
     <div class="flex-nav-bar">
       <img src="logo.png" alt="logo">
@@ -52,7 +52,7 @@
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
           value="Submit Favorite Food">
       </div>
-
+      
       <div class="main_clock">
         <div class="date">
           <span id="weekday"></span>
@@ -75,6 +75,13 @@
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="delete1">
         delete
       </button>
+      <div class="food-menus">
+        <button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+          Menus
+        </button>
+        
+        </button>
+      </div>
       <!--This is the UI for the settings button-->
       <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
         <i class="material-icons">more_vert</i>
@@ -82,6 +89,15 @@
 
     </div>
 
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left"
+      class="mi-tab">
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuEarhart')" id="menu-earheart">Earhart</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuFord')" id="menu-ford">Ford</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuHillenbrand')" id="menu-hillenbrand">Hillenbrand</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWiley')" id="menu-wiley">Wiley</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWindsor')" id="menu-windsor">
+        Windsor</li>
+    </ul>
     <!--These are the menu items that make up the settings menu-->
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right"
       class="mi-tab">
@@ -332,6 +348,26 @@
             </ul>
           </div>
         </form>
+      </div>
+
+      <div class="tabcontent2 menu" id="MenuEarhart">
+        <div class="menu-page-wrapper" id="menu Earhart"></div>
+      </div>
+      <div class="tabcontent2 menu" id="MenuFord">
+        <div class="menu-page-wrapper" id="menu Ford"></div>
+
+      </div>
+      <div class="tabcontent2 menu" id="MenuHillenbrand">
+        <div class="menu-page-wrapper" id="menu Hillenbrand"></div>
+
+      </div>
+      <div class="tabcontent2 menu" id="MenuWiley">
+        <div class="menu-page-wrapper" id="menu Wiley"></div>
+
+      </div>
+      <div class="tabcontent2 menu" id="MenuWindsor">
+        <div class="menu-page-wrapper" id="menu Windsor"></div>
+
       </div>
     </div>
   </div>
