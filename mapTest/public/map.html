@@ -299,12 +299,12 @@
               <input class="switch_1" type="checkbox" id="privacy1" name="privacy1" value="usersMessage" onchange="updatePrivacySettings()">
             </div>
             <div class="privacy-question">
-              <label for="privacy2">Prevent other users from seeing your profile</label>
-              <input class="switch_1" type="checkbox" id="privacy2" name="privacy2" value="usersSeeProfile" onchange="updatePrivacySettings()">
+              <label for="privacy2">Prevent other users from viewing your profile</label>
+              <input class="switch_1" type="checkbox" id="privacy2" name="privacy2" value="usersSeeProfile" onchange="updatePrivacySettings(), showProfile(), window.onbeforeunload = null, window.location.reload()">
             </div>
             <div class="privacy-question">
               <label for="privacy3">Filter out users that don't have a profile pic set</label>
-              <input class="switch_1" type="checkbox" id="privacy3" name="privacy3" value="noProfile" onchange="updatePrivacySettings()">
+              <input class="switch_1" type="checkbox" id="privacy3" name="privacy3" value="noProfile" onchange="updatePrivacySettings(),window.onbeforeunload = null, window.location.reload()">
             </div>
             <br>
           </div>

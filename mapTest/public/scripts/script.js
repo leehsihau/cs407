@@ -273,6 +273,8 @@ function showProfile(){
 });
 }
 
+showProfile();
+
 var locations = firebase.database().ref("/userLocations");
 
 const m = {};
@@ -325,6 +327,7 @@ function loadProfilePics() {
             });
             var username = childData["username"];
             var user = "&quot;" + childSnapshot.val()["username"] + "&quot;";
+
             var contentString =
               '<div id="content">' +
               '<div id="siteNotice">' +
@@ -342,6 +345,18 @@ function loadProfilePics() {
               childKey +
               "> Block</button>";
             "</div>" + "</div>";
+
+            if(showPro.indexOf(childKey) != -1){
+              contentString =
+              '<div id="content">' +
+              '<div id="siteNotice">' +
+              "</div>" +
+              '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+              '<div id="bodyContent">' +
+              "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+              "</div>" + "</div>";
+            }
+
             var infowindow = new google.maps.InfoWindow({
               content: contentString
             });
@@ -349,17 +364,13 @@ function loadProfilePics() {
               infowindow.open(map, marker);
             });
 
-            /*google.maps.event.addListener(marker, "click", function () {
-              var marker = this;
-              alert("ID is: " + this.id);
-            });*/
-            //marker.metadata = {id: "profilePic"};
             marker.setMap(map);
             gmarkers.set(childKey, marker);
-          } else {
+          } else{
             profilePics[childKey] = "../profile_placeholder.png";
             gmarkers.get(childKey).setMap(null);
             gmarkers.delete(childKey);
+            if(document.getElementById("privacy3").checked == false){
             var marker = new google.maps.Marker({
               position: pos,
               icon: {
@@ -374,6 +385,7 @@ function loadProfilePics() {
             });
             var username = childData["username"];
             var username = "&quot;" + childSnapshot.val()["username"] + "&quot;";
+            
             var contentString =
               '<div id="content">' +
               '<div id="siteNotice">' +
@@ -391,6 +403,18 @@ function loadProfilePics() {
               childKey +
               "> Block</button>";
             "</div>" + "</div>";
+
+            if(showPro.indexOf(childKey) != -1){
+              contentString =
+              '<div id="content">' +
+              '<div id="siteNotice">' +
+              "</div>" +
+              '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+              '<div id="bodyContent">' +
+              "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+              "</div>" + "</div>";
+            }
+            
             var infowindow = new google.maps.InfoWindow({
               content: contentString
             });
@@ -398,14 +422,11 @@ function loadProfilePics() {
               infowindow.open(map, marker);
             });
 
-            /*google.maps.event.addListener(marker, "click", function () {
-              var marker = this;
-              alert("ID is: " + this.id);
-            });*/
-            //marker.metadata = {id: "profilePic"};
+            
             loadBlockList();
             marker.setMap(map);
             gmarkers.set(childKey, marker);
+          }
           }
         }
         loadFriends();
@@ -548,19 +569,15 @@ function loadLocations() {
         var childData = childSnapshot.val();
         var pos = childData["pos"];
         var user = "&quot;" + childSnapshot.val()["username"] + "&quot;";
+        
+        if(document.getElementById("privacy3").checked != true || profilePics[childKey] != "../profile_placeholder.png"){
         if(childData["isShown"] == 0) {
           if(gmarkers.get(childKey) != undefined) {
               gmarkers.get(childKey).setMap(null);
           }
           gmarkers.delete(childKey);
         }
-        // if(childKey == "HeJUKBTUH7OMlXWNjUSCNx74kXD3") {
-        //   console.log("disappear",childKey);
-        //   if(gmarkers.get(childKey) != undefined) {
-        //     gmarkers.get(childKey).setMap(null);
-        //   }
-        //   gmarkers.delete(childKey);
-        // }
+       
         if(childData["isShown"] == 1) {
           var contentString =
             '<div id="content">' +
@@ -579,6 +596,17 @@ function loadLocations() {
             childKey +
             " +> Block</button>";
           "</div>" + "</div>";
+
+          if(showPro.indexOf(childKey) != -1){
+            contentString =
+              '<div id="content">' +
+              '<div id="siteNotice">' +
+              "</div>" +
+              '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+              '<div id="bodyContent">' +
+              "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+              "</div>" + "</div>";
+          }
 
           var marker = new google.maps.Marker({
             position: pos,
@@ -602,6 +630,12 @@ function loadLocations() {
           marker.setMap(map);
           gmarkers.set(childKey, marker);
           console.log(gmarkers.size);
+        }else{
+          if(gmarkers.get(childKey) != undefined) {
+            gmarkers.get(childKey).setMap(null);
+          }
+          gmarkers.delete(childKey);
+        }
       }
       });
       return;
