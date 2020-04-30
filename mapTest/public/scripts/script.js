@@ -1211,8 +1211,9 @@ function loadMenu(){
         snapshot.forEach(function(child) {
           snapshot.forEach(function(child) {
             snapshot.forEach(function(child) {
+              var data = snapshot.val()
               if(diningCourt == 0){
-                var data = snapshot.val()
+                
                 earhart.push({food: data.Name, calories: data.calories});
               }
               else if(diningCourt == 1){
