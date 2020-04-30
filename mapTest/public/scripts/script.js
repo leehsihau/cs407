@@ -82,9 +82,6 @@ function checkLogIn() {
   }
 }
 
-var filterNoProfile = false;
-console.log("BOOLEAN IS SET");
-
 function onDeleteAccount() {
   document.getElementById("delete1").addEventListener("click", deleteAccount);
 }
@@ -1405,8 +1402,6 @@ firebase.auth().onAuthStateChanged((user) => {
       navigator.geolocation.getCurrentPosition(
         function (position) {
           getLocationAndUpload();
-          console.log("GETLOCATION HAS RUN-LOGIN");
-          console.log("initial location");
           const firestore = firebase.firestore();
           /*const settings = {
           timestampsInSnapshots: true
@@ -1497,16 +1492,8 @@ function toggleButton() {
   }
 }
 
-//setInterval(getLocationAndUpload, 5000);
-//checkLogIn();
-
-console.log("LOADLOCATIONS HAS RUN");
 loadProfilePics();
 loadLocations();
-console.log("LOADPROFILEPICS HAS RUN");
-
-//loadFriends();
-//saveMessagingDeviceToken();
 
 /**
  * DOM elements
