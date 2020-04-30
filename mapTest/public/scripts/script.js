@@ -335,7 +335,7 @@ function loadProfilePics() {
               '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
               '<div id="bodyContent">' +
               username +
-              "<p><b>Favorite Food List: </b></p>" +
+              "<p><b>User Options: </b></p>" +
               '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
               childKey +
               "> friend me</button><p></p>" +
@@ -355,6 +355,19 @@ function loadProfilePics() {
               '<div id="bodyContent">' +
               "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
               "</div>" + "</div>";
+            }
+
+            if(childKey == getCurrentUserId()){
+              var contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                '<div id="bodyContent">' +
+                childData["username"] + ' (You)' +
+                "<b></b>" +
+                "</div>" + "</div>"
+              ;
             }
 
             var infowindow = new google.maps.InfoWindow({
@@ -368,66 +381,79 @@ function loadProfilePics() {
             gmarkers.set(childKey, marker);
           } else{
             profilePics[childKey] = "../profile_placeholder.png";
-            if(document.getElementById("privacy3").checked == false){
-            gmarkers.get(childKey).setMap(null);
-            gmarkers.delete(childKey);
+            if(document.getElementById("privacy3").checked == false || childKey == getCurrentUserId()){
+              gmarkers.get(childKey).setMap(null);
+              gmarkers.delete(childKey);
             
-            var marker = new google.maps.Marker({
-              position: pos,
-              icon: {
-                url: ".. /profile_placeholder.png",
-                scaledSize: new google.maps.Size(49, 40)
-              },
+              var marker = new google.maps.Marker({
+                position: pos,
+                icon: {
+                  url: ".. /profile_placeholder.png",
+                  scaledSize: new google.maps.Size(49, 40)
+                },
 
-              // animation: google.maps.Animation.DROP,
-              id: childKey,
-              title: childKey,
-              optimized: false
-            });
-            var username = childData["username"];
-            var username = "&quot;" + childSnapshot.val()["username"] + "&quot;";
+                // animation: google.maps.Animation.DROP,
+                id: childKey,
+                title: childKey,
+                optimized: false
+              });
+              var username = childData["username"];
+              var username = "&quot;" + childSnapshot.val()["username"] + "&quot;";
             
-            var contentString =
-              '<div id="content">' +
-              '<div id="siteNotice">' +
-              "</div>" +
-              '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
-              '<div id="bodyContent">' +
-              username +
-              "<p><b>Favorite Food List: </b></p>" +
-              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
-              childKey +
-              "> friend me</button><p></p>" +
-              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
-              user +
-              ')" id=' +
-              childKey +
-              "> Block</button>";
-            "</div>" + "</div>";
-
-            if(showPro.indexOf(childKey) != -1){
-              contentString =
-              '<div id="content">' +
-              '<div id="siteNotice">' +
-              "</div>" +
-              '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
-              '<div id="bodyContent">' +
-              "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+              var contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                '<div id="bodyContent">' +
+                username +
+                "<p><b>User Options: </b></p>" +
+                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
+                childKey +
+                "> friend me</button><p></p>" +
+                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
+                user +
+                ')" id=' +
+                childKey +
+                "> Block</button>";
               "</div>" + "</div>";
-            }
+
+              if(showPro.indexOf(childKey) != -1){
+                contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                '<div id="bodyContent">' +
+                "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+                "</div>" + "</div>";
+              }
+
+              if(childKey == getCurrentUserId()){
+                var contentString =
+                  '<div id="content">' +
+                  '<div id="siteNotice">' +
+                  "</div>" +
+                  '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                  '<div id="bodyContent">' +
+                  childData["username"] + ' (You)' +
+                  "<b></b>" +
+                  "</div>" + "</div>"
+                ;
+              }
             
-            var infowindow = new google.maps.InfoWindow({
-              content: contentString
-            });
-            google.maps.event.addListener(marker, "click", function() {
-              infowindow.open(map, marker);
-            });
+              var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+              google.maps.event.addListener(marker, "click", function() {
+                infowindow.open(map, marker);
+              });
 
             
-            loadBlockList();
-            marker.setMap(map);
-            gmarkers.set(childKey, marker);
-          }
+              loadBlockList();
+              marker.setMap(map);
+              gmarkers.set(childKey, marker);
+            }
           }
         }
         loadFriends();
@@ -587,7 +613,7 @@ function loadLocations() {
                 '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
                 '<div id="bodyContent">' +
                 childData["username"] +
-                "<p><b>Favorite Food List: </b></p>" +
+                "<p><b>User Options: </b></p>" +
                 '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
                 childKey +
                 "> friend me</button><p></p>" +
@@ -607,6 +633,19 @@ function loadLocations() {
                   '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
                   '<div id="bodyContent">' +
                   "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+                  "</div>" + "</div>"
+                ;
+              }
+
+              if(childKey == getCurrentUserId()){
+                var contentString =
+                  '<div id="content">' +
+                  '<div id="siteNotice">' +
+                  "</div>" +
+                  '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                  '<div id="bodyContent">' +
+                  childData["username"] + ' (You)' +
+                  "<b></b>" +
                   "</div>" + "</div>"
                 ;
               }
@@ -635,10 +674,12 @@ function loadLocations() {
               console.log(gmarkers.size);
             } 
             if(document.getElementById("privacy3").checked == true && profilePics[childKey] == "../profile_placeholder.png"){
-              if(gmarkers.get(childKey) != undefined) {
-                gmarkers.get(childKey).setMap(null);
+              if(childKey != getCurrentUserId()){
+                if(gmarkers.get(childKey) != undefined) {
+                  gmarkers.get(childKey).setMap(null);
+                }
+                gmarkers.delete(childKey);
               }
-              gmarkers.delete(childKey);
             } 
       });
       return;
