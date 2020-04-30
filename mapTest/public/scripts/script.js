@@ -1202,13 +1202,13 @@ function getPropertyRecursive(obj, property){
 function loadMenu(){
   var allFood;
   foodRec.once('value').then(function(snapshot){
-    allfood = snapshot.val();
+    allFood = snapshot.val();
   });
-  var earhart = allfood.Earhart;
-  var ford = allfood.Ford;
-  var hillenbrand = allfood.Hillenbrand;
-  var wiley = allfood.Wiley
-  var windsor = allfood.Windsor;
+  var earhart = allFood.Earhart;
+  var ford = allFood.Ford;
+  var hillenbrand = allFood.Hillenbrand;
+  var wiley = allFood.Wiley
+  var windsor = allFood.Windsor;
 
   var earhartFood = getPropertyRecursive(earhart, 'Name');
   var earhartCalories = getPropertyRecursive(earhart, 'calories');
