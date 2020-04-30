@@ -1177,3 +1177,70 @@ function getBMI(){
     console.log("Error getting document:", error);
 });
 }
+
+var foodRec = firebase.database().ref("/Recommendation");
+
+function traverse(obj,func, parent) {
+  for (i in obj){
+    func.apply(this,[i,obj[i],parent]);      
+    if (obj[i] instanceof Object && !(obj[i] instanceof Array)) {
+      traverse(obj[i],func, i);
+    }
+  }
+}
+
+function getPropertyRecursive(obj, property){
+  var acc = [];
+  traverse(obj, function(key, value, parent){
+    if(key === property){
+      acc.push({parent: parent, value: value});
+    }
+  });
+  return acc;
+}
+
+function loadMenu(){
+  var allFood;
+  foodRec.once('value').then(function(snapshot){
+    allfood = snapshot.val();
+  });
+  var earhart = allfood.Earhart;
+  var ford = allfood.Ford;
+  var hillenbrand = allfood.Hillenbrand;
+  var wiley = allfood.Wiley
+  var windsor = allfood.Windsor;
+
+  var earhartFood = getPropertyRecursive(earhart, 'Name');
+  var earhartCalories = getPropertyRecursive(earhart, 'calories');
+  var fordFood = getPropertyRecursive(ford, 'Name');
+  var fordCalories = getPropertyRecursive(ford, 'calories');
+  var hillenbrandFood = getPropertyRecursive(hillenbrand, 'Name');
+  var hillenbrandCalories = getPropertyRecursive(hillenbrand, 'calories');
+  var wileyFood = getPropertyRecursive(wiley, 'Name');
+  var wileyCalories = getPropertyRecursive(wiley, 'calories');
+  var windsorFood = getPropertyRecursive(windsor, 'Name');
+  var windsorCalories = getPropertyRecursive(windsor, 'calories');
+
+  var parsedFood = [earhartFood, fordFood, hillenbrandFood, wileyFood, windsorFood, earhartCalories, fordCalories, hillenbrandCalories, wileyCalories, windsorCalories];
+
+  var menus = ["menu Earhart", "menu Ford", "menu Hillenbrand", "menu Wiley", "menu Windsor"];
+  var mealtime;
+  for(let j = 0; j < 5; j++){
+  for(let i = 0; i < parsedFood[j].length; i++){
+      var node = document.createElement("div"); //Wrapper
+      node.setAttribute('class', 'menu-item-wrapper');  
+      var node3 = document.createElement("div");
+      node3.setAttribute('class', 'menu-item'); //Item name
+      var textnode = document.createTextNode(parsedFood[j][i].value);
+      node3.appendChild(textnode);
+      var node2 = document.createElement("div");
+      node2.setAttribute('class', 'calories'); //Calories
+      var calories; //Fetch calories from JSON
+      var textnode2 = document.createTextNode("Calories: " + parsedFood[j+5][i].value);
+      node2.appendChild(textnode2);
+      node.appendChild(node3);
+      node.appendChild(node2);
+      document.getElementById(menus[j]).appendChild(node);
+    }
+  }
+}

@@ -52,7 +52,19 @@
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
           value="Submit Favorite Food">
       </div>
-      
+        
+      <button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        Menus
+      </button>
+      <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left"
+    class="mi-tab">
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuEarhart')" id="menu-earheart">Earhart</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuFord')" id="menu-ford">Ford</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuHillenbrand')" id="menu-hillenbrand">Hillenbrand</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWiley')" id="menu-wiley">Wiley</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWindsor')" id="menu-windsor">
+      Windsor</li>
+    </ul>
       <div class="main_clock">
         <div class="date">
           <span id="weekday"></span>
@@ -75,21 +87,7 @@
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="delete1">
         delete
       </button>
-      <div class="food-menus">
-        <button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-          Menus
-        </button>
-        <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left"
-      class="mi-tab">
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuEarhart')" id="menu-earheart">Earhart</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuFord')" id="menu-ford">Ford</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuHillenbrand')" id="menu-hillenbrand">Hillenbrand</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWiley')" id="menu-wiley">Wiley</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWindsor')" id="menu-windsor">
-        Windsor</li>
-    </ul>
-        </button>
-      </div>
+      
       <!--This is the UI for the settings button-->
       <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
         <i class="material-icons">more_vert</i>
