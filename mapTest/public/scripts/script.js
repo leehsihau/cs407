@@ -368,9 +368,10 @@ function loadProfilePics() {
             gmarkers.set(childKey, marker);
           } else{
             profilePics[childKey] = "../profile_placeholder.png";
+            if(document.getElementById("privacy3").checked == false){
             gmarkers.get(childKey).setMap(null);
             gmarkers.delete(childKey);
-            if(document.getElementById("privacy3").checked == false){
+            
             var marker = new google.maps.Marker({
               position: pos,
               icon: {
@@ -570,73 +571,75 @@ function loadLocations() {
         var pos = childData["pos"];
         var user = "&quot;" + childSnapshot.val()["username"] + "&quot;";
         
-        if(document.getElementById("privacy3").checked != true || profilePics[childKey] != "../profile_placeholder.png"){
-        if(childData["isShown"] == 0) {
-          if(gmarkers.get(childKey) != undefined) {
-              gmarkers.get(childKey).setMap(null);
-          }
-          gmarkers.delete(childKey);
-        }
-       
-        if(childData["isShown"] == 1) {
-          var contentString =
-            '<div id="content">' +
-            '<div id="siteNotice">' +
-            "</div>" +
-            '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
-            '<div id="bodyContent">' +
-            childData["username"] +
-            "<p><b>Favorite Food List: </b></p>" +
-            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
-            childKey +
-            "> friend me</button><p></p>" +
-            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
-            user +
-            ')" id=' +
-            childKey +
-            " +> Block</button>";
-          "</div>" + "</div>";
-
-          if(showPro.indexOf(childKey) != -1){
-            contentString =
-              '<div id="content">' +
-              '<div id="siteNotice">' +
-              "</div>" +
-              '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
-              '<div id="bodyContent">' +
-              "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
-              "</div>" + "</div>";
-          }
-
-          var marker = new google.maps.Marker({
-            position: pos,
-            // animation: google.maps.Animation.DROP,
-            icon: {
-              url: profilePics[childKey],
-              scaledSize: new google.maps.Size(49, 40)
-            },
-
-            id: childKey,
-            title: childKey,
-            optimized: false
-          });
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString
-          });
-          marker.addListener("click", function() {
-            infowindow.open(map, marker);
-          });
-          loadBlockList();
-          marker.setMap(map);
-          gmarkers.set(childKey, marker);
-          console.log(gmarkers.size);
-        }else{
-          if(gmarkers.get(childKey) != undefined) {
-            gmarkers.get(childKey).setMap(null);
-          }
-          gmarkers.delete(childKey);
-        }
-      }
+        
+            if(childData["isShown"] == 0) {
+              if(gmarkers.get(childKey) != undefined) {
+                gmarkers.get(childKey).setMap(null);
+              }
+              gmarkers.delete(childKey);
+            }
+         
+            if(childData["isShown"] == 1) {
+              var contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                '<div id="bodyContent">' +
+                childData["username"] +
+                "<p><b>Favorite Food List: </b></p>" +
+                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
+                childKey +
+                "> friend me</button><p></p>" +
+                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
+                user +
+                ')" id=' +
+                childKey +
+                " +> Block</button>";
+                "</div>" + "</div>"
+              ;
+  
+              if(showPro.indexOf(childKey) != -1){
+                contentString =
+                  '<div id="content">' +
+                  '<div id="siteNotice">' +
+                  "</div>" +
+                  '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                  '<div id="bodyContent">' +
+                  "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+                  "</div>" + "</div>"
+                ;
+              }
+  
+              var marker = new google.maps.Marker({
+                position: pos,
+                // animation: google.maps.Animation.DROP,
+                icon: {
+                  url: profilePics[childKey],
+                  scaledSize: new google.maps.Size(49, 40)
+                },
+  
+                id: childKey,
+                title: childKey,
+                optimized: false
+                });
+              var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+              marker.addListener("click", function() {
+                infowindow.open(map, marker);
+              });
+              loadBlockList();
+              marker.setMap(map);
+              gmarkers.set(childKey, marker);
+              console.log(gmarkers.size);
+            } 
+            if(document.getElementById("privacy3").checked == true && profilePics[childKey] == "../profile_placeholder.png"){
+              if(gmarkers.get(childKey) != undefined) {
+                gmarkers.get(childKey).setMap(null);
+              }
+              gmarkers.delete(childKey);
+            } 
       });
       return;
     });
