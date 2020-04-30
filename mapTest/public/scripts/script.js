@@ -1205,6 +1205,7 @@ function loadMenu(){
   foodRec.once("value", function(snapshot){
     allFood = snapshot.val();
   });
+  console.log(allFood);
   var earhart = allFood.Earhart;
   var ford = allFood.Ford;
   var hillenbrand = allFood.Hillenbrand;
