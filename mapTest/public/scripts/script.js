@@ -1180,7 +1180,7 @@ function getBMI(){
 
 function loadMenu(){
   var allFood;
-  var diningCourt = 0;
+  var diningCourt = -1;
   
   var earhart = [];
   var ford = [];
@@ -1189,31 +1189,15 @@ function loadMenu(){
   var windsor = [];
   
   var foodRec = firebase.database().ref("/Recommendation");
-  
   foodRec.once("value", function(snapshot, context) {
-    if(snapshot.child.val() == "Earhart"){
-      diningCourt = 0;
-    }
-    else if(snapshot.child.val() == "Ford"){
-      diningCourt = 1;
-    }
-    else if(snapshot.child.val() == "Hillenbrand"){
-      diningCourt = 2;
-    }
-    else if(snapshot.child.val() == "Wiley"){
-      diningCourt = 3;
-    }
-    else if(snapshot.child.val() == "Windsor"){
-      diningCourt = 4;
-    }
     snapshot.forEach(function(child) {
+      diningCourt++;
       snapshot.forEach(function(child) {
         snapshot.forEach(function(child) {
           snapshot.forEach(function(child) {
             snapshot.forEach(function(child) {
               var data = snapshot.val()
               if(diningCourt == 0){
-                
                 earhart.push({food: data.Name, calories: data.calories});
               }
               else if(diningCourt == 1){
