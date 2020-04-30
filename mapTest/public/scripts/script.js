@@ -1,6 +1,80 @@
 let map, infoWindow;
 let gmarkers = new Map(); //array for google map markers
 
+let xyzbmi;
+let dinCourts = ["Earhart", "Ford", "Hillenbrand", "Wiley", "Windsor"];
+let dinCred = [
+  "Recommendation/Earhart/-M3I7dJZKbVFfE_5i5hr/1/",
+  "Recommendation/Ford/-M3I7gtUW5AUGhJFqjxT/1/",
+  "Recommendation/Hillenbrand/-M3I7_m3Tp711R2c4_WQ/1/",
+  "Recommendation/Wiley/-M3I7jd_-yX2mkIN9fxc/1/",
+  "Recommendation/Windsor/-M3I7nDOqS_Ek2iQj17f/1/",
+];
+document.getElementById("recommend").addEventListener("click", function () {
+  getBMI();
+  let bmi = parseFloat(xyzbmi);
+  if (bmi < 25) {
+    dinList = [
+      ["3", "2", "1", "0"],
+      ["1"],
+      ["1", "0"],
+      ["2", "1", "0"],
+      ["1", "0"],
+    ];
+  } else {
+    dinList = [
+      ["0", "1"],
+      ["0", "1"],
+      ["0", "1"],
+      ["0", "1"],
+      ["0", "1"],
+    ];
+  }
+  loadRecList(dinList, false);
+});
+document.getElementById("gain").addEventListener("click", function () {
+  dinList = [["3", "2", "1"], ["1"], ["1"], ["2", "1"], ["3", "1"]];
+  loadRecList(dinList, false);
+});
+
+document.getElementById("lose").addEventListener("click", function () {
+  dinList = [["0"], ["0"], ["0"], ["0"], ["0"]];
+  loadRecList(dinList, false);
+});
+document.getElementById("vegeterian").addEventListener("click", function () {
+  dinList = [
+    ["0", "1", "2", "3"],
+    ["0", "1"],
+    ["0", "1"],
+    ["0", "1", "2"],
+    ["0", "1", "3"],
+  ];
+  loadRecList(dinList, true);
+});
+function loadRecList(dinList, vege) {
+  for (i = 0; i < dinCourts.length; i++) {
+    document.getElementById(`${dinCourts[i]}`).innerHTML = "";
+    for (j = 0; j < dinList[i].length; j++) {
+      firebase
+        .database()
+        .ref(`${dinCred[i]}${dinList[i][j]}`)
+        .on("value", function (snap) {
+          snap.forEach(function (childNodes) {
+            if (vege) {
+              if (childNodes.val().IsVegetarian) {
+                document.getElementById(`${dinCourts[i]}`).innerHTML +=
+                  "<p class='BB'>" + childNodes.val().Name + "</p>";
+              }
+            } else {
+              document.getElementById(`${dinCourts[i]}`).innerHTML +=
+                "<p class='BB'>" + childNodes.val().Name + "</p>";
+            }
+          });
+        });
+    }
+  }
+}
+
 function checkLogIn() {
   var uid = getCurrentUserId();
   if (uid == null) {
@@ -19,20 +93,20 @@ function deleteAccount() {
   var user = firebase.auth().currentUser;
   console.log(user);
 
-  if(confirm("Are you sure you want to delete your account?")){
+  if (confirm("Are you sure you want to delete your account?")) {
     /*console.log("Deleted");*/
     user
-    .delete()
-    .then(function() {
-      // User deleted.
+      .delete()
+      .then(function () {
+        // User deleted.
 
-      window.location("./createaccount.html");
-    })
-    .catch(function(error) {
-      console.log(error);
-      // An error happened.
-    });
-  }else{
+        window.location("./createaccount.html");
+      })
+      .catch(function (error) {
+        console.log(error);
+        // An error happened.
+      });
+  } else {
     /*console.log("Cancelled");*/
   }
 }
@@ -43,13 +117,13 @@ function signOut() {
   firebase
     .auth()
     .signOut()
-    .then(function() {
+    .then(function () {
       const db = firebase.database();
       db.ref("/userLocations/" + uid).remove();
       window.location = "./index.html";
       // Sign-out successful.
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // An error happened.
     });
 }
@@ -65,13 +139,10 @@ function saveMessagingDeviceToken() {
   firebase
     .messaging()
     .getToken()
-    .then(function(currentToken) {
+    .then(function (currentToken) {
       if (currentToken) {
         console.log("Got FCM device token:", currentToken);
-        firebase
-          .database()
-          .ref("/fcmTokens")
-          .push(currentToken);
+        firebase.database().ref("/fcmTokens").push(currentToken);
         //firebase.database().ref('/fcmTokens').child(currentToken)
         // .set(firebase.auth().currentUser.uid);
       } else {
@@ -79,7 +150,7 @@ function saveMessagingDeviceToken() {
         requestNotificationsPermissions();
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Unable to get messaging device token:", error);
     });
 }
@@ -88,10 +159,10 @@ function initMap() {
   map = new google.maps.Map(document.getElementById("map-canvas"), {
     center: { lat: 40.426764, lng: -86.919632 },
     zoom: 15,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
   });
   var myoverlay = new google.maps.OverlayView();
-  myoverlay.draw = function() {
+  myoverlay.draw = function () {
     this.getPanes().markerLayer.id = "markerLayer";
   };
   myoverlay.setMap(map);
@@ -110,10 +181,10 @@ function getLocationAndUpload() {
   if (user != null) {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(
-        function(position) {
+        function (position) {
           let pos = {
             lat: position.coords.latitude,
-            lng: position.coords.longitude
+            lng: position.coords.longitude,
           };
           let timestamp = firebase.database.ServerValue.TIMESTAMP;
 
@@ -153,19 +224,16 @@ function getLocationAndUpload() {
             pos: pos,
             timestamp: dateString,
             username: name,
-            isShown: 1
+            isShown: 1,
           };
           console.log("uploading: ", pos);
-          firebase
-            .database()
-            .ref()
-            .update(updates);
+          firebase.database().ref().update(updates);
         },
-        function(err) {
+        function (err) {
           console.log("err", err);
         },
         {
-          enableHighAccuracy: true
+          enableHighAccuracy: true,
         }
       );
     } else {
@@ -201,7 +269,7 @@ function saveImageMessage(file) {
     (month + 1) +
     "-" +
     year;
-  
+
   // TODO 9: Posts a new image as a message.
   const firestore = firebase.firestore();
   /*const settings = {
@@ -209,20 +277,17 @@ function saveImageMessage(file) {
   };
   firestore.settings(settings);*/
 
-  const listRef = firebase
-    .storage()
-    .ref()
-    .child(getCurrentUserId());
+  const listRef = firebase.storage().ref().child(getCurrentUserId());
   listRef
     .listAll()
-    .then(fileRef => {
-      fileRef.items.forEach(function(imageRef) {
+    .then((fileRef) => {
+      fileRef.items.forEach(function (imageRef) {
         // And finally display them
         imageRef.delete();
       });
       //fileRef.delete();
     })
-    .catch(error => {
+    .catch((error) => {
       console.log("shabinima: ", error);
     });
 
@@ -231,9 +296,9 @@ function saveImageMessage(file) {
     .storage()
     .ref(filePath)
     .put(file)
-    .then(function(fileSnapshot) {
+    .then(function (fileSnapshot) {
       // 3 - Generate a public URL for the file.
-      return fileSnapshot.ref.getDownloadURL().then(url => {
+      return fileSnapshot.ref.getDownloadURL().then((url) => {
         // 4 - Update the chat message placeholder with the image’s URL.
 
         firebase
@@ -244,9 +309,9 @@ function saveImageMessage(file) {
             uid: getCurrentUserId(),
             timestamp: dateString,
             imageUrl: url,
-            storageUri: fileSnapshot.metadata.fullPath
+            storageUri: fileSnapshot.metadata.fullPath,
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log("error: " + error);
           });
       });
@@ -263,9 +328,9 @@ function loadProfilePics() {
   var query = firebase.firestore().collection("usersProfilePics");
 
   // Start listening to the query.
-  query.onSnapshot(function(snapshot) {
+  query.onSnapshot(function (snapshot) {
     console.log("called");
-    snapshot.docChanges().forEach(function(change) {
+    snapshot.docChanges().forEach(function (change) {
       var message = change.doc.data();
       //console.log("someone just uploaded their profilePic");
       //console.log("imageUrl", message.imageUrl);
@@ -273,8 +338,8 @@ function loadProfilePics() {
         profilePics[message.uid] = message.imageUrl;
       }
     });
-    locations.once("value", function(snapshot_) {
-      snapshot_.forEach(function(childSnapshot) {
+    locations.once("value", function (snapshot_) {
+      snapshot_.forEach(function (childSnapshot) {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData["pos"];
@@ -286,13 +351,13 @@ function loadProfilePics() {
             position: pos,
             icon: {
               url: profilePics[childKey],
-              scaledSize: new google.maps.Size(49, 40)
+              scaledSize: new google.maps.Size(49, 40),
             },
 
             //animation: google.maps.Animation.DROP,
             id: childKey,
             title: childKey,
-            optimized: false
+            optimized: false,
           });
           var username = childData["username"];
           var contentString =
@@ -308,9 +373,9 @@ function loadProfilePics() {
             "> friend me</button>";
           "</div>" + "</div>";
           var infowindow = new google.maps.InfoWindow({
-            content: contentString
+            content: contentString,
           });
-          google.maps.event.addListener(marker, "click", function() {
+          google.maps.event.addListener(marker, "click", function () {
             infowindow.open(map, marker);
           });
 
@@ -321,22 +386,22 @@ function loadProfilePics() {
           //marker.metadata = {id: "profilePic"};
           marker.setMap(map);
           gmarkers.set(childKey, marker);
-        } else{
+        } else {
           profilePics[childKey] = "../profile_placeholder.png";
           gmarkers.get(childKey).setMap(null);
           gmarkers.delete(childKey);
-          if(filterNoProfile==false){
+          if (filterNoProfile == false) {
             var marker = new google.maps.Marker({
               position: pos,
               icon: {
                 url: ".. /profile_placeholder.png",
-                scaledSize: new google.maps.Size(49, 40)
+                scaledSize: new google.maps.Size(49, 40),
               },
 
               // animation: google.maps.Animation.DROP,
               id: childKey,
               title: childKey,
-              optimized: false
+              optimized: false,
             });
             var username = childData["username"];
             var contentString =
@@ -352,9 +417,9 @@ function loadProfilePics() {
               "> friend me</button>";
             "</div>" + "</div>";
             var infowindow = new google.maps.InfoWindow({
-              content: contentString
+              content: contentString,
             });
-            google.maps.event.addListener(marker, "click", function() {
+            google.maps.event.addListener(marker, "click", function () {
               infowindow.open(map, marker);
             });
 
@@ -376,7 +441,7 @@ function loadProfilePics() {
 
 function loadLocations() {
   let flag = true;
-  locations.on("value", function(snapshot, context) {
+  locations.on("value", function (snapshot, context) {
     //console.log("called");
     //console.log(snapshot);
     if (gmarkers.size != 0) {
@@ -387,8 +452,8 @@ function loadLocations() {
       }
     }
     console.log("lai le");
-    locations.once("value", function(snapshot_) {
-      snapshot_.forEach(function(childSnapshot) {
+    locations.once("value", function (snapshot_) {
+      snapshot_.forEach(function (childSnapshot) {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData["pos"];
@@ -406,23 +471,26 @@ function loadLocations() {
           "> friend me</button>";
         "</div>" + "</div>";
 
-        if(profilePics[childKey] != undefined || (profilePics[childKey] == undefined && filterNoProfile==false)){
+        if (
+          profilePics[childKey] != undefined ||
+          (profilePics[childKey] == undefined && filterNoProfile == false)
+        ) {
           var marker = new google.maps.Marker({
             position: pos,
             // animation: google.maps.Animation.DROP,
             icon: {
               url: profilePics[childKey],
-              scaledSize: new google.maps.Size(49, 40)
+              scaledSize: new google.maps.Size(49, 40),
             },
 
             id: childKey,
             title: childKey,
-            optimized: false
+            optimized: false,
           });
           var infowindow = new google.maps.InfoWindow({
-            content: contentString
+            content: contentString,
           });
-          marker.addListener("click", function() {
+          marker.addListener("click", function () {
             infowindow.open(map, marker);
           });
           marker.setMap(map);
@@ -441,21 +509,29 @@ function loadFavoriteFoodList() {
     .database()
     .ref("/favoriteFoodList/")
     .child(uid);
-  favoriteFoodList.once("value", function(snapshot, context) {
+  favoriteFoodList.once("value", function (snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
-    snapshot.forEach(function(child) {
-      food = child.val()['food'];
+    snapshot.forEach(function (child) {
+      food = child.val()["food"];
       document.getElementById("favFoodContainer").innerHTML +=
-      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
+        "<li>" +
+        food +
+        '<span class="close" onclick ="removeFavFood(\'' +
+        child.key +
+        "');\">&times;</span></li>";
       console.log("fav food", child.val()["food"]);
     });
   });
-  favoriteFoodList.on("value", function(snapshot, context) {
+  favoriteFoodList.on("value", function (snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
-    snapshot.forEach(function(child) {
-      var food = child.val()['food'];
+    snapshot.forEach(function (child) {
+      var food = child.val()["food"];
       document.getElementById("favFoodContainer").innerHTML +=
-      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
+        "<li>" +
+        food +
+        '<span class="close" onclick ="removeFavFood(\'' +
+        child.key +
+        "');\">&times;</span></li>";
       console.log("fav food", child.val()["food"]);
     });
   });
@@ -463,13 +539,10 @@ function loadFavoriteFoodList() {
 
 function loadFriends() {
   var uid = getCurrentUserId();
-  var friendList = firebase
-    .database()
-    .ref("/friendList/")
-    .child(uid);
-  friendList.once("value", function(snapshot, context) {
+  var friendList = firebase.database().ref("/friendList/").child(uid);
+  friendList.once("value", function (snapshot, context) {
     friendsDir.innerHTML = "<h2>Friends</h2>";
-    snapshot.forEach(function(childSnapshot) {
+    snapshot.forEach(function (childSnapshot) {
       //if (childSnapshot.key == uid) {
       console.log("friend request: ", childSnapshot.key);
       //var node = document.createElement("LI");                 // Create a <li> node
@@ -535,10 +608,10 @@ function friendListTrigger() {
     .database()
     .ref("/friendList/")
     .child(getCurrentUserId());
-  friendList.on("value", function(snapshot, context) {
+  friendList.on("value", function (snapshot, context) {
     console.log("jibascao");
     friendsDir.innerHTML = "<h2>Friends</h2>";
-    snapshot.forEach(function(childSnapshot) {
+    snapshot.forEach(function (childSnapshot) {
       //if (childSnapshot.key == uid) {
       console.log("friend request: ", childSnapshot.key);
       //var node = document.createElement("LI");                 // Create a <li> node
@@ -568,12 +641,11 @@ function friendListTrigger() {
           ">Delete</div>" +
           "</div>" +
           "</div>";
-          friendsDir.innerHTML += friendRequestPlaceHolder;
-          $(document).on('click','#'+childSnapshot.key+' img',function(){
-            console.log(this.id)
-            swithFriendChat(event, 'chatDir',childSnapshot.key)
-            
-          });
+        friendsDir.innerHTML += friendRequestPlaceHolder;
+        $(document).on("click", "#" + childSnapshot.key + " img", function () {
+          console.log(this.id);
+          swithFriendChat(event, "chatDir", childSnapshot.key);
+        });
       } else {
         friendRequestPlaceHolder =
           '<div class="fb" id=' +
@@ -598,10 +670,8 @@ function friendListTrigger() {
           ">Delete</div>" +
           "</div>" +
           "</div>";
-          friendsDir.innerHTML += friendRequestPlaceHolder;
+        friendsDir.innerHTML += friendRequestPlaceHolder;
       }
-
-      
     });
   });
 }
@@ -630,7 +700,7 @@ function acceptFriend(friendId, username) {
     (month + 1) +
     "-" +
     year;
-  
+
   console.log("accpeted: ", friendId);
   updates = {};
   var uid = getCurrentUserId();
@@ -638,26 +708,19 @@ function acceptFriend(friendId, username) {
   var email = user.email;
   var name = email.substring(0, email.indexOf("@"));
   updates["/friendList/" + uid + "/" + friendId] = {
-
     friendStatus: 1,
     timestamp: dateString,
     username: username,
-    profUrl: profilePics[uid]
+    profUrl: profilePics[uid],
   };
-  firebase
-    .database()
-    .ref()
-    .update(updates);
+  firebase.database().ref().update(updates);
   updates["/friendList/" + friendId + "/" + uid] = {
     friendStatus: 1,
     timestamp: dateString,
     username: name,
-    profUrl: profilePics[uid]
+    profUrl: profilePics[uid],
   };
-  firebase
-    .database()
-    .ref()
-    .update(updates);
+  firebase.database().ref().update(updates);
 }
 
 function rejectFriend(friendId, username) {
@@ -723,12 +786,9 @@ function friendStatus(friendId) {
     friendStatus: 0,
     timestamp: dateString,
     username: name,
-    profUrl: profilePics[uid]
+    profUrl: profilePics[uid],
   };
-  firebase
-    .database()
-    .ref()
-    .update(updates);
+  firebase.database().ref().update(updates);
 }
 
 function favoriteDiningCourt(diningCourtId) {
@@ -739,15 +799,12 @@ function favoriteDiningCourt(diningCourtId) {
   updates[
     "/favoriteDiningCourts/" + getCurrentUserId() + "/" + diningCourtId
   ] = 1;
-  firebase
-    .database()
-    .ref()
-    .update(updates);
+  firebase.database().ref().update(updates);
 }
 
 function addFavFood() {
   var food = document.getElementById("favFoodText");
-  if(food.value == "") {
+  if (food.value == "") {
     return;
   }
   console.log(getCurrentUserId());
@@ -758,17 +815,17 @@ function addFavFood() {
   updates = {};
   updates["/favoriteFoodList/" + getCurrentUserId()] = food.value;
   pRef.set({
-    food: food.value
+    food: food.value,
   });
 }
 
 function removeFavFood(childval) {
   console.log("/friendList/" + getCurrentUserId() + "/" + childval);
   var favoriteFoodList = firebase
-  .database()
-  .ref("/favoriteFoodList/" + getCurrentUserId())
-  .child(childval)
-  .remove()
+    .database()
+    .ref("/favoriteFoodList/" + getCurrentUserId())
+    .child(childval)
+    .remove();
 }
 
 function loadDiningCourts() {
@@ -784,14 +841,14 @@ function loadDiningCourts() {
   firebase
     .database()
     .ref("/favoriteDiningCourts/" + getCurrentUserId())
-    .once("value", function(snapshot_) {
+    .once("value", function (snapshot_) {
       firebase
         .database()
         .ref("/timeSheets")
-        .once("value", function(snapshot) {
-          snapshot.forEach(function(childSnapshot) {
+        .once("value", function (snapshot) {
+          snapshot.forEach(function (childSnapshot) {
             //for (let j = 0; j < 5; j++) {
-            childSnapshot.forEach(function(childSnapshot_) {
+            childSnapshot.forEach(function (childSnapshot_) {
               //console.log("suib: ",childSnapshot_.val());
               for (let index = 0; index < 4; index++) {
                 timeArr = {};
@@ -804,7 +861,7 @@ function loadDiningCourts() {
               //for (let i = 0; i < 4; i++) {
               var temp = childSnapshot_.val();
               var temp_index = 0;
-              temp.forEach(function(temp_) {
+              temp.forEach(function (temp_) {
                 var tempStatus = temp_["status"];
                 timeArr[temp_index]["status"] = tempStatus;
                 if (tempStatus != "Open") {
@@ -831,24 +888,24 @@ function loadDiningCourts() {
               var posArr = {
                 Wiley: {
                   lat: 40.428476,
-                  lng: -86.920799
+                  lng: -86.920799,
                 },
                 Earhart: {
                   lat: 40.425691,
-                  lng: -86.925023
+                  lng: -86.925023,
                 },
                 Windsor: {
                   lat: 40.426757,
-                  lng: -86.921091
+                  lng: -86.921091,
                 },
                 Ford: {
                   lat: 40.432037,
-                  lng: -86.919693
+                  lng: -86.919693,
                 },
                 Hillenbrand: {
                   lat: 40.426663,
-                  lng: -86.926691
-                }
+                  lng: -86.926691,
+                },
               };
               var favoriteList = snapshot_.val();
               console.log("favorite dining: ", favoriteList);
@@ -964,21 +1021,21 @@ function loadDiningCourts() {
                 "</div>" + "</div>";
               }
               var infowindow = new google.maps.InfoWindow({
-                content: contentString
+                content: contentString,
               });
 
               console.log("loca: ", diningName);
-              setTimeout(function() {
+              setTimeout(function () {
                 var marker = new google.maps.Marker({
                   position: posArr[diningName],
                   animation: google.maps.Animation.DROP,
                   icon: {
                     url: "../dining.png",
-                    scaledSize: new google.maps.Size(70, 70)
-                  }
+                    scaledSize: new google.maps.Size(70, 70),
+                  },
                 });
 
-                google.maps.event.addListener(marker, "click", function() {
+                google.maps.event.addListener(marker, "click", function () {
                   infowindow.open(map, marker);
                   map.setZoom(18);
                   map.setCenter(marker.getPosition());
@@ -1015,34 +1072,35 @@ function loadDiningCourts() {
   //console.log('fav: ',favoriteList);
 }
 
-function loadRecommendations() {}
-
 function support() {
   let supportForm = document.querySelectorAll("#support-form");
   var user = firebase.auth().currentUser;
   var email = user.email;
-  var name = email.substring(0, email.indexOf('@'));
-  document.getElementById("email_support").value=email;
-  document.getElementById("name_support").value=name;
+  var name = email.substring(0, email.indexOf("@"));
+  document.getElementById("email_support").value = email;
+  document.getElementById("name_support").value = name;
   document.getElementById("support_support").value;
-  supportForm[0].addEventListener("submit", e => {
+  supportForm[0].addEventListener("submit", (e) => {
     e.preventDefault();
     const email = document.getElementById("email_support").value;
     const name = document.getElementById("name_support").value;
     const support = document.getElementById("support_support").value;
-    firebase.database().ref('/feedback/' + getCurrentUserId() + '/').update({
-      email: email,
-      name: name,
-      feedback: support
-    });
-    openMI(event, 'Map');
-  })
+    firebase
+      .database()
+      .ref("/feedback/" + getCurrentUserId() + "/")
+      .update({
+        email: email,
+        name: name,
+        feedback: support,
+      });
+    openMI(event, "Map");
+  });
 }
 
 function onChangePassword() {
   let changePasswordForm = document.querySelectorAll("#changePassword-form");
   var user = firebase.auth().currentUser;
-  changePasswordForm[0].addEventListener("submit", e => {
+  changePasswordForm[0].addEventListener("submit", (e) => {
     e.preventDefault();
     const password = document.getElementById("password").value;
     const password1 = document.getElementById("password1").value;
@@ -1050,11 +1108,11 @@ function onChangePassword() {
     if (password == password1) {
       user
         .updatePassword(password)
-        .then(function() {
+        .then(function () {
           // Update successful.
           alert("Password changed successfully");
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert("Password is not changed successfully");
           // An error happened.
         });
@@ -1064,14 +1122,14 @@ function onChangePassword() {
   });
 }
 
-function undisplayChat(){
-  $('.tablinksFriendChat').ready(function(){
-    console.log(this.id)
-    swithFriendChat(event, 'friendsDir')
-  });;
+function undisplayChat() {
+  $(".tablinksFriendChat").ready(function () {
+    console.log(this.id);
+    swithFriendChat(event, "friendsDir");
+  });
 }
 
-firebase.auth().onAuthStateChanged(user => {
+firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     checkPrivacySettings();
     console.log("CHECKPRIVACY HAS RUN");
@@ -1090,7 +1148,7 @@ firebase.auth().onAuthStateChanged(user => {
     if (navigator.geolocation) {
       console.log("jin");
       navigator.geolocation.getCurrentPosition(
-        function(position) {
+        function (position) {
           getLocationAndUpload();
           console.log("GETLOCATION HAS RUN-LOGIN");
           console.log("initial location");
@@ -1123,16 +1181,12 @@ firebase.auth().onAuthStateChanged(user => {
             seconds +
             ":" +
             mili;
-          firebase
-            .firestore()
-            .collection("usersProfilePics")
-            .doc("flag")
-            .set({
-              uid: 1,
-              timestamp: dateString
-            });
+          firebase.firestore().collection("usersProfilePics").doc("flag").set({
+            uid: 1,
+            timestamp: dateString,
+          });
         },
-        function(error) {
+        function (error) {
           console.log("not support error");
         },
         { timeout: 10000 }
@@ -1170,7 +1224,7 @@ function onMediaFileSelected(event) {
   if (!file.type.match("image.*")) {
     var data = {
       message: "You can only share images",
-      timeout: 2000
+      timeout: 2000,
     };
     signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
     return;
@@ -1181,9 +1235,9 @@ function onMediaFileSelected(event) {
 
 function toggleButton() {
   if (messageInputElement.value) {
-    submitButtonElement.removeAttribute('disabled');
+    submitButtonElement.removeAttribute("disabled");
   } else {
-    submitButtonElement.setAttribute('disabled', 'true');
+    submitButtonElement.setAttribute("disabled", "true");
   }
 }
 
@@ -1205,14 +1259,11 @@ var imageButtonElement = document.getElementById("submitImage");
 var imageFormElement = document.getElementById("image-form");
 var mediaCaptureElement = document.getElementById("mediaCapture");
 var friendsDir = document.getElementById("friendsDir");
-var messageInputElement = document.getElementById('message');
-var submitButtonElement = document.getElementById('submitMessage');
+var messageInputElement = document.getElementById("message");
+var submitButtonElement = document.getElementById("submitMessage");
 
-
-
-
-messageInputElement.addEventListener('keyup', toggleButton);
-messageInputElement.addEventListener('change', toggleButton);
+messageInputElement.addEventListener("keyup", toggleButton);
+messageInputElement.addEventListener("change", toggleButton);
 
 var settings = document.getElementById("settingButton");
 if (window.location.pathname == "/map.html") {
@@ -1221,52 +1272,67 @@ if (window.location.pathname == "/map.html") {
 }
 
 // Events for image upload.
-imageButtonElement.addEventListener("click", function(e) {
+imageButtonElement.addEventListener("click", function (e) {
   e.preventDefault();
   mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener("change", onMediaFileSelected);
 
-function getBMI(){
+function getBMI() {
   const db = firebase.database();
-  var docRef = firebase.firestore().collection("userSettings").doc(getCurrentUserId());
-  docRef.get().then(function(doc) {
-    if (doc.exists) {
-        document.getElementById("current-bmi").innerHTML = doc.data().bmi.toFixed(1).toString();
-    } else {
+  var docRef = firebase
+    .firestore()
+    .collection("userSettings")
+    .doc(getCurrentUserId());
+  docRef
+    .get()
+    .then(function (doc) {
+      if (doc.exists) {
+        xyzbmi = doc.data().bmi.toString();
+        document.getElementById(
+          "current-bmi"
+        ).innerHTML = doc.data().bmi.toString();
+      } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
-    }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting document:", error);
+    });
 }
 
-function checkPrivacySettings(){
+function checkPrivacySettings() {
   const db = firebase.database();
-  var docRef = firebase.firestore().collection("privacySettings").doc(getCurrentUserId());
+  var docRef = firebase
+    .firestore()
+    .collection("privacySettings")
+    .doc(getCurrentUserId());
 
-  docRef.get().then(function(doc) {
-    if (doc.exists) {
-      /*Print the privacy array to the console, for debugging*/
-      /*console.log(doc.data().privacy);*/
-      for (let i = 0; i < doc.data().privacy.length; i++){
-        document.getElementById(doc.data().privacy[i]).checked = true;
-      }
-
-      for (let i = 0; i < 4; i++) {
-        var current = 'privacy' + i.toString();
-        if (document.getElementById(current).checked) {
-          filterNoProfile = true;
-        }else{
-          filterNoProfile = false;
+  docRef
+    .get()
+    .then(function (doc) {
+      if (doc.exists) {
+        /*Print the privacy array to the console, for debugging*/
+        /*console.log(doc.data().privacy);*/
+        for (let i = 0; i < doc.data().privacy.length; i++) {
+          document.getElementById(doc.data().privacy[i]).checked = true;
         }
+
+        for (let i = 0; i < 4; i++) {
+          var current = "privacy" + i.toString();
+          if (document.getElementById(current).checked) {
+            filterNoProfile = true;
+          } else {
+            filterNoProfile = false;
+          }
+        }
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
       }
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
-  }).catch(function(error) {
-    console.log("Error getting document:", error);
-  });
+    })
+    .catch(function (error) {
+      console.log("Error getting document:", error);
+    });
 }
