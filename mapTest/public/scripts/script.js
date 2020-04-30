@@ -17,12 +17,12 @@ function deleteAccount() {
 
   user
     .delete()
-    .then(function() {
+    .then(function () {
       // User deleted.
 
       window.location("./createaccount.html");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
       // An error happened.
     });
@@ -34,13 +34,13 @@ function signOut() {
   firebase
     .auth()
     .signOut()
-    .then(function() {
+    .then(function () {
       const db = firebase.database();
       db.ref("/userLocations/" + uid).remove();
       window.location = "./index.html";
       // Sign-out successful.
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // An error happened.
     });
 }
@@ -56,7 +56,7 @@ function saveMessagingDeviceToken() {
   firebase
     .messaging()
     .getToken()
-    .then(function(currentToken) {
+    .then(function (currentToken) {
       if (currentToken) {
         console.log("Got FCM device token:", currentToken);
         firebase
@@ -70,7 +70,7 @@ function saveMessagingDeviceToken() {
         requestNotificationsPermissions();
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.error("Unable to get messaging device token:", error);
     });
 }
@@ -82,7 +82,7 @@ function initMap() {
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
   var myoverlay = new google.maps.OverlayView();
-  myoverlay.draw = function() {
+  myoverlay.draw = function () {
     this.getPanes().markerLayer.id = "markerLayer";
   };
   myoverlay.setMap(map);
@@ -101,7 +101,7 @@ function getLocationAndUpload() {
   if (user != null) {
     if (navigator.geolocation) {
       navigator.geolocation.watchPosition(
-        function(position) {
+        function (position) {
           let pos = {
             lat: position.coords.latitude,
             lng: position.coords.longitude
@@ -152,7 +152,7 @@ function getLocationAndUpload() {
             .ref()
             .update(updates);
         },
-        function(err) {
+        function (err) {
           console.log("err", err);
         },
         {
@@ -192,7 +192,7 @@ function saveImageMessage(file) {
     (month + 1) +
     "-" +
     year;
-  
+
   // TODO 9: Posts a new image as a message.
   const firestore = firebase.firestore();
   /*const settings = {
@@ -207,7 +207,7 @@ function saveImageMessage(file) {
   listRef
     .listAll()
     .then(fileRef => {
-      fileRef.items.forEach(function(imageRef) {
+      fileRef.items.forEach(function (imageRef) {
         // And finally display them
         imageRef.delete();
       });
@@ -222,7 +222,7 @@ function saveImageMessage(file) {
     .storage()
     .ref(filePath)
     .put(file)
-    .then(function(fileSnapshot) {
+    .then(function (fileSnapshot) {
       // 3 - Generate a public URL for the file.
       return fileSnapshot.ref.getDownloadURL().then(url => {
         // 4 - Update the chat message placeholder with the image’s URL.
@@ -237,7 +237,7 @@ function saveImageMessage(file) {
             imageUrl: url,
             storageUri: fileSnapshot.metadata.fullPath
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log("error: " + error);
           });
       });
@@ -254,9 +254,9 @@ function loadProfilePics() {
   var query = firebase.firestore().collection("usersProfilePics");
 
   // Start listening to the query.
-  query.onSnapshot(function(snapshot) {
+  query.onSnapshot(function (snapshot) {
     console.log("called");
-    snapshot.docChanges().forEach(function(change) {
+    snapshot.docChanges().forEach(function (change) {
       var message = change.doc.data();
       //console.log("someone just uploaded their profilePic");
       //console.log("imageUrl", message.imageUrl);
@@ -264,8 +264,8 @@ function loadProfilePics() {
         profilePics[message.uid] = message.imageUrl;
       }
     });
-    locations.once("value", function(snapshot_) {
-      snapshot_.forEach(function(childSnapshot) {
+    locations.once("value", function (snapshot_) {
+      snapshot_.forEach(function (childSnapshot) {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData["pos"];
@@ -301,7 +301,7 @@ function loadProfilePics() {
           var infowindow = new google.maps.InfoWindow({
             content: contentString
           });
-          google.maps.event.addListener(marker, "click", function() {
+          google.maps.event.addListener(marker, "click", function () {
             infowindow.open(map, marker);
           });
 
@@ -344,7 +344,7 @@ function loadProfilePics() {
           var infowindow = new google.maps.InfoWindow({
             content: contentString
           });
-          google.maps.event.addListener(marker, "click", function() {
+          google.maps.event.addListener(marker, "click", function () {
             infowindow.open(map, marker);
           });
 
@@ -365,7 +365,7 @@ function loadProfilePics() {
 
 function loadLocations() {
   let flag = true;
-  locations.on("value", function(snapshot, context) {
+  locations.on("value", function (snapshot, context) {
     //console.log("called");
     //console.log(snapshot);
     if (gmarkers.size != 0) {
@@ -376,8 +376,8 @@ function loadLocations() {
       }
     }
     console.log("lai le");
-    locations.once("value", function(snapshot_) {
-      snapshot_.forEach(function(childSnapshot) {
+    locations.once("value", function (snapshot_) {
+      snapshot_.forEach(function (childSnapshot) {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData["pos"];
@@ -410,7 +410,7 @@ function loadLocations() {
         var infowindow = new google.maps.InfoWindow({
           content: contentString
         });
-        marker.addListener("click", function() {
+        marker.addListener("click", function () {
           infowindow.open(map, marker);
         });
         marker.setMap(map);
@@ -428,18 +428,18 @@ function loadFavoriteFoodList() {
     .database()
     .ref("/favoriteFoodList/")
     .child(uid);
-  favoriteFoodList.once("value", function(snapshot, context) {
+  favoriteFoodList.once("value", function (snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
-    snapshot.forEach(function(child) {
+    snapshot.forEach(function (child) {
       document.getElementById("favFoodContainer").innerHTML +=
         "<h5>" + child.val()["food"] + "</h5>";
 
       console.log("fav food", child.val()["food"]);
     });
   });
-  favoriteFoodList.on("value", function(snapshot, context) {
+  favoriteFoodList.on("value", function (snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
-    snapshot.forEach(function(child) {
+    snapshot.forEach(function (child) {
       document.getElementById("favFoodContainer").innerHTML +=
         "<h5>" + child.val()["food"] + "</h5>";
 
@@ -454,9 +454,9 @@ function loadFriends() {
     .database()
     .ref("/friendList/")
     .child(uid);
-  friendList.once("value", function(snapshot, context) {
+  friendList.once("value", function (snapshot, context) {
     friendsDir.innerHTML = "<h2>Friends</h2>";
-    snapshot.forEach(function(childSnapshot) {
+    snapshot.forEach(function (childSnapshot) {
       //if (childSnapshot.key == uid) {
       console.log("friend request: ", childSnapshot.key);
       //var node = document.createElement("LI");                 // Create a <li> node
@@ -522,10 +522,10 @@ function friendListTrigger() {
     .database()
     .ref("/friendList/")
     .child(getCurrentUserId());
-  friendList.on("value", function(snapshot, context) {
+  friendList.on("value", function (snapshot, context) {
     console.log("jibascao");
     friendsDir.innerHTML = "<h2>Friends</h2>";
-    snapshot.forEach(function(childSnapshot) {
+    snapshot.forEach(function (childSnapshot) {
       //if (childSnapshot.key == uid) {
       console.log("friend request: ", childSnapshot.key);
       //var node = document.createElement("LI");                 // Create a <li> node
@@ -610,7 +610,7 @@ function acceptFriend(friendId, username) {
     (month + 1) +
     "-" +
     year;
-  
+
   console.log("accpeted: ", friendId);
   updates = {};
   var uid = getCurrentUserId();
@@ -752,14 +752,14 @@ function loadDiningCourts() {
   firebase
     .database()
     .ref("/favoriteDiningCourts/" + getCurrentUserId())
-    .once("value", function(snapshot_) {
+    .once("value", function (snapshot_) {
       firebase
         .database()
         .ref("/timeSheets")
-        .once("value", function(snapshot) {
-          snapshot.forEach(function(childSnapshot) {
+        .once("value", function (snapshot) {
+          snapshot.forEach(function (childSnapshot) {
             //for (let j = 0; j < 5; j++) {
-            childSnapshot.forEach(function(childSnapshot_) {
+            childSnapshot.forEach(function (childSnapshot_) {
               //console.log("suib: ",childSnapshot_.val());
               for (let index = 0; index < 4; index++) {
                 timeArr = {};
@@ -772,7 +772,7 @@ function loadDiningCourts() {
               //for (let i = 0; i < 4; i++) {
               var temp = childSnapshot_.val();
               var temp_index = 0;
-              temp.forEach(function(temp_) {
+              temp.forEach(function (temp_) {
                 var tempStatus = temp_["status"];
                 timeArr[temp_index]["status"] = tempStatus;
                 if (tempStatus != "Open") {
@@ -936,7 +936,7 @@ function loadDiningCourts() {
               });
 
               console.log("loca: ", diningName);
-              setTimeout(function() {
+              setTimeout(function () {
                 var marker = new google.maps.Marker({
                   position: posArr[diningName],
                   animation: google.maps.Animation.DROP,
@@ -946,7 +946,7 @@ function loadDiningCourts() {
                   }
                 });
 
-                google.maps.event.addListener(marker, "click", function() {
+                google.maps.event.addListener(marker, "click", function () {
                   infowindow.open(map, marker);
                   map.setZoom(18);
                   map.setCenter(marker.getPosition());
@@ -983,15 +983,15 @@ function loadDiningCourts() {
   //console.log('fav: ',favoriteList);
 }
 
-function loadRecommendations() {}
+function loadRecommendations() { }
 
 function support() {
   let supportForm = document.querySelectorAll("#support-form");
   var user = firebase.auth().currentUser;
   var email = user.email;
   var name = email.substring(0, email.indexOf('@'));
-  document.getElementById("email_support").value=email;
-  document.getElementById("name_support").value=name;
+  document.getElementById("email_support").value = email;
+  document.getElementById("name_support").value = name;
   document.getElementById("support_support").value;
   supportForm[0].addEventListener("submit", e => {
     e.preventDefault();
@@ -1018,11 +1018,11 @@ function onChangePassword() {
     if (password == password1) {
       user
         .updatePassword(password)
-        .then(function() {
+        .then(function () {
           // Update successful.
           alert("Password changed successfully");
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert("Password is not changed successfully");
           // An error happened.
         });
@@ -1046,7 +1046,7 @@ firebase.auth().onAuthStateChanged(user => {
     if (navigator.geolocation) {
       console.log("jin");
       navigator.geolocation.getCurrentPosition(
-        function(position) {
+        function (position) {
           getLocationAndUpload();
           console.log("initial location");
           const firestore = firebase.firestore();
@@ -1087,7 +1087,7 @@ firebase.auth().onAuthStateChanged(user => {
               timestamp: dateString
             });
         },
-        function(error) {
+        function (error) {
           console.log("not support error");
         },
         { timeout: 10000 }
@@ -1157,87 +1157,161 @@ if (window.location.pathname == "/map.html") {
 }
 
 // Events for image upload.
-imageButtonElement.addEventListener("click", function(e) {
+imageButtonElement.addEventListener("click", function (e) {
   e.preventDefault();
   mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener("change", onMediaFileSelected);
 
-function getBMI(){
+function getBMI() {
   const db = firebase.database();
   var docRef = firebase.firestore().collection("userSettings").doc(getCurrentUserId());
-  docRef.get().then(function(doc) {
+  docRef.get().then(function (doc) {
     if (doc.exists) {
-        document.getElementById("current-bmi").innerHTML = doc.data().bmi.toString();
+      document.getElementById("current-bmi").innerHTML = doc.data().bmi.toString();
     } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
     }
-}).catch(function(error) {
+  }).catch(function (error) {
     console.log("Error getting document:", error);
-});
+  });
 }
 
-function loadMenu(){
-  var allFood;
+function loadMenu() {
   var diningCourt = -1;
-  
-  var earhart = [];
-  var ford = [];
-  var hillenbrand = [];
-  var wiley = [];
-  var windsor = [];
-  
+  let earhart = new Array();
+  let ford = new Array();
+  let hillenbrand = new Array();
+  let wiley = new Array();
+  let windsor = new Array();
+
   var foodRec = firebase.database().ref("/Recommendation");
-  foodRec.once("value", function(snapshot, context) {
-    snapshot.forEach(function(child) {
+  foodRec.once("value", function (snapshot, context) {
+    snapshot.forEach(function (child) {
       diningCourt++;
-      snapshot.forEach(function(child) {
-        snapshot.forEach(function(child) {
-          snapshot.forEach(function(child) {
-            snapshot.forEach(function(child) {
-              var data = snapshot.val()
-              if(diningCourt == 0){
-                earhart.push({food: data.Name, calories: data.calories});
+      child.forEach(function (child1) {
+        child1.forEach(function (child2) {
+          child2.forEach(function (child3) {
+            child3.forEach(function (child4) {
+              var data = child4.val();
+              if (diningCourt == 0) {
+                earhart.push([data.Name, data.calories]);
               }
-              else if(diningCourt == 1){
-                ford.push({food: data.Name, calories: data.calories})
+              else if (diningCourt == 1) {
+                ford.push([data.Name, data.calories]);
               }
-              else if(diningCourt == 2){
-                hillenbrand.push({food: data.Name, calories: data.calories})
+              else if (diningCourt == 2) {
+                hillenbrand.push([data.Name, data.calories]);
               }
-              else if(diningCourt == 3){
-                wiley.push({food: data.Name, calories: data.calories})
+              else if (diningCourt == 3) {
+                wiley.push([data.Name, data.calories]);
               }
-              else if(diningCourt == 4){
-                windsor.push({food: data.Name, calories: data.calories})
+              else if (diningCourt == 4) {
+                windsor.push([data.Name, data.calories]);
               }
             });
           });
         });
       });
     });
-  });
-  
-  var parsedFood = [earhart, ford, hillenbrand, wiley, windsor];
-  console.log(parsedFood);
-  var menus = ["menu Earhart", "menu Ford", "menu Hillenbrand", "menu Wiley", "menu Windsor"];
-  for(let j = 0; j < 5; j++){
-  for(let i = 0; i < parsedFood[j].length; i++){
+  }).then(function(){
+    for (let i = 0; i < earhart.length; i++) {
       var node = document.createElement("div"); //Wrapper
-      node.setAttribute('class', 'menu-item-wrapper');  
+      node.setAttribute('class', 'menu-item-wrapper');
       var node3 = document.createElement("div");
       node3.setAttribute('class', 'menu-item'); //Item name
-      var textnode = document.createTextNode(parsedFood[j][i].food);
+      console.log(i);
+      var textnode = document.createTextNode(earhart[i][0]);
       node3.appendChild(textnode);
       var node2 = document.createElement("div");
       node2.setAttribute('class', 'calories'); //Calories
-      var calories; //Fetch calories from JSON
-      var textnode2 = document.createTextNode("Calories: " + parsedFood[j][i].calories);
+      let calories = earhart[i][1];
+      if(calories == 0){
+        calories = "Unknown";
+      }
+      var textnode2 = document.createTextNode("Calories: " + calories);
       node2.appendChild(textnode2);
       node.appendChild(node3);
       node.appendChild(node2);
-      document.getElementById(menus[j]).appendChild(node);
+      document.getElementById("menu Earhart").appendChild(node);
     }
-  }
+    for (let i = 0; i < ford.length; i++) {
+      var node = document.createElement("div"); //Wrapper
+      node.setAttribute('class', 'menu-item-wrapper');
+      var node3 = document.createElement("div");
+      node3.setAttribute('class', 'menu-item'); //Item name
+      var textnode = document.createTextNode(ford[i][0]);
+      node3.appendChild(textnode);
+      var node2 = document.createElement("div");
+      node2.setAttribute('class', 'calories'); //Calories
+      let calories = ford[i][1];
+
+      if(calories == 0){
+        calories = "Unknown";
+      }
+      var textnode2 = document.createTextNode("Calories: " + calories);
+      node2.appendChild(textnode2);
+      node.appendChild(node3);
+      node.appendChild(node2);
+      document.getElementById("menu Ford").appendChild(node);
+    }
+    for (let i = 0; i < hillenbrand.length; i++) {
+      var node = document.createElement("div"); //Wrapper
+      node.setAttribute('class', 'menu-item-wrapper');
+      var node3 = document.createElement("div");
+      node3.setAttribute('class', 'menu-item'); //Item name
+      var textnode = document.createTextNode(hillenbrand[i][0]);
+      node3.appendChild(textnode);
+      var node2 = document.createElement("div");
+      node2.setAttribute('class', 'calories'); //Calories
+      let calories = hillenbrand[i][1];
+      if(calories == 0){
+        calories = "Unknown";
+      }
+      var textnode2 = document.createTextNode("Calories: " + calories);
+      node2.appendChild(textnode2);
+      node.appendChild(node3);
+      node.appendChild(node2);
+      document.getElementById("menu Hillenbrand").appendChild(node);
+    }
+    for (let i = 0; i < wiley.length; i++) {
+      var node = document.createElement("div"); //Wrapper
+      node.setAttribute('class', 'menu-item-wrapper');
+      var node3 = document.createElement("div");
+      node3.setAttribute('class', 'menu-item'); //Item name
+      var textnode = document.createTextNode(wiley[i][0]);
+      node3.appendChild(textnode);
+      var node2 = document.createElement("div");
+      node2.setAttribute('class', 'calories'); //Calories
+      let calories = wiley[i][1];
+      if(calories == 0){
+        calories = "Unknown";
+      }
+      var textnode2 = document.createTextNode("Calories: " + calories);
+      node2.appendChild(textnode2);
+      node.appendChild(node3);
+      node.appendChild(node2);
+      document.getElementById("menu Wiley").appendChild(node);
+    }
+    for (let i = 0; i < windsor.length; i++) {
+      var node = document.createElement("div"); //Wrapper
+      node.setAttribute('class', 'menu-item-wrapper');
+      var node3 = document.createElement("div");
+      node3.setAttribute('class', 'menu-item'); //Item name
+      var textnode = document.createTextNode(windsor[i][0]);
+      node3.appendChild(textnode);
+      var node2 = document.createElement("div");
+      node2.setAttribute('class', 'calories'); //Calories
+      var calories = windsor[i][1]; //Fetch calories from JSON
+      if(calories == 0){
+        calories = "Unknown";
+      }
+      var textnode2 = document.createTextNode("Calories: " + calories);
+      node2.appendChild(textnode2);
+      node.appendChild(node3);
+      node.appendChild(node2);
+      document.getElementById("menu Windsor").appendChild(node);
+    }
+  });
 }
