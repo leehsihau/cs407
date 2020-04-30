@@ -1178,7 +1178,7 @@ function getBMI(){
 });
 }
 
-var foodRec = firebase.database().ref("/Recommendation");
+
 
 function traverse(obj,func, parent) {
   for (i in obj){
@@ -1201,7 +1201,8 @@ function getPropertyRecursive(obj, property){
 
 function loadMenu(){
   var allFood;
-  foodRec.once('value').then(function(snapshot){
+  var foodRec = firebase.database().ref("/Recommendation");
+  foodRec.once("value", function(snapshot){
     allFood = snapshot.val();
   });
   var earhart = allFood.Earhart;
