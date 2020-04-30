@@ -1178,67 +1178,77 @@ function getBMI(){
 });
 }
 
-
-
-function traverse(obj,func, parent) {
-  for (i in obj){
-    func.apply(this,[i,obj[i],parent]);      
-    if (obj[i] instanceof Object && !(obj[i] instanceof Array)) {
-      traverse(obj[i],func, i);
-    }
-  }
-}
-
-function getPropertyRecursive(obj, property){
-  var acc = [];
-  traverse(obj, function(key, value, parent){
-    if(key === property){
-      acc.push({parent: parent, value: value});
-    }
-  });
-  return acc;
-}
-
 function loadMenu(){
   var allFood;
+  var diningCourt = 0;
+  
+  var earhart = [];
+  var ford = [];
+  var hillenbrand = [];
+  var wiley = [];
+  var windsor = [];
+  
   var foodRec = firebase.database().ref("/Recommendation");
-  foodRec.once("value", function(snapshot){
-    allFood = snapshot.val();
+  
+  foodRec.once("value", function(snapshot, context) {
+    if(snapshot.child.val() == "Earhart"){
+      diningCourt = 0;
+    }
+    else if(snapshot.child.val() == "Ford"){
+      diningCourt = 1;
+    }
+    else if(snapshot.child.val() == "Hillenbrand"){
+      diningCourt = 2;
+    }
+    else if(snapshot.child.val() == "Wiley"){
+      diningCourt = 3;
+    }
+    else if(snapshot.child.val() == "Windsor"){
+      diningCourt = 4;
+    }
+    snapshot.forEach(function(child) {
+      snapshot.forEach(function(child) {
+        snapshot.forEach(function(child) {
+          snapshot.forEach(function(child) {
+            snapshot.forEach(function(child) {
+              if(diningCourt == 0){
+                var data = snapshot.val()
+                earhart.push({food: data.Name, calories: data.calories});
+              }
+              else if(diningCourt == 1){
+                ford.push({food: data.Name, calories: data.calories})
+              }
+              else if(diningCourt == 2){
+                hillenbrand.push({food: data.Name, calories: data.calories})
+              }
+              else if(diningCourt == 3){
+                wiley.push({food: data.Name, calories: data.calories})
+              }
+              else if(diningCourt == 4){
+                windsor.push({food: data.Name, calories: data.calories})
+              }
+            });
+          });
+        });
+      });
+    });
   });
-  console.log(allFood);
-  var earhart = allFood.Earhart;
-  var ford = allFood.Ford;
-  var hillenbrand = allFood.Hillenbrand;
-  var wiley = allFood.Wiley
-  var windsor = allFood.Windsor;
-
-  var earhartFood = getPropertyRecursive(earhart, 'Name');
-  var earhartCalories = getPropertyRecursive(earhart, 'calories');
-  var fordFood = getPropertyRecursive(ford, 'Name');
-  var fordCalories = getPropertyRecursive(ford, 'calories');
-  var hillenbrandFood = getPropertyRecursive(hillenbrand, 'Name');
-  var hillenbrandCalories = getPropertyRecursive(hillenbrand, 'calories');
-  var wileyFood = getPropertyRecursive(wiley, 'Name');
-  var wileyCalories = getPropertyRecursive(wiley, 'calories');
-  var windsorFood = getPropertyRecursive(windsor, 'Name');
-  var windsorCalories = getPropertyRecursive(windsor, 'calories');
-
-  var parsedFood = [earhartFood, fordFood, hillenbrandFood, wileyFood, windsorFood, earhartCalories, fordCalories, hillenbrandCalories, wileyCalories, windsorCalories];
-
+  
+  var parsedFood = [earhart, ford, hillenbrand, wiley, windsor];
+  console.log(parsedFood);
   var menus = ["menu Earhart", "menu Ford", "menu Hillenbrand", "menu Wiley", "menu Windsor"];
-  var mealtime;
   for(let j = 0; j < 5; j++){
   for(let i = 0; i < parsedFood[j].length; i++){
       var node = document.createElement("div"); //Wrapper
       node.setAttribute('class', 'menu-item-wrapper');  
       var node3 = document.createElement("div");
       node3.setAttribute('class', 'menu-item'); //Item name
-      var textnode = document.createTextNode(parsedFood[j][i].value);
+      var textnode = document.createTextNode(parsedFood[j][i].food);
       node3.appendChild(textnode);
       var node2 = document.createElement("div");
       node2.setAttribute('class', 'calories'); //Calories
       var calories; //Fetch calories from JSON
-      var textnode2 = document.createTextNode("Calories: " + parsedFood[j+5][i].value);
+      var textnode2 = document.createTextNode("Calories: " + parsedFood[j][i].calories);
       node2.appendChild(textnode2);
       node.appendChild(node3);
       node.appendChild(node2);
