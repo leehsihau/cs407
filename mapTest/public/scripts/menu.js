@@ -14,6 +14,8 @@ var messageListElement = document.getElementById('messages');
 
 //globals
 var friendId = 0;
+var blockMessage = false;
+
 // Template for messages.
 var MESSAGE_TEMPLATE =
   '<div class="message-container">' +
@@ -45,8 +47,30 @@ function openMI(evt, menu_item) {
 }
 
 
+function getCurrentUserName() {
+  var user = firebase.auth().currentUser;
+  var email = user.email;
+  var name = email.substring(0, email.indexOf("@"));
+  return name;
+}
 
+function blockMessages(friendId){
+  const db = firebase.firestore();
+  var docRef = db.collection("privacySettings").doc(friendId);
 
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Block messages?:", doc.data().privacy1);
+        blockMessage = doc.data().privacy1;
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+        blockMessage = false;
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
+}
 
 function displayMessage(key, name, text, picUrl, imageUrl) {
   var div = document.getElementById(key);
@@ -94,7 +118,7 @@ function loadMessages() {
 
   if (friendId != 0) {
     firebase.database().ref('/messages/' + uid + '/' + friendId).limitToLast(12).on('child_added', callback);
-    firebase.database().ref('/messages/'+uid+'/' + friendId).limitToLast(12).on('child_changed', callback);
+    firebase.database().ref('/messages/' + uid + '/' + friendId).limitToLast(12).on('child_changed', callback);
   }
 }
 
@@ -102,26 +126,35 @@ function sendMessage() {
   /*$('#message-form').on('click', function(){
     console.log("send ni nai nai ge tuier");
   })*/
+  
   var message = document.getElementById("message").value;
+    $('#message')[0].value=null;
+  toggleButton();
   if (message.length == 0) {
     console.log("kong");
-  } else {
+  } else if(blockMessage == true){
+      alert("Sorry, it seems like this user has indicated that they would not like to receive any messages at this time");
+  }else {
     console.log("send ni nai nai ge tuier: ", message);
     var ref = firebase.database().ref("/messages/" + getCurrentUserId() + "/" + friendId);
     ref.push({
-      name: "buddy",
+      name: getCurrentUserName(),
       text: message,
     }).catch(function (error) {
       console.error('Error writing new message to Realtime Database:', error);
     });
     var ref = firebase.database().ref("/messages/" + friendId + "/" + getCurrentUserId());
     ref.push({
-      name: "buddy",
+      name: getCurrentUserName(),
       text: message,
     }).catch(function (error) {
       console.error('Error writing new message to Realtime Database:', error);
     });
   }
+  console.log("value aft4er all toggle: ", messageInputElement.value);
+  console.log("value after jquery in toggle: ", $('#message')[0].value);
+
+
 }
 
 function swithFriendChat(evt, item, id) {
@@ -137,11 +170,12 @@ function swithFriendChat(evt, item, id) {
   }
   document.getElementById(item).style.display = "block";
   evt.currentTarget.className += " active";
-  if(id!=0){
+  if (id != 0) {
     friendId = id;
     loadMessages();
-  }else{
-    messageListElement.innerHTML=' ';
-    friendId=0;
+    blockMessages(friendId);
+  } else {
+    messageListElement.innerHTML = ' ';
+    friendId = 0;
   }
 }

@@ -48,7 +48,7 @@
     <div class="flex-nav-bar">
       <img src="logo.png" alt="logo">
       <div class="search">
-        <input type="text" id="favFoodText" placeholder="Search">
+        <input type="text" id="favFoodText" placeholder="Add your favorite Food here">
         <input id="favFoodId" onclick="addFavFood()"
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
           value="Submit Favorite Food">
@@ -120,6 +120,7 @@
       class="mi-tab">
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Map')" id="default-menu-map">Map</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Profile')" id="menu-profile">Profile</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'BlockList')" id="menu-blockList">Block List</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Settings')" id="menu-settings">Settings</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Privacy')" id="menu-privacy">Privacy</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Change Password')" id="menu-changepass">
@@ -318,32 +319,35 @@
           <div class="privacy-list">
             <br>
             <div class="privacy-question">
-              <label for="privacy0">Allow other users to see you on map</label>
-              <input class="switch_1" type="checkbox" id="privacy0" name="usersOnMap" value="usersOnMap">
+              <label for="privacy0">Become invisible on the map</label>
+              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap" onchange="loadProfilePics(), updatePrivacySettings(), window.onbeforeunload = null, window.location.reload()">
             </div>
             <div class="privacy-question">
-              <label for="privacy1">Allow other users to message you</label>
-              <input class="switch_1" type="checkbox" id="privacy1" name="usersMessage" value="usersMessage">
+              <label for="privacy1">Prevent other users from messaging you</label>
+              <input class="switch_1" type="checkbox" id="privacy1" name="privacy1" value="usersMessage" onchange="updatePrivacySettings()">
             </div>
             <div class="privacy-question">
-              <label for="privacy2">Allow other users to see your profile</label>
-              <input class="switch_1" type="checkbox" id="privacy2" name="usersSeeProfile" value="usersSeeProfile">
+              <label for="privacy2">Prevent other users from viewing your profile</label>
+              <input class="switch_1" type="checkbox" id="privacy2" name="privacy2" value="usersSeeProfile" onchange="updatePrivacySettings(), showProfile(), window.onbeforeunload = null, window.location.reload()">
             </div>
             <div class="privacy-question">
               <label for="privacy3">Filter out users that don't have a profile pic set</label>
-              <input class="switch_1" type="checkbox" id="privacy3" name="noProfile" value="noProfile">
+              <input class="switch_1" type="checkbox" id="privacy3" name="privacy3" value="noProfile" onchange="updatePrivacySettings(),window.onbeforeunload = null, window.location.reload()">
             </div>
             <br>
           </div>
           <br>
-          <input type="button" class="privacy-button" id="privacy-submit" onclick="privacySubmitHandler()"
-            value="Submit All"></button>
         </div>
       </div>
 
       <div class="tabcontent2" id="Profile">
         <h2>Favorite Food List</h2>
         <ul id="favFoodContainer"></ul>
+      </div>
+
+      <div class="tabcontent2" id="BlockList">
+        <h2>Block List</h2>
+        <ul id="blockList"></ul>
       </div>
 
       <div class="tabcontent2" id="Change Password">

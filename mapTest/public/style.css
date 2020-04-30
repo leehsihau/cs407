@@ -265,6 +265,8 @@ ul.login-list li input[type="button"] {
   text-align: center;
   border: 2px solid black;
   border-radius: 5px;
+  overflow-y: auto;
+  overflow-x:hidden;
 }
 
 .recommendations {
@@ -755,9 +757,7 @@ ul li:hover {
   transform: translate(0%, -50%);
 }
 
-.close:hover {
-  background: #bbb;
-}
+.close:hover {background: #bbb;}
 
 /* Checkboxes */
 

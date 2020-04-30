@@ -219,12 +219,16 @@ function getLocationAndUpload() {
           var user = firebase.auth().currentUser;
           var email = user.email;
           var name = email.substring(0, email.indexOf("@"));
+          var shown = 1;
+          if(document.getElementById("privacy0").checked == true) {
+            shown = 0;
+          }
           console.log("name: ", name);
           updates["/userLocations/" + uid + "/"] = {
             pos: pos,
             timestamp: dateString,
             username: name,
-            isShown: 1,
+            isShown: shown
           };
           console.log("uploading: ", pos);
           firebase.database().ref().update(updates);
@@ -318,6 +322,27 @@ function saveImageMessage(file) {
     });
 }
 
+const showPro = [];
+var showPro_index = 0;
+
+function showProfile(){
+  const db = firebase.firestore();
+  showPro.length = 0;
+  showPro_index = 0;
+
+  db.collection("privacySettings").get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        if(doc.data().privacy2 == true){
+          showPro[showPro_index] = doc.data().uid;
+          showPro_index++;
+        }
+    });
+});
+}
+
+showProfile();
+
 var locations = firebase.database().ref("/userLocations");
 
 const m = {};
@@ -343,67 +368,34 @@ function loadProfilePics() {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData["pos"];
-        if ([childKey] != undefined) {
-          console.log(profilePics[childKey]);
-          gmarkers.get(childKey).setMap(null);
+        if(childData["isShown"] == 0) {
+          if(gmarkers.get(childKey) != undefined) {
+            gmarkers.get(childKey).setMap(null);
+          }
           gmarkers.delete(childKey);
-          var marker = new google.maps.Marker({
-            position: pos,
-            icon: {
-              url: profilePics[childKey],
-              scaledSize: new google.maps.Size(49, 40),
-            },
-
-            //animation: google.maps.Animation.DROP,
-            id: childKey,
-            title: childKey,
-            optimized: false,
-          });
-          var username = childData["username"];
-          var contentString =
-            '<div id="content">' +
-            '<div id="siteNotice">' +
-            "</div>" +
-            '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
-            '<div id="bodyContent">' +
-            username +
-            "<p><b>Favorite Food List: </b></p>" +
-            '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
-            childKey +
-            "> friend me</button>";
-          "</div>" + "</div>";
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString,
-          });
-          google.maps.event.addListener(marker, "click", function () {
-            infowindow.open(map, marker);
-          });
-
-          /*google.maps.event.addListener(marker, "click", function () {
-            var marker = this;
-            alert("ID is: " + this.id);
-          });*/
-          //marker.metadata = {id: "profilePic"};
-          marker.setMap(map);
-          gmarkers.set(childKey, marker);
-        } else {
-          profilePics[childKey] = "../profile_placeholder.png";
-          gmarkers.get(childKey).setMap(null);
-          gmarkers.delete(childKey);
-          if (filterNoProfile == false) {
+        } 
+        if(childData["isShown"] == 1) {
+          if (profilePics[childKey] != undefined) {
+            console.log(profilePics[childKey]);
+            if(gmarkers.get(childKey) != undefined) {
+              gmarkers.get(childKey).setMap(null);
+            }
+            gmarkers.delete(childKey);
             var marker = new google.maps.Marker({
               position: pos,
               icon: {
-                url: ".. /profile_placeholder.png",
-                scaledSize: new google.maps.Size(49, 40),
+                url: profilePics[childKey],
+                scaledSize: new google.maps.Size(49, 40)
               },
 
-              // animation: google.maps.Animation.DROP,
+              //animation: google.maps.Animation.DROP,
               id: childKey,
               title: childKey,
-              optimized: false,
+              optimized: false
             });
             var username = childData["username"];
+            var user = "&quot;" + childSnapshot.val()["username"] + "&quot;";
+
             var contentString =
               '<div id="content">' +
               '<div id="siteNotice">' +
@@ -411,25 +403,125 @@ function loadProfilePics() {
               '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
               '<div id="bodyContent">' +
               username +
-              "<p><b>Favorite Food List: </b></p>" +
+              "<p><b>User Options: </b></p>" +
               '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
               childKey +
-              "> friend me</button>";
+              "> friend me</button><p></p>" +
+              '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
+              user +
+              ')" id=' +
+              childKey +
+              "> Block</button>";
             "</div>" + "</div>";
+
+            if(showPro.indexOf(childKey) != -1){
+              contentString =
+              '<div id="content">' +
+              '<div id="siteNotice">' +
+              "</div>" +
+              '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+              '<div id="bodyContent">' +
+              "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+              "</div>" + "</div>";
+            }
+
+            if(childKey == getCurrentUserId()){
+              var contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                '<div id="bodyContent">' +
+                childData["username"] + ' (You)' +
+                "<b></b>" +
+                "</div>" + "</div>"
+              ;
+            }
+
             var infowindow = new google.maps.InfoWindow({
-              content: contentString,
+              content: contentString
             });
-            google.maps.event.addListener(marker, "click", function () {
+            google.maps.event.addListener(marker, "click", function() {
               infowindow.open(map, marker);
             });
 
-            /*google.maps.event.addListener(marker, "click", function () {
-              var marker = this;
-              alert("ID is: " + this.id);
-            });*/
-            //marker.metadata = {id: "profilePic"};
             marker.setMap(map);
             gmarkers.set(childKey, marker);
+          } else{
+            profilePics[childKey] = "../profile_placeholder.png";
+            if(document.getElementById("privacy3").checked == false || childKey == getCurrentUserId()){
+              gmarkers.get(childKey).setMap(null);
+              gmarkers.delete(childKey);
+            
+              var marker = new google.maps.Marker({
+                position: pos,
+                icon: {
+                  url: ".. /profile_placeholder.png",
+                  scaledSize: new google.maps.Size(49, 40)
+                },
+
+                // animation: google.maps.Animation.DROP,
+                id: childKey,
+                title: childKey,
+                optimized: false
+              });
+              var username = childData["username"];
+              var username = "&quot;" + childSnapshot.val()["username"] + "&quot;";
+            
+              var contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                '<div id="bodyContent">' +
+                username +
+                "<p><b>User Options: </b></p>" +
+                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
+                childKey +
+                "> friend me</button><p></p>" +
+                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
+                user +
+                ')" id=' +
+                childKey +
+                "> Block</button>";
+              "</div>" + "</div>";
+
+              if(showPro.indexOf(childKey) != -1){
+                contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                '<div id="bodyContent">' +
+                "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+                "</div>" + "</div>";
+              }
+
+              if(childKey == getCurrentUserId()){
+                var contentString =
+                  '<div id="content">' +
+                  '<div id="siteNotice">' +
+                  "</div>" +
+                  '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                  '<div id="bodyContent">' +
+                  childData["username"] + ' (You)' +
+                  "<b></b>" +
+                  "</div>" + "</div>"
+                ;
+              }
+            
+              var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+              google.maps.event.addListener(marker, "click", function() {
+                infowindow.open(map, marker);
+              });
+
+            
+              loadBlockList();
+              marker.setMap(map);
+              gmarkers.set(childKey, marker);
+            }
           }
         }
         loadFriends();
@@ -437,6 +529,120 @@ function loadProfilePics() {
       return;
     });
   });
+}
+function removeblockPerson(childval) {
+  //console.log("/blockList/" + getCurrentUserId() + "/" + childval);
+  firebase
+  .database()
+  .ref("/blockList/" + childval)
+  .child(childval)
+  .remove()
+}
+
+
+function blockPerson(user, username) {
+  var uid = getCurrentUserId();
+  var pushRef = firebase.database().ref('/blockList/' + getCurrentUserId());
+  var pRef = pushRef.child(uid);
+  update = {};
+  update["/blockList/" + getCurrentUserId()] = user.value;
+  pRef.set({
+    username:username,
+    userid:user,
+    blockedBy:uid
+  });
+
+  var pushRef1 = firebase.database().ref('/blockList/' + user);
+  var pRef1 = pushRef1.child(user);
+  update1 = {};
+  update1["/blockList/" + user] = user.value;
+  pRef1.set({
+    username:username,
+    userid:user,
+    blockedBy:uid
+  });
+}
+
+
+function loadBlockList() {
+  var uid = getCurrentUserId();
+  var flag = 0;
+  var blockList = firebase
+    .database()
+    .ref("/blockList/")
+    .child(uid);
+  blockList.once("value", function(snapshot, context) {
+    document.getElementById("blockList").innerHTML = "";
+    snapshot.forEach(function(child) {
+      var person = child.val()['username'];
+      var personid = child.val()['userid'];
+      var blockBy = child.val()['blockedBy'];
+      if(blockBy == uid) {
+        console.log("disappear",personid);
+        if(gmarkers.get(personid) != undefined) {
+          gmarkers.get(personid).setMap(null);
+        }
+        gmarkers.delete(personid);
+      }
+      else if(blockBy != uid && personid == uid) {
+        console.log("disappear",blockBy);
+        if(gmarkers.get(blockBy) != undefined) {
+          gmarkers.get(blockBy).setMap(null);
+        }
+        gmarkers.delete(blockBy);
+      }
+      if(blockBy == uid) {
+        document.getElementById("blockList").innerHTML +=
+        '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\'), removeblockPerson(\''+ personid +'\'), window.onbeforeunload = null, window.location.reload();">&times;</span></li>';
+      }
+    });
+  });
+  blockList.on("value", function(snapshot, context) {
+    document.getElementById("blockList").innerHTML = "";
+    snapshot.forEach(function(child) {
+      var childKey = snapshot.key;
+      var personid = child.val()['userid'];
+      var blockBy = child.val()['blockedBy'];
+      if(blockBy == uid) {
+        if(gmarkers.get(personid) != undefined) {
+          gmarkers.get(personid).setMap(null);
+        }
+        gmarkers.delete(personid);
+        console.log("disappear",personid);
+      }
+      else if(blockBy != uid && personid == uid) {
+        if(gmarkers.get(blockBy) != undefined) {
+          gmarkers.get(blockBy).setMap(null);
+        }
+        gmarkers.delete(blockBy);
+        console.log("disappear",blockBy);
+      }
+      var person = child.val()['username'];
+      if(blockBy == uid) {
+        document.getElementById("blockList").innerHTML +=
+        '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\'), removeblockPerson(\''+ personid +'\'), window.onbeforeunload = null, window.location.reload();">&times;</span></li>';
+      }
+    });
+  });
+
+  var blockList1 = firebase
+  .database()
+  .ref("/blockList/");
+  blockList1.on("value", function(snapshot, context) {
+  
+    snapshot.forEach(function(child) {
+      var childKey = snapshot.key;
+      var personid = child.val()['userid'];
+      console.log("disappear",personid);
+      if(gmarkers.get(personid) != undefined) {
+        gmarkers.get(personid).setMap(null);
+      }
+      gmarkers.delete(personid);
+      var person = child.val()['username'];
+    });
+  });
+
+  return flag;
 }
 
 function loadLocations() {
@@ -457,46 +663,92 @@ function loadLocations() {
         var childKey = childSnapshot.key;
         var childData = childSnapshot.val();
         var pos = childData["pos"];
+        var user = "&quot;" + childSnapshot.val()["username"] + "&quot;";
+        
+        
+            if(childData["isShown"] == 0) {
+              if(gmarkers.get(childKey) != undefined) {
+                gmarkers.get(childKey).setMap(null);
+              }
+              gmarkers.delete(childKey);
+            }
+         
+            if(childData["isShown"] == 1) {
+              var contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                '<div id="bodyContent">' +
+                childData["username"] +
+                "<p><b>User Options: </b></p>" +
+                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
+                childKey +
+                "> friend me</button><p></p>" +
+                '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="blockPerson(this.id,'+
+                user +
+                ')" id=' +
+                childKey +
+                " +> Block</button>";
+                "</div>" + "</div>"
+              ;
+  
+              if(showPro.indexOf(childKey) != -1){
+                contentString =
+                  '<div id="content">' +
+                  '<div id="siteNotice">' +
+                  "</div>" +
+                  '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                  '<div id="bodyContent">' +
+                  "<p><b>Sorry, it seems like this user has decided not to share their profile info at this time</b></p>" +
+                  "</div>" + "</div>"
+                ;
+              }
 
-        var contentString =
-          '<div id="content">' +
-          '<div id="siteNotice">' +
-          "</div>" +
-          '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
-          '<div id="bodyContent">' +
-          childData["username"] +
-          "<p><b>Favorite Food List: </b></p>" +
-          '<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="friendStatus(this.id)" id=' +
-          childKey +
-          "> friend me</button>";
-        "</div>" + "</div>";
-
-        if (
-          profilePics[childKey] != undefined ||
-          (profilePics[childKey] == undefined && filterNoProfile == false)
-        ) {
-          var marker = new google.maps.Marker({
-            position: pos,
-            // animation: google.maps.Animation.DROP,
-            icon: {
-              url: profilePics[childKey],
-              scaledSize: new google.maps.Size(49, 40),
-            },
-
-            id: childKey,
-            title: childKey,
-            optimized: false,
-          });
-          var infowindow = new google.maps.InfoWindow({
-            content: contentString,
-          });
-          marker.addListener("click", function () {
-            infowindow.open(map, marker);
-          });
-          marker.setMap(map);
-          gmarkers.set(childKey, marker);
-          console.log(gmarkers.size);
-        }
+              if(childKey == getCurrentUserId()){
+                var contentString =
+                  '<div id="content">' +
+                  '<div id="siteNotice">' +
+                  "</div>" +
+                  '<h4 id="firstHeading" class="firstHeading">User Info</h4>' +
+                  '<div id="bodyContent">' +
+                  childData["username"] + ' (You)' +
+                  "<b></b>" +
+                  "</div>" + "</div>"
+                ;
+              }
+  
+              var marker = new google.maps.Marker({
+                position: pos,
+                // animation: google.maps.Animation.DROP,
+                icon: {
+                  url: profilePics[childKey],
+                  scaledSize: new google.maps.Size(49, 40)
+                },
+  
+                id: childKey,
+                title: childKey,
+                optimized: false
+                });
+              var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
+              marker.addListener("click", function() {
+                infowindow.open(map, marker);
+              });
+              loadBlockList();
+              marker.setMap(map);
+              gmarkers.set(childKey, marker);
+              console.log(gmarkers.size);
+            } 
+            if(document.getElementById("privacy3").checked == true && profilePics[childKey] == "../profile_placeholder.png"){
+              if(childKey != getCurrentUserId()){
+                if(gmarkers.get(childKey) != undefined) {
+                  gmarkers.get(childKey).setMap(null);
+                }
+                gmarkers.delete(childKey);
+              }
+            } 
       });
       return;
     });
@@ -511,31 +763,33 @@ function loadFavoriteFoodList() {
     .child(uid);
   favoriteFoodList.once("value", function (snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
-    snapshot.forEach(function (child) {
-      food = child.val()["food"];
+    snapshot.forEach(function(child) {
+      food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-        "<li>" +
-        food +
-        '<span class="close" onclick ="removeFavFood(\'' +
-        child.key +
-        "');\">&times;</span></li>";
+      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
   favoriteFoodList.on("value", function (snapshot, context) {
     document.getElementById("favFoodContainer").innerHTML = "";
-    snapshot.forEach(function (child) {
-      var food = child.val()["food"];
+    snapshot.forEach(function(child) {
+      var food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-        "<li>" +
-        food +
-        '<span class="close" onclick ="removeFavFood(\'' +
-        child.key +
-        "');\">&times;</span></li>";
+      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
 }
+
+function removeFavFood(childval) {
+  console.log("/friendList/" + getCurrentUserId() + "/" + childval);
+  var favoriteFoodList = firebase
+  .database()
+  .ref("/favoriteFoodList/" + getCurrentUserId())
+  .child(childval)
+  .remove()
+}
+
 
 function loadFriends() {
   var uid = getCurrentUserId();
@@ -1132,9 +1386,8 @@ function undisplayChat() {
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     checkPrivacySettings();
-    console.log("CHECKPRIVACY HAS RUN");
     loadFriends();
-    console.log("LOADFRIENDS-LOGIN HAS RUN");
+    loadBlockList();
     loadDiningCourts();
     friendListTrigger();
     onChangePassword();
@@ -1144,6 +1397,8 @@ firebase.auth().onAuthStateChanged((user) => {
     getBMI();
     undisplayChat();
     loadMessages();
+    //loadLocations();
+    //loadProfilePics();
     console.log("uid: ", firebase.auth().currentUser.uid);
     if (navigator.geolocation) {
       console.log("jin");
@@ -1235,7 +1490,8 @@ function onMediaFileSelected(event) {
 
 function toggleButton() {
   if (messageInputElement.value) {
-    submitButtonElement.removeAttribute("disabled");
+    submitButtonElement.removeAttribute('disabled');
+    console.log("value in toggle: ", messageInputElement.value);
   } else {
     submitButtonElement.setAttribute("disabled", "true");
   }
@@ -1262,8 +1518,11 @@ var friendsDir = document.getElementById("friendsDir");
 var messageInputElement = document.getElementById("message");
 var submitButtonElement = document.getElementById("submitMessage");
 
-messageInputElement.addEventListener("keyup", toggleButton);
-messageInputElement.addEventListener("change", toggleButton);
+
+
+messageInputElement.addEventListener('keyup', toggleButton);
+messageInputElement.addEventListener('change', toggleButton);
+//submitButtonElement.addEventListener('click', toggleButton);
 
 var settings = document.getElementById("settingButton");
 if (window.location.pathname == "/map.html") {
@@ -1295,44 +1554,50 @@ function getBMI() {
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
-      }
-    })
-    .catch(function (error) {
-      console.log("Error getting document:", error);
-    });
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
 }
 
-function checkPrivacySettings() {
+function updatePrivacySettings() {
   const db = firebase.database();
-  var docRef = firebase
-    .firestore()
-    .collection("privacySettings")
-    .doc(getCurrentUserId());
+  var docRef = firebase.firestore().collection("privacySettings").doc(getCurrentUserId());
+  var check0 = document.getElementById('privacy0').checked;
+  var check1 = document.getElementById('privacy1').checked;
+  var check2 = document.getElementById('privacy2').checked;
+  var check3 = document.getElementById('privacy3').checked;
+  docRef.update({
+    privacy0: check0,
+    privacy1: check1,
+    privacy2: check2,
+    privacy3: check3
+  });
+}
 
-  docRef
-    .get()
-    .then(function (doc) {
-      if (doc.exists) {
-        /*Print the privacy array to the console, for debugging*/
-        /*console.log(doc.data().privacy);*/
-        for (let i = 0; i < doc.data().privacy.length; i++) {
-          document.getElementById(doc.data().privacy[i]).checked = true;
-        }
+function checkPrivacySettings(){
+  const db = firebase.database();
+  var docRef = firebase.firestore().collection("privacySettings").doc(getCurrentUserId());
 
-        for (let i = 0; i < 4; i++) {
-          var current = "privacy" + i.toString();
-          if (document.getElementById(current).checked) {
-            filterNoProfile = true;
-          } else {
-            filterNoProfile = false;
-          }
-        }
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+      if(doc.data().privacy0 == true){
+        document.getElementById('privacy0').checked = true;
       }
-    })
-    .catch(function (error) {
-      console.log("Error getting document:", error);
-    });
+      if(doc.data().privacy1 == true){
+        document.getElementById('privacy1').checked = true;
+      }
+      if(doc.data().privacy2 == true){
+        document.getElementById('privacy2').checked = true;
+      }
+      if(doc.data().privacy3 == true){
+        document.getElementById('privacy3').checked = true;
+      }
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  }).catch(function(error) {
+    console.log("Error getting document:", error);
+  });
 }
