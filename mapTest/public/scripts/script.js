@@ -617,7 +617,7 @@ function loadBlockList() {
       var person = child.val()['username'];
       if(blockBy == uid) {
         document.getElementById("blockList").innerHTML +=
-        '<li>' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\'), removeblockPerson(\''+ personid +'\'), window.onbeforeunload = null, window.location.reload();">&times;</span></li>';
+        '<li class="block-li">' + person + '<span class="close" onclick ="removeblockPerson(\''+ child.key +'\'), removeblockPerson(\''+ personid +'\'), window.onbeforeunload = null, window.location.reload();">&times;</span></li>';
       }
     });
   });
@@ -763,7 +763,7 @@ function loadFavoriteFoodList() {
     snapshot.forEach(function(child) {
       food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
+      '<li class="fav-li">' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
@@ -772,7 +772,7 @@ function loadFavoriteFoodList() {
     snapshot.forEach(function(child) {
       var food = child.val()['food'];
       document.getElementById("favFoodContainer").innerHTML +=
-      '<li>' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
+      '<li class="fav-li">' + food + '<span class="close" onclick ="removeFavFood(\''+ child.key +'\');">&times;</span></li>';
       console.log("fav food", child.val()["food"]);
     });
   });
@@ -1537,7 +1537,7 @@ function getBMI() {
         xyzbmi = doc.data().bmi.toString();
         document.getElementById(
           "current-bmi"
-        ).innerHTML = doc.data().bmi.toString();
+        ).innerHTML = doc.data().bmi.toFixed(1).toString();
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");

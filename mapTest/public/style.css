@@ -722,17 +722,19 @@ h3 {
 }
 
 /* Close buttons*/
-* {
+
+.fav-ul, .block-ul{
   box-sizing: border-box;
 }
 
-ul {
+.fav-ul, .block-ul{
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-ul li {
+
+.fav-li, .block-li{
   border: 1px solid #ddd;
   margin-top: -1px; /* Prevent double borders */
   background-color: #f6f6f6;
@@ -744,7 +746,7 @@ ul li {
   position: relative;
 }
 
-ul li:hover {
+.fav-li:hover, .block-li:hover {
   background-color: #eee;
 }
 
