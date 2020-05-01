@@ -1554,7 +1554,7 @@ function updatePrivacySettings() {
   var check1 = document.getElementById('privacy1').checked;
   var check2 = document.getElementById('privacy2').checked;
   var check3 = document.getElementById('privacy3').checked;
-  docRef.update({
+  docRef.set({
     privacy0: check0,
     privacy1: check1,
     privacy2: check2,
