@@ -1178,8 +1178,27 @@ function getBMI() {
   });
 }
 
+function meanCalories(allCals){
+  let sum = 0;
+  let amount = 0;
+  console.log("LENGTH");
+  console.log(allCals[0].length);
+  for(let i = 0; i < 5; i++){
+    for(let j = 0; j < allCals[i].length; j++){
+      if(allCals[i][j][1] !== "Unknown"){
+      sum = sum + allCals[i][j][1];
+      amount++;
+      }
+    }
+  }
+  console.log(sum/amount);
+  return sum/amount;
+}
+
 function loadMenu() {
   var diningCourt = -1;
+  var time = -1;
+  let meal = "Breakfast";
   let earhart = new Array();
   let ford = new Array();
   let hillenbrand = new Array();
@@ -1191,24 +1210,38 @@ function loadMenu() {
     snapshot.forEach(function (child) {
       diningCourt++;
       child.forEach(function (child1) {
+        time = -1;
         child1.forEach(function (child2) {
+          time++;
+          if(time == 0){
+            meal = "Breakfast";
+          }
+          else if(time == 1){
+            meal = "Lunch";
+          }
+          else if(time == 2){
+            meal = "Late Lunch";
+          }
+          else if(time == 3){
+            meal = "Dinner";
+          }
           child2.forEach(function (child3) {
             child3.forEach(function (child4) {
               var data = child4.val();
               if (diningCourt == 0) {
-                earhart.push([data.Name, data.calories]);
+                earhart.push([data.Name, data.calories, meal]);
               }
               else if (diningCourt == 1) {
-                ford.push([data.Name, data.calories]);
+                ford.push([data.Name, data.calories, meal]);
               }
               else if (diningCourt == 2) {
-                hillenbrand.push([data.Name, data.calories]);
+                hillenbrand.push([data.Name, data.calories, meal]);
               }
               else if (diningCourt == 3) {
-                wiley.push([data.Name, data.calories]);
+                wiley.push([data.Name, data.calories, meal]);
               }
               else if (diningCourt == 4) {
-                windsor.push([data.Name, data.calories]);
+                windsor.push([data.Name, data.calories, meal]);
               }
             });
           });
@@ -1216,12 +1249,25 @@ function loadMenu() {
       });
     });
   }).then(function(){
+    let allMenus = ["menu Earhart", "menu Ford", "menu Hillenbrand", "menu Wiley", "menu Windsor"];
+    let allCalories = [earhart, ford, hillenbrand, wiley, windsor];
+    let mean = meanCalories(allCalories);
+    console.log(meanCalories);
     for (let i = 0; i < earhart.length; i++) {
+      let highLow;
+      if(earhart[i][1] == 0){
+        highLow = 'remove';
+      }
+      else if(earhart[i][1] < mean){
+        highLow = 'lowCal';
+      }
+      else{
+        highLow = 'highCal';
+      }
       var node = document.createElement("div"); //Wrapper
-      node.setAttribute('class', 'menu-item-wrapper');
+      node.setAttribute('class', 'menu-item-wrapper ' + meal + ' ' + highLow);
       var node3 = document.createElement("div");
       node3.setAttribute('class', 'menu-item'); //Item name
-      console.log(i);
       var textnode = document.createTextNode(earhart[i][0]);
       node3.appendChild(textnode);
       var node2 = document.createElement("div");
@@ -1237,8 +1283,18 @@ function loadMenu() {
       document.getElementById("menu Earhart").appendChild(node);
     }
     for (let i = 0; i < ford.length; i++) {
+      let highLow;
+      if(ford[i][1] == 0){
+        highLow = 'remove';
+      }
+      else if(ford[i][1] < mean){
+        highLow = 'lowCal';
+      }
+      else{
+        highLow = 'highCal';
+      }
       var node = document.createElement("div"); //Wrapper
-      node.setAttribute('class', 'menu-item-wrapper');
+      node.setAttribute('class', 'menu-item-wrapper ' + meal + ' ' + highLow);
       var node3 = document.createElement("div");
       node3.setAttribute('class', 'menu-item'); //Item name
       var textnode = document.createTextNode(ford[i][0]);
@@ -1257,8 +1313,18 @@ function loadMenu() {
       document.getElementById("menu Ford").appendChild(node);
     }
     for (let i = 0; i < hillenbrand.length; i++) {
+      let highLow;
+      if(hillenbrand[i][1] == 0){
+        highLow = 'remove';
+      }
+      else if(hillenbrand[i][1] < mean){
+        highLow = 'lowCal';
+      }
+      else{
+        highLow = 'highCal';
+      }
       var node = document.createElement("div"); //Wrapper
-      node.setAttribute('class', 'menu-item-wrapper');
+      node.setAttribute('class', 'menu-item-wrapper ' + meal + ' ' + highLow);
       var node3 = document.createElement("div");
       node3.setAttribute('class', 'menu-item'); //Item name
       var textnode = document.createTextNode(hillenbrand[i][0]);
@@ -1276,8 +1342,18 @@ function loadMenu() {
       document.getElementById("menu Hillenbrand").appendChild(node);
     }
     for (let i = 0; i < wiley.length; i++) {
+      let highLow;
+      if(wiley[i][1] == 0){
+        highLow = 'remove';
+      }
+      else if(wiley[i][1] < mean){
+        highLow = 'lowCal';
+      }
+      else{
+        highLow = 'highCal';
+      }
       var node = document.createElement("div"); //Wrapper
-      node.setAttribute('class', 'menu-item-wrapper');
+      node.setAttribute('class', 'menu-item-wrapper ' + meal + ' ' + highLow);
       var node3 = document.createElement("div");
       node3.setAttribute('class', 'menu-item'); //Item name
       var textnode = document.createTextNode(wiley[i][0]);
@@ -1295,8 +1371,18 @@ function loadMenu() {
       document.getElementById("menu Wiley").appendChild(node);
     }
     for (let i = 0; i < windsor.length; i++) {
+      let highLow;
+      if(windsor[i][1] == 0){
+        highLow = 'remove';
+      }
+      else if(windsor[i][1] < mean){
+        highLow = 'lowCal';
+      }
+      else{
+        highLow = 'highCal';
+      }
       var node = document.createElement("div"); //Wrapper
-      node.setAttribute('class', 'menu-item-wrapper');
+      node.setAttribute('class', 'menu-item-wrapper ' + meal + ' ' + highLow);
       var node3 = document.createElement("div");
       node3.setAttribute('class', 'menu-item'); //Item name
       var textnode = document.createTextNode(windsor[i][0]);
@@ -1314,4 +1400,50 @@ function loadMenu() {
       document.getElementById("menu Windsor").appendChild(node);
     }
   });
+}
+
+function highCalSelected(){
+  var lowCal = document.getElementsByClassName("lowCal");
+  for(let i = 0; i < lowCal.length; i++){
+    lowCal[i].style.display = "none";
+  }
+  var highCal = document.getElementsByClassName("highCal");
+  for(let i = 0; i < highCal.length; i++){
+    highCal[i].style.display = "flex";
+  }
+  hideUnknown();
+}
+
+function lowCalSelected(){
+  var highCal = document.getElementsByClassName("highCal");
+  for(let i = 0; i < highCal.length; i++){
+    highCal[i].style.display = "none";
+  }
+  var lowCal = document.getElementsByClassName("lowCal");
+  for(let i = 0; i < lowCal.length; i++){
+    lowCal[i].style.display = "flex";
+  }
+  hideUnknown();
+}
+
+function allSelected(){
+  var highCal = document.getElementsByClassName("highCal");
+  for(let i = 0; i < highCal.length; i++){
+    highCal[i].style.display = "flex";
+  }
+  var lowCal = document.getElementsByClassName("lowCal");
+  for(let i = 0; i < lowCal.length; i++){
+    lowCal[i].style.display = "flex";
+  }
+  var unknown = document.getElementsByClassName("remove");
+  for(let i = 0; i < unknown.length; i++){
+    unknown[i].style.display = "flex";
+  }
+}
+
+function hideUnknown(){
+  var unknown = document.getElementsByClassName("remove");
+  for(let i = 0; i < unknown.length; i++){
+    unknown[i].style.display = "none";
+  }
 }

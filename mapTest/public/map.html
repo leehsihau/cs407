@@ -51,19 +51,22 @@
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
           value="Submit Favorite Food">
       </div>
-        
-      <button id="demo-menu-lower-left" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+
+      <button id="demo-menu-lower-left"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
         Menus
       </button>
       <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left"
-    class="mi-tab">
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuEarhart')" id="menu-earheart">Earhart</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuFord')" id="menu-ford">Ford</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuHillenbrand')" id="menu-hillenbrand">Hillenbrand</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWiley')" id="menu-wiley">Wiley</li>
-      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWindsor')" id="menu-windsor">
-      Windsor</li>
-    </ul>
+        class="mi-tab">
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuEarhart')" id="menu-earheart">Earhart
+        </li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuFord')" id="menu-ford">Ford</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuHillenbrand')" id="menu-hillenbrand">
+          Hillenbrand</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWiley')" id="menu-wiley">Wiley</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWindsor')" id="menu-windsor">
+          Windsor</li>
+      </ul>
       <div class="main_clock">
         <div class="date">
           <span id="weekday"></span>
@@ -86,7 +89,7 @@
       <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" id="delete1">
         delete
       </button>
-      
+
       <!--This is the UI for the settings button-->
       <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
         <i class="material-icons">more_vert</i>
@@ -94,7 +97,7 @@
 
     </div>
 
-    
+
     <!--These are the menu items that make up the settings menu-->
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right"
       class="mi-tab">
@@ -305,7 +308,8 @@
               </li>
               <li><input type="password" id="password" name="password" placeholder="New Password"></li>
               <li><input type="password" id="password1" name="password" placeholder="Repeat New Password"></li>
-              <li><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" id="submit" name="submit" value="Change Password"></li>
+              <li><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                  type="submit" id="submit" name="submit" value="Change Password"></li>
               </li>
             </ul>
           </div>
@@ -340,7 +344,8 @@
                   name="support" rows="10" cols="54" required></textarea>
               </li>
               <li>
-                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" id="submit_support" value="Submit" />
+                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                  type="submit" id="submit_support" value="Submit" />
               </li>
             </ul>
           </div>
@@ -349,24 +354,99 @@
 
       <div class="tabcontent2 menu" id="MenuEarhart">
         <h2 class="menu-header">Earhart Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
         <div class="menu-page-wrapper" id="menu Earhart"></div>
       </div>
       <div class="tabcontent2 menu" id="MenuFord">
         <h2 class="menu-header">Ford Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
         <div class="menu-page-wrapper" id="menu Ford"></div>
       </div>
       <div class="tabcontent2 menu" id="MenuHillenbrand">
         <h2 class="menu-header">Hillenbrand Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
         <div class="menu-page-wrapper" id="menu Hillenbrand"></div>
 
       </div>
       <div class="tabcontent2 menu" id="MenuWiley">
         <h2 class="menu-header">Wiley Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
         <div class="menu-page-wrapper" id="menu Wiley"></div>
 
       </div>
       <div class="tabcontent2 menu" id="MenuWindsor">
         <h2 class="menu-header">Windsor Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
         <div class="menu-page-wrapper" id="menu Windsor"></div>
 
       </div>
@@ -390,11 +470,23 @@
     }
   </script>
   <style>
-
-.tabcontent2.menu{
-  overflow-y: auto;
-
-}
+    .tabcontent2.menu {
+      overflow-y: auto;
+    }
+    .cal-button-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    }  
+    .call-button-wrapper button{
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .filter{
+      margin: 0px;
+      font-size: 20px;
+      margin-top: 4px;
+    }
   </style>
 </body>
 
