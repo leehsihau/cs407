@@ -1,0 +1,38 @@
+.menu-page-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.menu-item-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: whitesmoke;
+    font-size: 18px;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.menu-item{
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.calories{
+    margin-right: 5px;
+}
+
+.menu{
+    width: 100%;
+}
+
+.menu-header{
+    text-align: center;
+}

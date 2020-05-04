@@ -19,10 +19,12 @@
   <!-- initialize the SDK after all desired features are loaded -->
   <script src="/__/firebase/init.js"></script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="chat.css">
+  <link rel="stylesheet" href="foodmenu.css" />
 
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-red.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
   <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -42,17 +44,32 @@
   </script>
 </head>
 
-<body>
+<body onload="loadMenu()">
   <div class="flex-wrapper">
     <div class="flex-nav-bar">
       <img src="logo.png" alt="logo">
       <div class="search">
-        <input type="text" id="favFoodText" placeholder="Search">
+        <input type="text" id="favFoodText" placeholder="Add your favorite Food here">
         <input id="favFoodId" onclick="addFavFood()"
           class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit"
           value="Submit Favorite Food">
       </div>
 
+      <button id="demo-menu-lower-left"
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        Menus
+      </button>
+      <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-left"
+        class="mi-tab">
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuEarhart')" id="menu-earheart">Earhart
+        </li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuFord')" id="menu-ford">Ford</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuHillenbrand')" id="menu-hillenbrand">
+          Hillenbrand</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWiley')" id="menu-wiley">Wiley</li>
+        <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'MenuWindsor')" id="menu-windsor">
+          Windsor</li>
+      </ul>
       <div class="main_clock">
         <div class="date">
           <span id="weekday"></span>
@@ -80,13 +97,46 @@
         <i class="material-icons">more_vert</i>
       </button>
 
+      <!--This is the UI for the recommendations button-->
+      <button id="rec-lower-right" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        Recommendations
+      </button>
+
+      <!--This is the UI for the menu button-->
+      <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">more_vert</i>
+      </button>
+
     </div>
+
+    <!--These are the menu items that make up the settings menu-->
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="rec-lower-right"
+      class="mi-tab">
+      <li class="mdl-menu__item" ><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+        id="recommend">
+        BMI 
+      </button></li>
+      <li class="mdl-menu__item" ><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+        id="gain">
+        Gain 
+      </button></li>
+      <li class="mdl-menu__item" ><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+        id="lose">
+        Lose 
+      </button></li>
+      <li class="mdl-menu__item" ><button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+        id="vegeterian">
+        Vegeterian 
+      </button></li>
+
+    </ul>
 
     <!--These are the menu items that make up the settings menu-->
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right"
       class="mi-tab">
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Map')" id="default-menu-map">Map</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Profile')" id="menu-profile">Profile</li>
+      <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'BlockList')" id="menu-blockList">Block List</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Settings')" id="menu-settings">Settings</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Privacy')" id="menu-privacy">Privacy</li>
       <li class="mdl-menu__item" class="tablinks2" onclick="openMI(event, 'Change Password')" id="menu-changepass">
@@ -96,9 +146,35 @@
     </ul>
 
     <div class="flex-social">
+      <!--<button class="tablinksFriendChat" onclick="swithFriendChat(event, 'chatDir')">chat</button>-->
+      <button class="tablinksFriendChat" onclick="swithFriendChat(event, 'friendsDir', 0)">Return to Friends List</button>
+      <div class="social-tab" id="chatDir">
+        <div id="messages-card-container" class="mdl-cell mdl-cell--6-col mdl-grid">
 
-      <div class="friends" id="friendsDir">
+          <!-- Messages container -->
+          <!--<div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--6-col-tablet mdl-cell--6-col-desktop"></div>-->
+          <div class="mdl-card__supporting-text mdl-color-text--blue-600">
+            <div id="messages" class="container">
+              <span id="message-filler"></span>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="message" autocomplete="off">
+              <label class="mdl-textfield__label" for="message">Message...</label>
+            </div>
+            <input id="submitMessage"
+              class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+              value="send" disabled onclick="sendMessage()"/>
+            <!--<form id="image-form" action="#">
+              <input id="mediaCapture" type="file" accept="image/*" capture="camera">
+              <button id="submitImage" title="Add an image"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+                <i class="material-icons">image</i>
+              </button>
+            </form>-->
+          </div>
+        </div>
       </div>
+      <div class="social-tab friends" id="friendsDir"></div>
 
       <div class="recommendations">
         <!--Dining Court tab links-->
@@ -114,31 +190,31 @@
         <div id="Earhart" class="tabcontent">
           <h3>Today's Recommendations at Earhart</h3>
           <!--TODO: Add functionality for pulling recs. from database and displaying here-->
-          <p>Add recommendations from database here!</p>
+          <p>Click the recommendations button in the navigation bar to get recommendations</p>
         </div>
 
         <div id="Ford" class="tabcontent">
           <h3>Today's Recommendations at Ford</h3>
           <!--TODO: Add functionality for pulling recs. from database and displaying here-->
-          <p>Add recommendations from database here!</p>
+          <p>Click the recommendations button in the navigation bar to get recommendations</p>
         </div>
 
         <div id="Hillenbrand" class="tabcontent">
           <h3>Today's Recommendations at Hillenbrand</h3>
           <!--TODO: Add functionality for pulling recs. from database and displaying here-->
-          <p>Add recommendations from database here!</p>
+          <p>Click the recommendations button in the navigation bar to get recommendations</p>
         </div>
 
         <div id="Wiley" class="tabcontent">
           <h3>Today's Recommendations at Wiley</h3>
           <!--TODO: Add functionality for pulling recs. from database and displaying here-->
-          <p>Add recommendations from database here!</p>
+          <p>Click the recommendations button in the navigation bar to get recommendations</p>
         </div>
 
         <div id="Windsor" class="tabcontent">
           <h3>Today's Recommendations at Windsor</h3>
           <!--TODO: Add functionality for pulling recs. from database and displaying here-->
-          <p>Add recommendations from database here!</p>
+          <p>Click the recommendations button in the navigation bar to get recommendations</p>
         </div>
       </div>
     </div>
@@ -245,8 +321,11 @@
           </div>
           <br>
           <input type="button" class='allergen-button' onclick="addAllergens()" value="Submit Allergens">
-
-
+        </div>
+        <div class="deleteAccount">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="delete1">
+            Delete Account
+          </button>
         </div>
       </div>
 
@@ -256,30 +335,35 @@
           <div class="privacy-list">
             <br>
             <div class="privacy-question">
-              <label for="privacy0">Allow other users to see you on map</label>
-              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap">
+              <label for="privacy0">Become invisible on the map</label>
+              <input class="switch_1" type="checkbox" id="privacy0" name="privacy0" value="usersOnMap" onchange="loadProfilePics(), updatePrivacySettings(), window.onbeforeunload = null, window.location.reload()">
             </div>
             <div class="privacy-question">
-              <label for="privacy1">Allow other users to message you</label>
-              <input class="switch_1" type="checkbox" id="privacy1" name="privacy1" value="usersMessage">
+              <label for="privacy1">Prevent other users from messaging you</label>
+              <input class="switch_1" type="checkbox" id="privacy1" name="privacy1" value="usersMessage" onchange="updatePrivacySettings()">
             </div>
             <div class="privacy-question">
-              <label for="privacy2">Allow other users to see your profile</label>
-              <input class="switch_1" type="checkbox" id="privacy2" name="privacy2" value="usersSeeProfile">
+              <label for="privacy2">Prevent other users from viewing your profile</label>
+              <input class="switch_1" type="checkbox" id="privacy2" name="privacy2" value="usersSeeProfile" onchange="updatePrivacySettings(), showProfile(), window.onbeforeunload = null, window.location.reload()">
+            </div>
+            <div class="privacy-question">
+              <label for="privacy3">Filter out users that don't have a profile pic set</label>
+              <input class="switch_1" type="checkbox" id="privacy3" name="privacy3" value="noProfile" onchange="updatePrivacySettings(),window.onbeforeunload = null, window.location.reload()">
             </div>
             <br>
           </div>
           <br>
-          <input type="button" class="privacy-button" id="privacy-submit" onclick="privacySubmitHandler()"
-            value="Submit All"></button>
         </div>
       </div>
 
       <div class="tabcontent2" id="Profile">
         <h2>Favorite Food List</h2>
-        <div id="favFoodContainer">
-          fweqfweof
-        </div>
+        <ul id="favFoodContainer" class=fav-ul></ul>
+      </div>
+
+      <div class="tabcontent2" id="BlockList">
+        <h2>Block List</h2>
+        <ul id="blockList" class="block-ul"></ul>
       </div>
 
       <div class="tabcontent2" id="Change Password">
@@ -292,7 +376,8 @@
               </li>
               <li><input type="password" id="password" name="password" placeholder="New Password"></li>
               <li><input type="password" id="password1" name="password" placeholder="Repeat New Password"></li>
-              <li><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" id="submit" name="submit" value="Change Password"></li>
+              <li><input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                  type="submit" id="submit" name="submit" value="Change Password"></li>
               </li>
             </ul>
           </div>
@@ -327,11 +412,110 @@
                   name="support" rows="10" cols="54" required></textarea>
               </li>
               <li>
-                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" type="submit" id="submit_support" value="Submit" />
+                <input class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                  type="submit" id="submit_support" value="Submit" />
               </li>
             </ul>
           </div>
         </form>
+      </div>
+      <div class="tabcontent2 menu" id="MenuEarhart">
+        <h2 class="menu-header">Earhart Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
+        <div class="menu-page-wrapper" id="menu Earhart"></div>
+      </div>
+      <div class="tabcontent2 menu" id="MenuFord">
+        <h2 class="menu-header">Ford Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
+        <div class="menu-page-wrapper" id="menu Ford"></div>
+      </div>
+      <div class="tabcontent2 menu" id="MenuHillenbrand">
+        <h2 class="menu-header">Hillenbrand Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
+        <div class="menu-page-wrapper" id="menu Hillenbrand"></div>
+
+      </div>
+      <div class="tabcontent2 menu" id="MenuWiley">
+        <h2 class="menu-header">Wiley Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
+        <div class="menu-page-wrapper" id="menu Wiley"></div>
+
+      </div>
+      <div class="tabcontent2 menu" id="MenuWindsor">
+        <h2 class="menu-header">Windsor Menu</h2>
+        <div class="cal-button-wrapper">
+          <h3 class="filter">Filters: </h3>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="high-calories" onclick="highCalSelected()">
+            High Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="low-calories" onclick="lowCalSelected()">
+            Low Calories
+          </button>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+            id="all-calories" onclick="allSelected()">
+            All Food
+          </button>
+        </div>
+        <div class="menu-page-wrapper" id="menu Windsor"></div>
+
       </div>
     </div>
   </div>
@@ -351,7 +535,27 @@
     function caoTaMa() {
       console.log("jier", $('#purdueDining').length)
     }
+    
   </script>
+  <style>
+    .tabcontent2.menu {
+      overflow-y: auto;
+    }
+    .cal-button-wrapper{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    }  
+    .call-button-wrapper button{
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .filter{
+      margin: 0px;
+      font-size: 20px;
+      margin-top: 4px;
+    }
+  </style>
 </body>
 
 </html>
